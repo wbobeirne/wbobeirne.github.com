@@ -3,10 +3,20 @@ layout: default
 title: William O'Beirne
 ---
 
-Work in progress
-
-{% for post in site.posts limit:5 %}
-	<h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-	{{ post.content }}
-	<em>Posted on {{ post.date | date_to_long_string }}.</em>
-{% endfor %}
+<div id="home">
+	<h1 id="intro">My musings</h1>
+	
+	<div>
+	</div>
+	
+	{% for post in site.posts limit:5 %}
+	<div class="post">
+		<h2><a href="{{ post.url }}">{{post.title}}</a></h2>
+		<span class="date">{{ post.date | date:"%B %d, %Y" }}</span>
+		<div>
+		</div>
+		{{ post.content }}
+	</div>
+	{% endfor %}
+	
+</div>

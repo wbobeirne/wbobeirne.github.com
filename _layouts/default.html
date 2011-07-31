@@ -2,11 +2,23 @@
 <html>
 	<head>
 		<title>{{ page.title }}</title>
+		<link rel="stylesheet" href="/css/style.css" type="text/css">
 	</head>
  
 	<body>
-		<h1>{{ page.title }}</h1>
- 
+		
+		<div class="site">
+			<div class="header">
+				<a href="/"><h1>William O'Beirne</h1></a>
+				<a class="extra" href="/">blog</a>
+				<a class="extra" href="/projects.html">projects</a>
+				<a class="extra" href="/about.html">about</a>
+				<a class="extra" href="/contact.html">contact</a>
+			</div>
+		
 		{{ content }}
+		
+		</div>
+		
 	</body>
 </html>
