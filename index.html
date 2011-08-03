@@ -4,19 +4,24 @@ title: William O'Beirne
 ---
 
 <div id="home">
-	<h1 id="intro">My musings</h1>
-	
-	<div>
-	</div>
+	<h1>My latest musings</h1>
 	
 	{% for post in site.posts limit:5 %}
 	<div class="post">
-		<h2><a href="{{ post.url }}">{{post.title}}</a></h2>
+		<h2><a class="title" href="{{ post.url }}">{{post.title}}</a></h2>
 		<span class="date">{{ post.date | date:"%B %d, %Y" }}</span>
 		<div>
 		</div>
-		{{ post.content }}
+		{{ post.content | truncatewords:75 }}
 	</div>
 	{% endfor %}
-	
+	<h1>Older posts</h1>
+	<ul class="archive">
+		{% for post in site.posts offset:5 %}
+		<li>
+			<span class="date">{{ post.date | date:"%B %d, %Y" }}</span>
+			<a href="{{ post.url }}">{{ post.title}}</a>
+		</li>
+		{% endfor %}
+	</ul>
 </div>
