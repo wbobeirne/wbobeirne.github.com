@@ -4,8 +4,6 @@ title: William O'Beirne
 ---
 
 <div id="home">
-	<h1>My latest musings</h1>
-	
 	{% for post in site.posts limit:5 %}
 	<div class="post">
 		<h2><a class="title" href="{{ post.url }}">{{post.title}}</a></h2>

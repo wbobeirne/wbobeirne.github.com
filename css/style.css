@@ -107,6 +107,11 @@ ul.posts span {
 	text-align:center;
 }
 
+.header a:active,
+.header a:hover{
+	text-decoration:none;
+}
+
 .header h1 {
 	color:#FFF;
 	font-family: "ChunkFive";
