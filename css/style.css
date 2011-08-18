@@ -103,7 +103,7 @@ ul.posts span {
 	color:#0000AA;
 	font-weight:bold;
 	margin-top: 2em;
-	margin-bottom:2em;
+	margin-bottom: 2em;
 	text-align:center;
 }
 
@@ -155,7 +155,7 @@ ul.posts span {
 	font-size: 110%;
 	text-align: justify;
 	width: 55em;
-	margin: 3em auto 2em auto;
+	margin: 2em auto 2em auto;
 	line-height: 1.5em;
 }
 
@@ -211,6 +211,27 @@ ul.posts span {
 }
 .site .footer2 a {
 	color: #666;
+}
+
+.site .twitfeed {
+	margin-bottom: 2em;
+	height: 46px;
+	background: url(/images/twitfeed.png);
+}
+
+.site .twitfeed li{
+	list-style-type:none;
+	color: #FFFFFF;
+	padding-left: 5.5em;
+	padding-top: 1em;
+	font-size: 12px;
+	width: 700px;
+	line-height:1.6;
+}
+
+.site .twitfeed a{
+	color:#000000;
+	font-size: 12px;
 }
 
 /*****************************************************************************/
