@@ -61,4 +61,4 @@ I had a really great time and I think I learned a lot about myself as a develope
 
 Ludum Dare #22 can't come soon enough.
 
-EDIT: Wow, this is why I shouldn't write this stuff so late at night. I entirely forgot to link to my finished game! It requires XNA 4.0 and .Net 4.0 installed to play the game, but those files are included in the download. They won't put any crap on your computer, they're just little dll's that sit tucked away for my game to call on. http://www.ludumdare.com/compo/ludum-dare-21/?action=preview&uid=5193
+EDIT: Wow, this is why I shouldn't write this stuff so late at night. I entirely forgot to link to my finished game! It requires XNA 4.0 and .Net 4.0 installed to play the game, but those files are included in the download. They won't put any crap on your computer, they're just little dll's that sit tucked away for my game to call on. [Check it out here!](http://www.ludumdare.com/compo/ludum-dare-21/?action=preview&uid=5193)
