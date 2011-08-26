@@ -14,8 +14,7 @@ title: William O'Beirne
 	<div class="post">
 		<h2><a class="title" href="{{ post.url }}">{{post.title}}</a></h2>
 		<span class="date">{{ post.date | date:"%B %d, %Y" }}</span>
-		<div>
-		</div>
+		
 		{{ post.content | truncatewords:75 }}
 		<a href="{{ post.url }}">read more</a>
 	</div>

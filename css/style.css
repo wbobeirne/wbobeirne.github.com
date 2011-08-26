@@ -143,7 +143,6 @@ ul.posts span {
 }
 .header .navbar a.extra:hover {
 	color:#45484B;
-	border-bottom:1px solid #753232;
 }
 
 /*****************************************************************************/
@@ -256,18 +255,13 @@ ul.posts span {
 	color:#777;
 }
 
-.post #post-body{
-	padding-top: 20px;
-}
-
 .post date{
 	color:#999;
 	font-style:italic;
-	padding-bottom: 20px;
 }
 
 .post p{
-	padding-bottom: 20px;
+	padding-top: 20px;
 }
 
 .post pre {
@@ -301,6 +295,7 @@ img.center {
 	margin-left: auto;   
 	margin-right: auto; 
 	margin-bottom: 2em;
+	margin-top: 2em;
 	padding:1px;
     border:1px solid #021a40;
 }
@@ -341,5 +336,6 @@ img.center {
 .post .date{
 	color:#AAA;
 	font-style:italic;
-	margin-bottom: 50px;
+	font-size: 14px;
+	padding-bottom:0.5em;
 }
