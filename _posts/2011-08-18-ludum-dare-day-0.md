@@ -11,11 +11,11 @@ Earlier this week, a post popped up for the [Ludum Dare gamedev competition](htt
 
 As you can see below, there are 2 major components to my setup. You've got my desk:
 
-<img src="http://i.imgur.com/B5SNI.jpg" class="center"/>
+<img src="http://i.imgur.com/B5SNI.jpg" class="captionme"/>
 
 Which is rocking my newly purchased second monitor, and will shortly be flooded with carbonated beverages and various microwavable meals. And you've got the whiteboard:
 
-<img src="http://i.imgur.com/feKdf.jpg" class="center"/>
+<img src="http://i.imgur.com/feKdf.jpg" class="captionme"/>
 
 All the cool kids have whiteboards, so I needed one too.
 

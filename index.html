@@ -1,31 +1,29 @@
 ---
-layout: default
+layout: home
 title: William O'Beirne
 ---
 
-<div id="home">
-	<div class="twitfeed">
-		<div id="twitter_update_list">
-		<script src="http://twitter.com/javascripts/blogger.js" type="text/javascript"></script>
-		<script src="http://twitter.com/statuses/user_timeline/wbobeirne.json?callback=twitterCallback2&count=1" type="text/javascript"></script>
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="./css/style.css">
+	</head>
+	<body>
+		<div id="accordion-container">
+			<div id="a1" class="accordion-entry">
+				<image src="images/blogtab.png"/><a href="/blog.html"><image src="images/blogaccordion.png"/></a>
+				<div class="thecaption">Blah</div>
+			</div>
+			<div class="accordion-entry">
+				<image src="images/projectstab.png"/><a href="/projects.html"><image src="images/projectsaccordion.png"/></a>
+			</div>
+			<div class="accordion-entry">
+				<image src="images/abouttab.png"/><a href="/about.html"><image src="images/aboutaccordion.png"/></a>
+			</div>
+			<div class="accordion-entry">
+				<image src="images/contacttab.png"/><a href="/contact.html"><image src="images/contactaccordion.png"/></a>
+			</div>
+			<div style="height: 0px; clear: both;"></div>
 		</div>
-	</div>
-	{% for post in site.posts limit:5 %}
-	<div class="post">
-		<h2><a class="title" href="{{ post.url }}">{{post.title}}</a></h2>
-		<span class="date">{{ post.date | date:"%B %d, %Y" }}</span>
-		
-		{{ post.content | truncatewords:75 }}
-		<a href="{{ post.url }}">read more</a>
-	</div>
-	{% endfor %}
-	<h1>Older posts</h1>
-	<ul class="archive">
-		{% for post in site.posts offset:5 %}
-		<li>
-			<span class="date">{{ post.date | date:"%B %d, %Y" }}</span>
-			<a href="{{ post.url }}">{{ post.title}}</a>
-		</li>
-		{% endfor %}
-	</ul>
-</div>
+	</body>
+</html>

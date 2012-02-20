@@ -3,6 +3,9 @@
 	<head>
 		<title>{{ page.title }}</title>
 		<link rel="stylesheet" href="/css/style.css" type="text/css">
+		
+		<script src="/scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
+		<script src="/scripts/jq.wrapcaptions.js" type="text/javascript"></script>
 	</head>
  
 	<body>
@@ -11,7 +14,7 @@
 				<a href="/"><h1>William O'Beirne</h1></a>
 				
 				<div class="navbar">
-					<a class="extra" href="/">blog</a>
+					<a class="extra" href="/blog.html">blog</a>
 					<a class="extra" href="/projects.html">projects</a>
 					<a class="extra" href="/about.html">about</a>
 					<a class="extra" href="/contact.html">contact</a>
@@ -19,9 +22,7 @@
 		</div>
 		
 		<div class="site">
-		
 			{{ content }}
-		
 			<div class="footer">
 				<div class="contact">
 						This site is owned and run by William O'Beirne who can be reached at <a href="wbobeirne@gmail.com">wbobeirne@gmail.com</a>.
@@ -29,8 +30,6 @@
 						<a href="https://github.com/mojombo/jekyll">Jekyll</a>.
 				</div>
 			</div>
-		
 		</div>
-		
 	</body>
 </html>

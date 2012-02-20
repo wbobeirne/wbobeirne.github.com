@@ -57,6 +57,11 @@ table {
 	font: 100%;
 }
 
+p {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
 /*****************************************************************************/
 /*
 /* Resources
@@ -198,7 +203,7 @@ ul.posts span {
 
 .site .twitfeed li{
 	list-style-type:none;
-	color: #FFFFFF;
+	color: #FFF;
 	padding-left: 5.5em;
 	padding-top: 1em;
 	font-size: 12px;
@@ -207,8 +212,9 @@ ul.posts span {
 }
 
 .site .twitfeed a{
-	color:#000000;
+	color: #FFF;
 	font-size: 12px;
+	text-decoration: underline;
 }
 
 .site ul{
@@ -261,7 +267,7 @@ ul.posts span {
 }
 
 .post p{
-	padding-top: 20px;
+	margin-top: 20px;
 }
 
 .post pre {
@@ -288,16 +294,6 @@ ul.posts span {
 	font-family: "ChunkFive";
 	color:#753232;
 	font-size: 22px;
-}
-
-img.center {   
-	display: block;   
-	margin-left: auto;   
-	margin-right: auto; 
-	margin-bottom: 2em;
-	margin-top: 2em;
-	padding:1px;
-    border:1px solid #021a40;
 }
 
 .post ul{
@@ -338,4 +334,78 @@ img.center {
 	font-style:italic;
 	font-size: 14px;
 	padding-bottom:0.5em;
+}
+
+/**************************
+*	Accordion
+***************************/
+
+#accordion-container{
+  padding: 5px;
+  border: 2px solid #45484B;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  margin:0px auto;
+}
+
+.accordion-entry{
+  display: block;
+  overflow: hidden;
+  width: 50px;
+  height: 400px;
+  float: left;
+  white-space: nowrap;
+}
+
+.accordion-entry img{
+	border: none;
+}
+
+.accordion-caption{
+  background: #45484B;
+  position: relative;
+  top: -400px;
+  left: 100px;
+  width: 100%;
+}
+
+#a1{
+  width: 750px;
+}
+
+/**************************
+*	JQ Captions
+***************************/
+
+.imgpost 
+{
+	float: left;
+	margin: 20px 0px 30px 0px;
+	width: 100%;
+	position: relative;
+	overflow: visible;
+}
+
+/* so that image still floats and looks nice even if JS is turned off */
+.imgpost img
+{
+	background-color: #fff;
+	box-shadow: 0px 0px 25px #444;
+	display: block; 
+	margin-left: auto; 
+	margin-right: auto;
+	border: 1px solid #000;
+}
+
+.imgpost .thecaption 
+{
+	background: url('../images/caption.png') no-repeat left bottom;
+	bottom: 60px;
+	left: -30px;
+	color: #fff;
+	padding: 8px 0px 18px 13px;
+	position: relative;
+	display: block; 
+	margin-left: auto; 
+	margin-right: auto;
 }
