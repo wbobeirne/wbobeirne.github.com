@@ -6,6 +6,7 @@ Contact
 ===========
 Feel free to contact me in the following places:
 
-* Email me at [wbobeirne@gmail.com](wbobeirne@gmail.com)
+* Email me at [wbobeirne@gmail.com](mailto:wbobeirne@gmail.com)
 * Follow me on Twitter [@wbobeirne](http://twitter.com/wbobeirne)
-* Or call me at 703-517-3588, but please respect that I'm in the EST time zone.
+* I'm also on [Facebook](http://www.facebook.com/william.obeirne), but I mostly keep that friends and family.
+* You can shoot me a message on [Steam](http://steamcommunity.com/id/hotdinosaurs).
