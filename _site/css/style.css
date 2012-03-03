@@ -271,16 +271,7 @@ ul.posts span {
 }
 
 .post pre {
-	border: 1px solid #ddd;
-	background-color: #eef;
-	padding: 0 .4em;
-}
-
-.post code {
-	border: 1px solid #ddd;
-	background-color: #EEE6AB;
-	font-size: 95%;
-	padding: 0 .2em;
+	border: 1px dashed #bbb;
 }
 
 .post h3{
@@ -311,6 +302,9 @@ ul.posts span {
 
 .post pre code {
 	border: none;
+  margin: 0; 
+  font-size: medium;
+  line-height: normal;
 }
 
 /* terminal */

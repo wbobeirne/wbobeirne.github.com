@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Oh hey world, didn't see you there. How've things been?</title>
+		<title>Syntax Highlighting Test</title>
 		<link rel="stylesheet" href="/css/style.css" type="text/css">
 		<link rel="stylesheet" href="/css/default-highlight.css">
     
@@ -26,11 +26,46 @@
 		
 		<div class="site">
 			<div class="post">
-	<h3>Oh hey world, didn't see you there. How've things been?</h3>
-	<date>July 31, 2011</date>
+	<h3>Syntax Highlighting Test</h3>
+	<date>March 02, 2012</date>
 	
 	<div id="post-body">
-		<p>Just set up an actually somewhat useful website as opposed to the old static HTML one I had before. Still tweaking the colors and layout, but for the most part, I&#8217;m happy with it. I look forward to actually posting some content here (yeah right) but in the meantime, it&#8217;ll just serve as a place to point people to. Might even get me some business cards made up. Anyway, just gonna add some filler words here to test out my truncation for posts. Otherwise it looks kind of silly. 75 words shouldn&#8217;t be too hard to hit with a regular post anyhow.</p>
+		<p>Testing syntax highlighting. Sample from TwitchViewer&#8230; However, I need more text or else I break some shit. Breaking shit is bad. Filler text inc:</p>
+
+<p>Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text Filler Text</p>
+<pre><code>require_once 'Zend.php';
+require_once 'Zend/Uri/Exception.php';
+require_once 'Zend/Uri/Http.php';
+require_once 'Zend/Uri/Mailto.php';
+
+abstract class Zend_Uri
+{
+
+  /**
+   * Return a string representation of this URI.
+   *
+   * @see     getUri()
+   * @return  string
+   */
+  public function __toString()
+  {
+      return $this->getUri();
+  }
+
+  static public function factory($uri = 'http')
+  {
+      $uri = explode(':', $uri, 2);
+      $scheme = strtolower($uri[0]);
+      $schemeSpecific = isset($uri[1]) ? $uri[1] : '';
+
+      // Security check: $scheme is used to load a class file,
+      // so only alphanumerics are allowed.
+      if (!ctype_alnum($scheme)) {
+          throw new Zend_Uri_Exception('Illegal scheme');
+      }
+  }
+}
+</code></pre>
 	</div>
 </div>
 
