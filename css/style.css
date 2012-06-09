@@ -9,6 +9,7 @@
 * {
 	margin: 0;
 	padding: 0;
+  font-weight: normal;
 }
 
 html, body {
@@ -127,7 +128,7 @@ ul.posts span {
 }
 
 .header .navbar{
-	width: 60em;
+	max-width: 800px;
 	margin: auto auto auto auto;
 	border-bottom:1px solid #CCCCCC;
 }
@@ -159,9 +160,15 @@ ul.posts span {
 .site {
 	font-size: 110%;
 	text-align: justify;
-	width: 55em;
+	max-width: 800px;
 	margin: 2em auto 2em auto;
 	line-height: 1.5em;
+  width: 100%;
+}
+
+.site.front {
+  max-width: 920px;
+  width: 920px;
 }
 
 .site #intro{
@@ -197,18 +204,21 @@ ul.posts span {
 
 .site .twitfeed {
 	margin-bottom: 2em;
-	height: 46px;
-	background: url(/images/twitfeed.png);
+	background: url(/images/twitfeed.png) center left no-repeat;
+}
+
+#twitter_update_list {
+  padding: 5px;
+  margin-left: 35px;
+  background: #753232;
+  border-radius: 8px;
 }
 
 .site .twitfeed li{
 	list-style-type:none;
 	color: #FFF;
-	padding-left: 5.5em;
-	padding-top: 1em;
 	font-size: 12px;
-	width: 700px;
-	line-height:1.6;
+  padding-left: 10px;
 }
 
 .site .twitfeed a{
@@ -340,6 +350,32 @@ ul.posts span {
   border-radius: 10px;
   -moz-border-radius: 10px;
   margin:0px auto;
+  display: inline-block;
+}
+
+.accordion-tab {
+  width: 46px;
+  height: 100%;
+  float: left;
+  background-color: #753232;
+  border-radius: 10px;
+  margin: 0 1px;
+}
+
+.accordion-tab.blog {
+  background: #753232 url(/images/blogtab.png) center no-repeat;
+}
+
+.accordion-tab.projects {
+  background: #753232 url('/images/projectstab.png') center no-repeat;
+}
+
+.accordion-tab.about {
+  background: #753232 url('/images/abouttab.png') center no-repeat;
+}
+
+.accordion-tab.contact {
+  background: #753232 url('/images/contacttab.png') center no-repeat;
 }
 
 .accordion-entry{
@@ -353,6 +389,7 @@ ul.posts span {
 
 .accordion-entry img{
 	border: none;
+  height: 100%;
 }
 
 .accordion-caption{
@@ -403,3 +440,21 @@ ul.posts span {
 	margin-left: auto; 
 	margin-right: auto;
 }
+
+
+/***************************
+ * Responsive stuffs
+ ***************************/
+ 
+ @media all and (max-width: 800px) {
+ 
+  .site {
+    margin: 0;
+    padding: 10px;
+    width: auto;
+  }
+  
+ }
+ 
+ 
+ 

@@ -8,7 +8,7 @@ $(document).ready(function(){
     $("#accordion-container").css('width', ((numEntries-1) * minWidth + maxWidth) + 'px');
 	
 	//IE doesn't support $.click?
-    $(".accordion-entry").mousedown(
+    $(".accordion-entry").mouseup(
       function(){
         $(lastBlock).animate({width: minWidth+"px"}, { queue:false, duration:dur });
         $(this).animate({width: maxWidth+"px"}, { queue:false, duration:dur });
