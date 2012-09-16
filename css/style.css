@@ -208,11 +208,13 @@ p {
   max-width: 820px;
 }
 
-.post h2,
+.post h2 {
+  font-size: 28px;
+}
+
 .post a.title:link,
 .post a.title:visited {
   color: #753232;
-  font-size: 28px;
   text-decoration: none;
   font-weight: normal;
 }
@@ -384,11 +386,11 @@ p {
     float: none;
     display: inline;
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   #slidingMenu li a {
-    padding: 0 10px;
+    padding: 0 4px;
     float: none;
     display: inline;
   }
@@ -411,9 +413,9 @@ p {
     padding-top: 5px;
   }
 
-  .content .post a.title:link,
-  .content .post a.title:visited {
-    font-size: 20px;
+  .content .post h2 {
+    font-size: 18px;
+    line-height: 18px;
   }
 
   .content .post .date {
