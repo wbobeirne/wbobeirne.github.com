@@ -1,460 +1,423 @@
-/*****************************************************************************/
-/*
-/* Common
-/*
-/*****************************************************************************/
-
-/* Global Reset */
-
+/*Reset Styles*/
 * {
-	margin: 0;
-	padding: 0;
-  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+
+ul{
+    list-style:disc;
+    padding-left: 20px;
 }
 
 html, body {
-	background:#FFF url(/images/headerrectangle.png) repeat-x;
-	background-position: 0px 13px;
-	height: 95%;
+  height: 100%;
 }
 
 body {
-	font: 13.34px helvetica, arial, clean, sans-serif;
-	*font-size: small;
-	text-align: center;
+  background: url(/images/bg.png);
+}
+
+p, li {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #45484B;
+  text-shadow: 1px 1px #FFF;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  padding: 10px 0;
+  font-family: "ChunkFiveRegular";
 }
 
 h1 {
-	font-size:28px;
-	color:#45484B;
-	margin-bottom: 10px;
-	margin-top: 25px;
-	font-family: "ChunkFive";
+  font-size: 34px;
+  color: #753232;
 }
 
 h2 {
-	color:#4F4F4F;
-	font-size:18px;
-}
-
-
-a {
-	font-size:14px;
-	color: #00a;
-	text-decoration:none;
-}
-
-a:hover {
-	color: black;
-	text-decoration:underline;
-}
-
-a:visited {
-	color: #00a;
-}
-
-table {
-	font-size: inherit;
-	font: 100%;
+  font-size: 24px;
+  color: #45484B;
 }
 
 p {
-	margin-top: 10px;
-	margin-bottom: 10px;
+  margin-bottom: 24px;
+  line-height: 23px;
+  font-weight: 300;
 }
 
-/*****************************************************************************/
-/*
-/* Resources
-/*
-/*****************************************************************************/
+.clearfix {
+  clear: both;
+}
+
+/*Fonts*/
 
 @font-face {
-  font-family: "ChunkFive";
-  src: url("/fonts/Chunkfive.otf");
+  font-family: 'RobotoBoldCondensed';
+  src: url('Roboto-BoldCondensed-webfont.eot');
+  src: url('Roboto-BoldCondensed-webfont.eot?#iefix') format('embedded-opentype'),
+       url('Roboto-BoldCondensed-webfont.woff') format('woff'),
+       url('Roboto-BoldCondensed-webfont.ttf') format('truetype'),
+       url('Roboto-BoldCondensed-webfont.svg#RobotoBoldCondensed') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 
-/*****************************************************************************/
-/*
-/* Home
-/*
-/*****************************************************************************/
-
-ul.posts {
-	list-style-type: none;
-	margin-bottom: 2em;
+@font-face {
+  font-family: 'ChunkFiveRegular';
+  src: url('Chunkfive-webfont.eot');
+  src: url('Chunkfive-webfont.eot?#iefix') format('embedded-opentype'),
+       url('Chunkfive-webfont.woff') format('woff'),
+       url('Chunkfive-webfont.ttf') format('truetype'),
+       url('Chunkfive-webfont.svg#ChunkFiveRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 
-.small {
-	font-size:90%;
-}
 
-ul.posts li {
-	line-height: 1.75em;
-}
 
-ul.posts span {
-	color: #aaa;
-	font-family: Monaco, "Courier New", monospace;
-	font-size: 80%;
-}
 
-/*****************************************************************************/
-/*
-/* Header
-/*
-/*****************************************************************************/
+/********
+  Header
+ ********/
 
-.header {
-	font-family:Arial, Helvetica, sans-serif;
-	color:#0000AA;
-	font-weight:bold;
-	margin-top: 2em;
-	margin-bottom: 2em;
-	text-align:center;
-}
-
-.header a:active,
-.header a:hover{
-	text-decoration:none;
-}
-
-.header h1 {
-	color:#FFF;
-	font-family: "ChunkFive";
-	font-size:50px;
-	background: #753232;
-	font-weight:normal;
-}
-
-.header .navbar{
-	max-width: 800px;
-	margin: auto auto auto auto;
-	border-bottom:1px solid #CCCCCC;
-}
-
-.header .navbar a {
-	color:#777C82;
-	font-size:16px;
-	text-decoration:none;
-}
-.header .navbar a:hover {
-	color:#DDD;
-}
-
-.header .navbar a.extra{
-	color:#999;
-	margin-right:2em;
-	text-decoration:none;
-}
-.header .navbar a.extra:hover {
-	color:#45484B;
-}
-
-/*****************************************************************************/
-/*
-/* Site
-/*
-/*****************************************************************************/
-
-.site {
-	font-size: 110%;
-	text-align: justify;
-	max-width: 800px;
-	margin: 2em auto 2em auto;
-	line-height: 1.5em;
+#header {
+  margin: 10px 0;
+  text-align: center;
   width: 100%;
 }
 
-.site.front {
-  max-width: 920px;
-  width: 920px;
+#header a {
+  text-decoration: none;
 }
 
-.site #intro{
-	color:#000000;
-	font-size:18px;
-	margin-bottom:1em;
-}
-
-.site a:link,
-.site a:visited{
-	color:#753232;
-	font-size:14px;
-	text-decoration:none;
-}
-
-.site a:hover {
-	color:#999;
-}
-
-.site .footer {
-	clear:both;
-	font-size: 80%;
-	color: #666;
-	border-top: 1px #ccc solid;
-	margin-top: 5em;
-	padding-bottom: 4em;
-}
-
-.site .footer a{
-	color:#894646;
-	font-size:12px;
-}
-
-.site .twitfeed {
-	margin-bottom: 2em;
-	background: url(/images/twitfeed.png) center left no-repeat;
-}
-
-#twitter_update_list {
-  padding: 5px;
-  margin-left: 35px;
+#header h1 {
+  color: white;
+  font-family: "ChunkFiveRegular";
+  text-shadow: none;
+  font-size: 50px;
   background: #753232;
-  border-radius: 8px;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#804040), to(#753232));
+  background: -moz-linear-gradient(19% 75% 90deg, #804040, #753232 100%);
+  font-weight: normal;
+  padding: 0;
+  padding-top: 10px;
 }
 
-.site .twitfeed li{
-	list-style-type:none;
-	color: #FFF;
-	font-size: 12px;
+/**************
+  Left sidebar
+ **************/
+
+#sidebar-left-wrapper {
+  vertical-align: top;
+  width: 280px;
+  float: left;
+}
+
+#sidebar-left {
+  display: block;
+}
+
+/*Sliding navigation menu*/
+#slidingMenu {
+  position: relative;
+  max-width: 280px;
+  padding: 30px 0 30px 10px;
+  overflow:hidden;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#slidingMenu.docked {
+  position: fixed;
+  top: 0;
+}
+
+#slidingMenu li {
+  display: block;
+  float: left;
+  position: relative;
+  overflow: hidden;
+}
+
+#slidingMenu li.move {
+  width: 9px;
+  height: 54px;
+  left:0px;
+  z-index: -100;
+  position: absolute;
+  background: #753232;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#9C4343), to(#753232));
+  background: -moz-linear-gradient(19% 75% 90deg, #753232, #9C4343 100%);
+  border-radius: 0px 8px 8px 0px;
+  -webkit-border-top-right-radius: 8px;
+  -webkit-border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  -moz-box-shadow:0px 0px 3px #000;
+  -webkit-box-shadow:0px 0px 3px #000;
+  box-shadow:0px 0px 3px #000;
+  padding-right: 10px;
+}
+
+#slidingMenu li a {
+  /*font-size:48px;*/
+  font-family: "ChunkFiveRegular";
+  text-transform:uppercase;
+  text-decoration: none;
+  color: #FFF;
+  text-shadow: 2px 2px 8px #35383B;
+  outline: none;
+  text-indent:5px;
+  z-index: 10;
+  display: block;
+  float: left;
+  overflow: hidden;
+  padding-right:10px;
+}
+
+
+/***********
+  Content
+ ***********/
+
+#content-wrapper {
+  width: 68%;
+  max-width: 820px;
+  float: left;
+}
+
+.content {
+  display: inline-block;
+  width: 100%;
+  padding-top: 20px;
   padding-left: 10px;
 }
 
-.site .twitfeed a{
-	color: #FFF;
-	font-size: 12px;
-	text-decoration: underline;
+.content a:link,
+.content a:visited {
+  color: #666;
 }
 
-.site ul{
-	margin-left: 20px;
-	margin-bottom: 1em;
-	margin-top: 1em;
+.content a:active,
+.content a:hover {
+  color: #999;
 }
 
-/*****************************************************************************/
-/*
-/* Posts
-/*
-/*****************************************************************************/
+
+/*Blog Posts*/
 
 .post {
-	border-bottom: 1px #ccc solid;
-	padding-bottom: 20px;
-	margin-bottom:30px;
-	color:#45484B;
+  max-width: 820px;
 }
 
-/* standard */
-
-.post a:link,
-.post a:visited{
-	color:#753232;
-	font-size:14px;
-	text-decoration:none;
-}
-
-.post a:hover {
-	color:#999;
-}
-
+.post h2,
 .post a.title:link,
-.post a.title:visited{
-	color:#753232;
-	font-size:22px;
-	text-decoration:none;
-	font-family: "ChunkFive";
+.post a.title:visited {
+  color: #753232;
+  font-size: 28px;
+  text-decoration: none;
+  font-weight: normal;
 }
 
+.post a.title:active,
 .post a.title:hover {
-	color:#777;
+  color: #A57272;
 }
 
-.post date{
-	color:#999;
-	font-style:italic;
+.post .date {
+  color: #AAA;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 100;
+  padding-bottom: 15px;
+  font-size: 14px;
+  font-style: italic;
 }
 
-.post p{
-	margin-top: 20px;
+.post h2 {
+  padding-bottom: 0;
 }
 
-.post pre {
-	border: 1px dashed #bbb;
-}
-
-.post h3{
-	font-family: "ChunkFive";
-	color:#753232;
-	font-size: 32px;
-	padding-bottom: 4px;
-}
-
-.post h2{
-	font-family: "ChunkFive";
-	color:#753232;
-	font-size: 22px;
-}
-
-.post ul{
-	margin-left: 40px;
-	margin-bottom: 1em;
-}
-
-.post ul.archive{
-	list-style-type: none;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding-top: 0;
-	padding-bottom: 0;
-}
-
-.post pre code {
-	border: none;
-  margin: 0; 
-  font-size: medium;
-  line-height: normal;
-}
-
-/* terminal */
-
-.post pre.terminal {
-	border: 1px solid black;
-	background-color: #EEE6AB;
-	color: white;
-	font-size: 14px;
-	overflow:auto;
-}
-
-.post pre.terminal code {
-	background-color: #EEE6AB;
-}
-
-
-/* date */
-.post .date{
-	color:#AAA;
-	font-style:italic;
-	font-size: 14px;
-	padding-bottom:0.5em;
-}
-
-/**************************
-*	Accordion
-***************************/
-
-#accordion-container{
-  padding: 5px;
-  border: 2px solid #45484B;
-  border-radius: 10px;
-  -moz-border-radius: 10px;
-  margin:0px auto;
-  display: inline-block;
-}
-
-.accordion-tab {
-  width: 46px;
-  height: 100%;
-  float: left;
-  background-color: #753232;
-  border-radius: 10px;
-  margin: 0 1px;
-}
-
-.accordion-tab.blog {
-  background: #753232 url(/images/blogtab.png) center no-repeat;
-}
-
-.accordion-tab.projects {
-  background: #753232 url('/images/projectstab.png') center no-repeat;
-}
-
-.accordion-tab.about {
-  background: #753232 url('/images/abouttab.png') center no-repeat;
-}
-
-.accordion-tab.contact {
-  background: #753232 url('/images/contacttab.png') center no-repeat;
-}
-
-.accordion-entry{
+.post img {
+  max-width: 90%;
+  border: 1px solid #222;
+  margin: auto;
   display: block;
-  overflow: hidden;
-  width: 50px;
-  height: 400px;
-  float: left;
-  white-space: nowrap;
+  margin-bottom: 30px;
+  box-shadow: 0px 0px 25px #444;
 }
 
-.accordion-entry img{
-	border: none;
-  height: 100%;
-}
-
-.accordion-caption{
-  background: #45484B;
+.post .imgpost {
   position: relative;
-  top: -400px;
-  left: 100px;
-  width: 100%;
 }
 
-#a1{
-  width: 750px;
-}
-
-/**************************
-*	JQ Captions
-***************************/
-
-.imgpost 
-{
-	float: left;
-	margin: 20px 0px 30px 0px;
-	width: 100%;
-	position: relative;
-	overflow: visible;
-}
-
-/* so that image still floats and looks nice even if JS is turned off */
-.imgpost img
-{
-	background-color: #fff;
-	box-shadow: 0px 0px 25px #444;
-	display: block; 
-	margin-left: auto; 
-	margin-right: auto;
-	border: 1px solid #000;
-}
-
-.imgpost .thecaption 
-{
-	background: url('../images/caption.png') no-repeat left bottom;
-	bottom: 60px;
-	left: -30px;
-	color: #fff;
-	padding: 8px 0px 18px 13px;
-	position: relative;
-	display: block; 
-	margin-left: auto; 
-	margin-right: auto;
+.post .imgpost .thecaption {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-shadow: 1px 1px #000;
+  color: #FFF;
+  position: absolute;
+  bottom: 10px;
+  background: url('../images/caption.png') no-repeat left bottom;
+  padding: 8px 0px 18px 13px;
+  display: block;
+  margin-left: auto; 
+  margin-right: auto;
 }
 
 
-/***************************
- * Responsive stuffs
- ***************************/
+/*Blog post page, and its menu*/
+
+.post-page .center {
+  margin: auto;
+  max-width: 900px;
+}
+
+.menu {
+  text-align: center;
+  margin: auto;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #aaa;
+}
+
+.menu ul li {
+  display: inline;
+  padding: 0px 20px;
+}
+
+/***********
+  Footer
+ ***********/
+
+#footer {
+  clear: both;
+  position: relative;
+  bottom: 0;
+  right: 0;
+}
  
- @media all and (max-width: 800px) {
- 
-  .site {
-    margin: 0;
-    padding: 10px;
-    width: auto;
+#footer .contact {
+  float: right;
+  text-align: right;
+  padding: 20px;
+}
+
+#footer .contact p {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+#footer .contact a {
+  color: #333;
+}
+
+/***********************************
+  Gettin' all responsive up in this
+ ***********************************/
+
+@media all and (max-width:940px) {
+  
+  /**********
+    Sidebar
+   **********/
+
+  #sidebar-left-wrapper {
+    width: 29%;
   }
   
- }
- 
- 
- 
+  #slidingMenu {
+    padding-left: 5px;
+  }
+
+  #slidingMenu li {
+    padding-bottom: 3px;
+  }
+
+  #slidingMenu li.move {
+    height: 18%;
+  }
+  
+  #slidingMenu li a {
+    text-shadow: 2px 2px 8px #35383B;
+  }
+  
+}
+
+@media all and (max-width:600px) {
+
+  p {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  #header h1 {
+    font-size: 32px;
+  }
+
+  /*Sidebar*/
+
+  #sidebar-left {
+    float: none;
+    padding: 0;
+    width: auto;
+    margin: 0 auto;
+  }
+
+  #sidebar-left-wrapper {
+    display: block;
+    text-align: center;
+  }
+
+  #sidebar-left-wrapper {
+    width: 100%;
+    margin: auto;
+    float: none;
+  }
+
+  #slidingMenu {
+    width: auto;
+    padding: 0;
+    max-width: none;
+    text-align: center;
+    padding-bottom: 5px;
+  }
+
+  #slidingMenu li {
+    float: none;
+    display: inline;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  #slidingMenu li a {
+    padding: 0 10px;
+    float: none;
+    display: inline;
+  }
+
+  #slidingMenu li.move {
+    display: none;
+  }
+
+  /*Content*/
+
+  #content-wrapper {
+    display: block;
+    width: 100%;
+  }
+
+  .content {
+    float: none;
+    width: 90%;
+    padding: 5%;
+    padding-top: 5px;
+  }
+
+  .content .post a.title:link,
+  .content .post a.title:visited {
+    font-size: 20px;
+  }
+
+  .content .post .date {
+    font-size: 12px;
+  }
+
+}

@@ -1,32 +1,25 @@
 ---
-layout: home
+layout: default
 title: William O'Beirne
 ---
 
-<!DOCTYPE html>
-<html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="./css/style.css">
-	</head>
-	<body>
-		<noscript><b>It seems you don't have javascript enabled! The front page won't work without it.
-		Either enable javascript in your browser's settings, get a modern browser that supports javascript, 
-		or use the following links to get where you want to go:
-		<a href="/blog.html">Blog</a>, <a href="/projects.html">Projects</a>, <a href="/about.html">About</a>, <a href="/contact.html">Contact</a></b></noscript>
-		<div id="accordion-container">
-			<div id="a1" class="accordion-entry">
-				<div class="accordion-tab blog"></div><a href="/blog.html"><image src="images/blogaccordion.png"/></a>
-			</div>
-			<div class="accordion-entry">
-				<div class="accordion-tab projects"></div><a href="/projects.html"><image src="images/projectsaccordion.png"/></a>
-			</div>
-			<div class="accordion-entry">
-				<div class="accordion-tab about"></div><a href="/about.html"><image src="images/aboutaccordion.png"/></a>
-			</div>
-			<div class="accordion-entry">
-				<div class="accordion-tab contact"></div><a href="/contact.html"><image src="images/contactaccordion.png"/></a>
-			</div>
-			<div style="height: 0px; clear: both;"></div>
-		</div>
-	</body>
-</html>
+<div id="blog">
+  {% for post in site.posts limit:5 %}
+  <div class="post">
+  	<h2><a class="title" href="{{ post.url }}">{{post.title}}</a></h2>
+  	<div class="date">{{ post.date | date:"%B %d, %Y" }}</div>
+  	
+  	{{ post.content | truncatewords:100 }}
+  	<a class="read-more" href="{{ post.url }}">read more</a>
+  </div>
+  {% endfor %}
+  <h1>Older posts</h1>
+  <ul class="archive">
+  	{% for post in site.posts offset:5 %}
+  	<li>
+  		<span class="date">{{ post.date | date:"%B %d, %Y" }}</span>
+  		<a href="{{ post.url }}">{{ post.title}}</a>
+  	</li>
+  	{% endfor %}
+  </ul>
+</div>

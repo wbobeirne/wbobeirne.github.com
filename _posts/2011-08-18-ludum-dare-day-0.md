@@ -7,7 +7,7 @@ While eventually I'm going to have to wake up and smell the money, game developm
 
 Earlier this week, a post popped up for the [Ludum Dare gamedev competition](http://ludumdare.com/compo/). 48 hours of non-stop game development. I was intrigued, I'd heard the name from earlier competitions, but didn't quite have the skills to enter. After a few side projects of my own though, I feel I could crank a game out in 48 hours. So there you have it, I'm in. Let's get down to the details, shall we?
 
-<h2>The Setup</h2>
+<h3>The Setup</h3>
 
 As you can see below, there are 2 major components to my setup. You've got my desk:
 
@@ -19,7 +19,7 @@ Which is rocking my newly purchased second monitor, and will shortly be flooded 
 
 All the cool kids have whiteboards, so I needed one too.
 
-<h2>The Tools</h2>
+<h3>The Tools</h3>
 
 A bad blacksmith blames his tools, so let me get this out of the way. All of the following tools I'll be using are bad:
 

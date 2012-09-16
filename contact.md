@@ -3,7 +3,7 @@ layout: default
 title: Contact
 ---
 Contact
-===========
+================
 Feel free to contact me in the following places:
 
 * Email me at [wbobeirne@gmail.com](mailto:wbobeirne@gmail.com)

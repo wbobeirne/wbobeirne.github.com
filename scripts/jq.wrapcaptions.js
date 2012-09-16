@@ -15,15 +15,15 @@ $(document).ready(function(){
 	
 	function addCaption(){
 		var captiontext = $(this).attr('title');
-		console.log($(this).parent().attr('class'));
 		if($(this).parent().attr('class') != 'imgpost'){ 
 			$(this).wrap("<div class='imgpost'></div>");
 		}
 		$(this).load(function(){
 			if(this.title){
-				var style = "style=\"width: " + this.clientWidth + "px;\"";
+				var width = $(this).parent().width() - $(this).width();
+				width = width / 2 - 37; //Divide by 2 since it's only accounting for one side, 37 for the image width.
+				var style = 'style="width: ' + this.clientWidth + 'px; left: '+width+'px;"';
 				$(this).parent().append("<div class='thecaption' " + style + ">" + captiontext + "</div>");
-				$(this).parent().height(this.clientHeight);
 			}
 		});
 	}
