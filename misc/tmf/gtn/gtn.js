@@ -46,10 +46,10 @@ $(document).ready(function(){
     $(submit).removeAttr('disabled');
     $(guess).removeAttr('disabled');
     messages.html('');
-    randomNum = Math.floor(Math.random() * MAX_NUM);
+    randomNum = Math.ceil(Math.random() * MAX_NUM);
     tries = 0;
     $(submit).val('Submit guess (' + NUM_TRIES + ')');
-    addMessage('A random number between 1 and 100 has been generated. Can you guess it?');
+    addMessage('A random number between 1 and ' + MAX_NUM  + ' has been generated. Can you guess it? You have ' + NUM_TRIES + ' tries.');
   }
   
   function addMessage(msg, status) {
@@ -85,6 +85,7 @@ $(document).ready(function(){
           addMessage(value + " is a bit low, try again.", 'warning');
         }
         incrementTries();
+        $(guess).select();
       }
       else {
         addMessage("Well done! The number was " + randomNum + ". Play again?", 'success');
