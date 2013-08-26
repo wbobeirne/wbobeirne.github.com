@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="create.js"></script>
+  <script type="text/javascript" src="utils.js"></script>
+  <script type="text/javascript" src="konami.js"></script>
+  
+  <script>
+    // =====================
+    // Variable declarations
+    // ---------------------
+    
+    // Meta info
+    var W = 640,
+        H = 640;
+        KEY_UP    = '38',
+        KEY_DOWN  = '40',
+        KEY_LEFT  = '37',
+        KEY_RIGHT = '39',
+        KEY_W     = '87',
+        KEY_A     = '65',
+        KEY_S     = '83',
+        KEY_D     = '68',
+        MOUSE_LEFT = 'mouse0';
+    // Colors
+    var WHITE     = 'FFFFFF',
+        BLACK     = '000000',
+        BLUE      = '6EE3F4',
+        RED       = 'FF0005',
+        ORANGE    = 'FFA305';
+    // Assets
+    var assets,
+        assetManifest,
+        sprites,
+        bgMusic;
+    // Entities
+    var stage,
+        bg,
+        bgBack,
+        bgFront,
+        enemies,
+        projectiles,
+        player,
+        timer,
+        crosshair;
+    // Misc.
+    var keysDown,
+        mousePos,
+        tickDelta,
+        parallax1,
+        parallax2,
+        parallax3,
+        ticks,
+        timeScale,
+        difficulty,
+        enemiesKilled,
+        gameStatus,
+        volume;
+    // Testing stuff
+    var firstFrame = true;
+
+    // Entry point
+    function init() {
+      this.initAssets();
+    }
+
+    // Asset loading / management
+    // --------------------------
+    function initAssets() {
+      assets = [];
+      sprites = [];
+      assetManifest = [
+        // Sprites
+        { id: 'grass', src: 'img/grass.jpg', },
+        { id: 'portal', src: 'img/portal.png', },
+        // Audio
+        { id: 'bgMusic', src: 'audio/bgmusic.mp3' },
+        { id: 'timer', src: 'audio/timer.wav' },
+        { id: 'damage', src: 'audio/damage.wav' },
+        { id: 'bomb_set', src: 'audio/bomb_set.wav' },
+        { id: 'explosion', src: 'audio/explosion.wav' },
+        { id: 'single_shot', src: 'audio/single_shot.wav' },
+        { id: 'shotgun_shot', src: 'audio/shotgun_shot.wav' },
+        { id: 'machinegun_shot', src: 'audio/machinegun_shot.wav' },
+      ];
+
+      loader = new createjs.LoadQueue(false);
+      createjs.Sound.registerPlugin(createjs.HTMLAudioPlugin);  // need this so it doesn't default to Web Audio
+      loader.installPlugin(createjs.Sound);
+      loader.addEventListener('fileload', handleLoaderLoad);
+      loader.addEventListener('complete', handleLoaderComplete);
+      loader.loadManifest(assetManifest);
+      volume = 0.3;
+      createjs.Sound.setVolume(volume);
+      createjs.Sound.registerManifest(assetManifest);
+    }
+
+    // Callback for when a file loads.
+    function handleLoaderLoad(event) {
+      assets[event.item.id] = event.item;
+    }
+
+    function handleLoaderComplete(event) {
+      // Start the bidya gaym.
+      this.initGame();
+      createjs.Ticker.setFPS(60);
+      createjs.Ticker.addEventListener('tick', tick);
+      createjs.Ticker.addListener(stage);
+    }
+
+
+    // Game initialization
+    // -------------------
+    function initGame() {
+      gameStatus = 1;
+      keysDown = [];
+      mousePos = {x:0,y:0}
+      enemies = new createjs.Container();
+      projectiles = new createjs.Container();
+      tickDelta = 0;
+      ticks = 0;
+      timeScale = 1.0;
+      difficulty = 1.0;
+      enemiesKilled = 0;
+      stage = new createjs.Stage("game-canvas");
+
+      // Start up that background stuff.
+      initBg();
+      bgMusic = createjs.Sound.play(assets.bgMusic.id, createjs.Sound.INTERRUPT_ANY, 0, 0, -1, 0.1);
+
+      // Projectiles in the back
+      stage.addChild(projectiles);
+
+      // Add our player
+      player = newPlayer(W / 2, H / 2);
+      stage.addChild(player);
+
+      // Add enemy portals
+      portals = new createjs.Container();
+      var padding = 50;
+      var portalCoords = [
+        { x: padding, y: padding },
+        { x: W - padding, y: padding},
+        { x: padding, y: H - padding},
+        { x: W - padding, y: H - padding}
+      ];
+      portalCoords.forEach(function(coord) {
+        var portal = new createjs.Bitmap(assets.portal.src);
+        portal.x = coord.x;
+        portal.y = coord.y;
+        portal.regX = assets.portal.tag.width / 2;
+        portal.regY = assets.portal.tag.height / 2;
+        portal.alpha = 0.3;
+        portal.enemiesToSpawn = 3;
+        portal.enemySpawnCooldown = 1000;
+        portal.rotateSpeed = 0.3;
+        portal.spawn = function(enemy) {
+          enemy = enemy ? enemy : newEnemy(this.x, this.y, basicMove);
+          enemies.addChild(enemy);
+          this.enemySpawnCooldown = 1000;
+        }
+        portal.tick = function(e) {
+          this.rotation += this.rotateSpeed;
+          if (this.enemySpawnCooldown > 0)
+            this.enemySpawnCooldown -= e.delta;
+
+          if (this.enemiesToSpawn > 0) {
+            this.alpha = 1;
+            this.rotateSpeed = 5;
+            if (this.enemySpawnCooldown <= 0) {
+              this.spawn();
+              this.enemiesToSpawn--;
+            }
+          }
+          else {
+            this.alpha = 0.3;
+            this.rotateSpeed = 0.3;
+          }
+        }
+        portals.addChild(portal);
+      });
+      stage.addChild(portals);
+      stage.addChild(enemies);
+
+      // Add the timer at the bottom
+      timer = new createjs.Shape();
+      timer.graphics.beginFill('#FF9900').drawRect(0, 0, W, 3);
+      timer.y = H - 3;
+      timer.time = 10000;
+      timer.timeLeft = timer.time; // 10 seconds
+      stage.addChild(timer);
+
+      // And our crosshair
+      crosshair = new createjs.Shape();
+      crosshair.graphics.beginFill(WHITE)
+        .drawRect(-1, -7, 2, 4)
+        .drawRect(-1, 3, 2, 4)
+        .drawRect(-7, -1, 4, 2)
+        .drawRect(3, -1, 4, 2);
+      crosshair.shadow = new createjs.Shadow(BLUE, 0, 0, 8);
+      crosshair.v = 0;
+      crosshair.accel = 0.3;
+      stage.addChild(crosshair);
+
+      // Register control events
+      document.onkeydown = handleKeyDown;
+      document.onkeyup = handleKeyUp;
+      document.onmousemove = handleMouseMove;
+      document.onmousedown = handleKeyDown;
+      document.onmouseup = handleKeyUp;
+    }
+
+    function newPlayer(x, y) {
+      var player = new createjs.Shape();
+      player.name = 'player';
+      player.x = x ? x : 0;
+      player.y = y ? y : 0;
+      player.width = 12;
+      player.height = 12;
+      player.graphics.beginFill(WHITE).drawRoundRect(-player.width / 2, -player.height / 2, player.width, player.height, 2);
+      player.maxHealth = 100;
+      player.health = player.maxHealth;
+      player.maxSpeed = 10;
+      player.speedAdjustment = 1;
+      player.accel = 1;
+      player.decel = 1;
+      player.vx = 0;
+      player.vy = 0;
+      player.shadow = new createjs.Shadow(BLUE, 0, 0, 8);
+      player.reloadTime = 200;
+      player.reloadTimeLeft = 0;
+      player.projectileSpeed = 8;
+      player.damage = 20;
+      player.attack = basicAttack;
+      player.weapon = 1;
+
+      return player;
+    }
+
+    function newEnemy(x, y, move, attack) {
+      var points = Math.round(Math.max(Math.round(Math.random() * 5 * difficulty), 3 * difficulty));
+      var pointAngle = Math.max(Math.min(Math.random(), 0.8), 0.2);
+      var angle = Math.random();
+      var size = Math.round(Math.max(Math.min(Math.random() * 20 * difficulty, 20 * difficulty), 12 * difficulty));
+      var speed = Math.round(Math.max(Math.min(Math.random() * 0.8 * difficulty, 0.8 * difficulty), 0.5 * difficulty));
+      var color = colorBetween(RED, ORANGE, Math.random());
+      var rotateSpeed = Math.random() * 7;
+
+      var enemy = new createjs.Shape();
+      enemy.name = 'enemy';
+      enemy.x = x ? x : 0;
+      enemy.y = y ? y : 0;
+      enemy.width = size * 2;
+      enemy.height = size;
+      enemy.graphics.beginFill(BLACK).drawPolyStar(0, 0, size, points, pointAngle, angle);
+      enemy.health = 30 * difficulty;
+      enemy.maxSpeed = speed;
+      enemy.accel = 0.5;
+      enemy.vx = 0;
+      enemy.vy = 0;
+      enemy.move = move;
+      enemy.damage = 25 * difficulty;
+      enemy.attack = attack;
+      enemy.shadow = new createjs.Shadow(color, 0, 0, 8);
+      enemy.rotateSpeed = rotateSpeed;
+
+      return enemy;
+    }
+
+    // Create the background.
+    function initBg() {
+      var numLines = 10;
+      parallax1 = 0.09;
+      parallax2 = 0.14;
+      parallax3 = 0.27;
+      bg = new createjs.Container();
+      bg.snapToPixel = true;
+
+      // Back of the bg.
+      bgBack = new createjs.Container();
+      addBgLines(bgBack, WHITE, 2);
+      bg.addChild(bgBack);
+      bgBack.alpha = 0.2;
+      bgBack.shadow = new createjs.Shadow(WHITE, 0, 0, 2);
+
+      // Front of the bg.
+      bgFront = new createjs.Container();
+      addBgLines(bgFront, BLUE, 10);
+      bg.addChild(bgFront);
+      bgFront.alpha = 0.4;
+      bgFront.shadow = new createjs.Shadow(BLUE, 0, 0, 8);
+
+      bg.tick = function(e) {
+        bgBack.x = player.x * parallax1 + ((ticks * 2) % bgBack.gridW);
+        bgBack.y = player.y * parallax1 + ((ticks * 0.4) % bgBack.gridH);
+        bgFront.x = player.x * parallax2;
+        bgFront.y = player.y * parallax2;
+      }
+
+      stage.addChild(bg);
+    }
+    function addBgLines(container, color, numLines) {
+      var padding = 4;
+      container.gridW = W/numLines;
+      container.gridH = H/numLines;
+
+      var verticalLine = new createjs.Graphics();
+      verticalLine.beginFill(color);
+      verticalLine.drawRect(0, 0, 1, container.gridH * (numLines + padding));
+      var s;
+      for (var i = -padding; i < numLines + padding; i++) {
+        s = new createjs.Shape(verticalLine);
+        s.snapToPixel = true;
+        s.x = i * container.gridW;
+        s.y = -container.gridH * padding;
+        container.addChild(s);
+      }
+      var horizontalLine = new createjs.Graphics();
+      horizontalLine.beginFill(color);
+      horizontalLine.drawRect(0, 0, container.gridW * (numLines + padding), 1);
+      for (var i = -padding; i < numLines + padding; i++) {
+        s = new createjs.Shape(horizontalLine);
+        s.snapToPixel = true;
+        s.x = 0 - (padding * container.gridW);
+        s.y = i * container.gridH;
+        container.addChild(s);
+      }
+    }
+
+    // Entity behaviors
+    function basicMove(target) {
+      moveTo(this, target, this.maxSpeed);
+    }
+
+    function basicAttack(target, speed) {
+      var bullet = new createjs.Shape();
+      bullet.damageOnCollide = true;
+      bullet.offscreen = false;
+      bullet.owner = this;
+      bullet.x = this.x + this.width / 2;
+      bullet.y = this.y + this.height / 2;
+      bullet.width = 2;
+      bullet.height = 2;
+      bullet.speed = speed ? speed : 3;
+      bullet.damage = this.damage;
+      bullet.angle = generateAngle(this.x, target.x, this.y, target.y);
+      bullet.graphics.beginFill(WHITE).drawCircle(bullet.width / 2, bullet.width / 2, bullet.width);
+      bullet.tick = basicbulletTick;
+
+      projectiles.addChild(bullet);
+      createjs.Sound.play(assets.single_shot.id, createjs.Sound.INTERRUPT_ANY);
+    }
+    function shotgunAttack(target, speed) {
+      for (var i = 0; i < 6; i++) {
+        var bullet = new createjs.Shape();
+        bullet.damageOnCollide = true;
+        bullet.offscreen = false;
+        bullet.owner = this;
+        bullet.x = this.x + this.width / 2;
+        bullet.y = this.y + this.height / 2;
+        bullet.width = 1.5;
+        bullet.height = 1.5;
+        bullet.speed = (speed ? speed : 2) + Math.random();
+        bullet.damage = this.damage;
+        bullet.angle = generateAngle(this.x, target.x, this.y, target.y) + Math.random() / 2;
+        bullet.graphics.beginFill(WHITE).drawCircle(bullet.width / 2, bullet.width / 2, bullet.width);
+        bullet.tick = basicbulletTick;
+
+        projectiles.addChild(bullet);
+        createjs.Sound.play(assets.shotgun_shot.id, createjs.Sound.INTERRUPT_ANY);
+      }
+    }
+    function bombAttack(target, speed) {
+      var bomb = new createjs.Shape();
+      bomb.damageOnCollide = false;
+      bomb.offscreen = false;
+      bomb.owner = this;
+      bomb.x = this.x + this.width / 2;
+      bomb.y = this.y + this.height / 2;
+      bomb.width = 5;
+      bomb.height = 5;
+      bomb.damage = this.damage;
+      bomb.graphics.beginFill(WHITE).drawCircle(bomb.width / 2, bomb.height / 2, bomb.width);
+      bomb.shadow = new createjs.Shadow(RED, 0, 0, 20);
+      bomb.timeLeft = 3000;
+      bomb.tick = function(e) {
+        var bomb = this;
+        this.timeLeft -= e.delta;
+        if (this.timeLeft <= 0) {
+          var explosion = {
+            x: this.x,
+            y: this.y,
+            width: 100,
+            height: 100,
+          };
+          enemies.children.forEach(function(enemy) {
+            if (checkRectIntersection(enemy, explosion)) {
+              enemy.health -= bomb.damage;
+            }
+          });
+          createjs.Sound.play(assets.explosion.id, createjs.Sound.INTERRUPT_ANY);
+          projectiles.removeChild(this);
+        }
+      }
+
+      projectiles.addChild(bomb);
+      createjs.Sound.play(assets.bomb_set.id, createjs.Sound.INTERRUPT_ANY);
+    }
+    function basicbulletTick(e) {
+      moveAngle(this, this.angle, this.speed);
+      if (this.x > W || this.x < 0 || this.y > H || this.y < 0) {
+        this.offscreen = true;
+      }
+    }
+
+    // Main game loop, called 60 times a second.
+    function tick(e) {
+      if (gameStatus != 1) {
+        return;
+      }
+
+      logVal(Math.round(createjs.Ticker.getMeasuredFPS()), 'FPS');
+      tickDelta = e.delta;
+      ticks++;
+      handleInput(e);
+      handlePlayerMovement(e);
+
+      // Handle portals.
+      portals.children.forEach(function(portal) {
+        portal.tick(e);
+      })
+
+      // Handle enemy behavior.
+      enemies.children.forEach(function(enemy) {
+        // Check for projectile collisions.
+        projectiles.children.forEach(function(projectile, idx) {
+          if (projectile.owner.name == 'player' && projectile.damageOnCollide) {
+            if (checkRectIntersection(enemy, projectile)) {
+              enemy.health -= projectile.damage;
+              projectiles.removeChild(projectile);
+            }
+          }
+        });
+
+        if (enemy.health <= 0) {
+          enemies.removeChild(enemy);
+          enemiesKilled++;
+        }
+
+        if (enemy.move) {
+          enemy.move(player);
+        }
+        if (enemy.attack) {
+          enemy.attack(player);
+        }
+        enemy.rotation += scale(enemy.rotateSpeed);
+      });
+
+      bg.tick(e);
+
+      // Handle projectiles
+      projectiles.children.forEach(function(projectile, idx) {
+        if (projectile.offscreen) {
+          projectiles.removeChild(projectile);
+        }
+        projectile.tick(e);
+      })
+
+      updateTimer(e);
+
+      stage.update();
+      firstFrame = false;
+    }
+
+    // Controls
+    function handleKeyDown(e) {
+      if (e.type == 'keydown') {
+        keysDown[e.keyCode] = e.keyCode;
+      }
+      else {
+        var name = 'mouse' + e.button;
+        keysDown[name] = name;
+      }
+    }
+    function handleKeyUp(e) {
+      if (e.type == 'keyup') {
+        delete keysDown[e.keyCode];
+      }
+      else {
+        var name = 'mouse' + e.button;
+        delete keysDown[name];
+      }
+    }
+    function handleMouseMove(e) {
+      if (e.toElement.id == 'game-canvas') {
+        mousePos.x = e.layerX;
+        mousePos.y = e.layerY;
+        crosshair.x = e.layerX;
+        crosshair.y = e.layerY;
+      }
+    }
+    function handleInput(e) {
+      var vert = false;
+      var hori = false;
+      var mouseLeft = false;
+      for (key in keysDown) {
+        switch (key) {
+          case KEY_UP:
+          case KEY_W:
+            player.vy -= player.accel;
+            vert = true;
+            break;
+          case KEY_DOWN:
+          case KEY_S:
+            player.vy += player.accel;
+            vert = true;
+            break;
+          case KEY_LEFT:
+          case KEY_A:
+            player.vx -= player.accel;
+            hori = true;
+            break;
+          case KEY_RIGHT:
+          case KEY_D:
+            player.vx += player.accel;
+            hori = true;
+            break;
+          case MOUSE_LEFT:
+            crosshair.v = scale(Math.min(crosshair.v + crosshair.accel, 15));
+            if (player.attack && player.reloadTimeLeft <= 0) {
+              player.attack(mousePos, player.projectileSpeed, player.damage);
+              player.reloadTimeLeft = player.reloadTime;
+            }
+            mouseLeft = true;
+            break;
+        }
+      }
+
+      player.vy = absMin(player.vy, player.maxSpeed);
+      player.vx = absMin(player.vx, player.maxSpeed);
+      if (!vert && player.vy !== 0) {
+        player.vy = approachZero(player.vy, player.decel);
+      }
+      if (!hori && player.vx !== 0) {
+        player.vx = approachZero(player.vx, player.decel);
+      }
+
+      if (!mouseLeft) {
+        crosshair.v = approachZero(crosshair.v, crosshair.accel);
+      }
+      crosshair.rotation += crosshair.v;
+    }
+
+    function handlePlayerMovement(e) {
+      // Diagonal movement shouldn't be faster, so we need to make sure they add up to the max speed.
+      if (player.vx !== 0 && player.vy !== 0) {
+        var combinedSpeed = Math.abs(player.vx) + Math.abs(player.vy);
+        player.speedAdjustment = Math.min(player.maxSpeed / combinedSpeed, 1);
+      }
+      else {
+        player.speedAdjustment = 1;
+      }
+
+      // Apply movement to player.
+      player.vx = absMin(player.vx, player.maxSpeed);
+      player.vy = absMin(player.vy, player.maxSpeed);
+      prevx = player.x;
+      prevy = player.y;
+      player.x = Math.min(Math.max(scale(player.vx * player.speedAdjustment) + player.x, 0 + player.width / 2), W - player.width / 2);
+      player.y = Math.min(Math.max(scale(player.vy * player.speedAdjustment) + player.y, 0 + player.height / 2), H - player.height / 2);
+
+      player.reloadTimeLeft -= e.delta;
+
+      // Check for collisions with enemies.
+      logVal(player.health, 'health');
+      enemies.children.forEach(function(enemy) {
+        if (checkRectIntersection(enemy, player)) {
+          player.health -= enemy.damage;
+          if (player.health <= 0) {
+            endGame(e);
+          }
+          createjs.Sound.play(assets.damage.id, createjs.Sound.INTERRUPT_ANY);
+          enemies.removeChild(enemy);
+          enemiesKilled++;
+        }
+      });
+    }
+
+
+    // 10 second event timer
+    function updateTimer(e) {
+      timer.timeLeft -= scale(e.delta);
+      var pct = timer.timeLeft / timer.time;
+      var color = colorBetween('00FF00', 'FF0000', pct);
+      timer.graphics.clear().beginFill(color).drawRect(0, 0, W * pct, 3);
+
+      if (timer.timeLeft <= 0) {
+        tenSecondEvent(e);
+        timer.timeLeft = timer.time;
+      }
+    }
+    function tenSecondEvent(e) {
+      createjs.Sound.play(assets.timer.id, createjs.Sound.INTERRUPT_ANY);
+      difficulty += 0.2;
+      difficulty = Math.min(difficulty, 3);
+      // Handle portals.
+      portals.children.forEach(function(portal) {
+        portal.enemiesToSpawn = 3;
+      });
+
+      // Give the player a new random gun.
+      var weapon = 0;
+      do {
+        weapon = Math.round(Math.random() * 4);
+        logMsg('Switched from weapon ' + player.weapon + ' to ' + weapon);
+      } while (weapon == player.weapon);
+      switch (weapon) {
+        case 1:
+          player.attack = basicAttack;
+          player.damage = 20;
+          player.reloadTime = 200;
+          player.projectileSpeed = 12;
+          break;
+        case 2:
+          player.attack = basicAttack;
+          player.damage = 3;
+          player.reloadTime = 30;
+          player.projectileSpeed = 10;
+          break;
+        case 3:
+          player.attack = shotgunAttack;
+          player.damage = 15;
+          player.reloadTime = 1000;
+          player.projectileSpeed = 6;
+          break;
+        case 4:
+          player.attack = bombAttack;
+          player.damage = 100;
+          player.reloadTime = 2000;
+          player.projectileSpeed = 0;
+          break;
+      }
+      player.weapon = weapon;
+    }
+
+
+    function endGame(e) {
+      gameStatus = 2;
+      timeScale = 0;
+      player.health = 1000000;
+      jQuery('#game-canvas').fadeOut(1000, function() {
+        jQuery('#game-canvas').remove();
+        jQuery('#canvas-wrap').append('<div id="game-over" style="top: -400px;"></div>');
+        var gameOver = jQuery('#game-over');
+        gameOver.append('<h1>Oh no, you died!</h1>');
+        gameOver.append("<div>You got this far only to see a really crappy game over screen. Well, that's what happens when you have poor time management skills and try to finish a game in 48 hours. I had big plans for more weapons, enemy types, sound effects, etc., but just couldn't see them through. Thanks for playing though!</div>");
+        gameOver.append('<div class="stat">You survived for <span class="val">' + Math.round(e.time / 1000) + ' seconds. </span><span id="survival-fact"></span></div>');
+        gameOver.append('<div class="stat">You killed <span class="val">' + enemiesKilled + ' enemies. </span><span id="killed-fact"></span></div>');
+        gameOver.append('<button onclick="location.reload()">Play again?</button>');
+        setTimeout(function() {
+          gameOver.css('top', 0);
+        }, 1);
+
+        // Add cool random facts!
+        addFact(enemiesKilled, 'killed-fact');
+        addFact(Math.round(e.time / 1000), 'survival-fact');
+      });
+    }
+
+    function addFact(num, id) {
+      jQuery.ajax({
+        url: 'http://numbersapi.com/' + num,
+        success: function(data) {
+          data = data.substring(0, data.length - 1) + '?';
+          jQuery('#' + id).html('Did you know that ' + data);
+        }
+      });
+    }
+
+    // Konami code, bitches.
+    var kc = new Konami();
+    kc.load('http://salmonofcapistrano.com/');
+
+    // Show / hide debugger.
+    jQuery(document).keypress(function(e) {
+      if (e.charCode == 96) {
+        $('#log-container').fadeIn(200);
+      }
+    });
+
+  </script>
+
+  
+  <style>
+  body {
+    overflow: hidden;
+    background: url('img/bg.png');
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    font-family: BentonSans, 'Lucida Sans', 'Lucida Grande', sans-serif;
+  }
+	#canvas-wrap {
+	  position: relative;
+	  width: 100%;
+	  margin: 10px auto 0;
+	}
+	#game-canvas {
+	  display: block;
+	  margin: auto;
+	  border: 1px solid #333;
+    background: #222;
+    cursor: none;
+    box-shadow: 0px 0px 20px -2px #6EE3F4;
+	}
+  #log-container {
+    display: none;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    border: 1px solid #CCC;
+    width: 300px;
+    height: 640px;
+    background: #222;
+    box-shadow: 0px 0px 20px -2px #6EE3F4;
+  }
+  #log-container h2 {
+    font-family: BentonSans, 'Lucida Sans', 'Lucida Grande', sans-serif;
+    font-weight: 100;
+    margin: 0;
+    color: #999;
+    padding: 10px;
+  }
+  #log {
+    color: #999;
+    overflow-y: auto;
+    height: 570px;
+    padding: 10px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 12px;
+  }
+  #log .timestamp {
+    margin-right: 10px;
+    color: #CC7A00;
+  }
+  #log .message,
+  #vars > div {
+    margin-bottom: 5px;
+  }
+  #vars {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #CCC;
+  }
+  #game-over {
+    position: relative;
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #FFF;
+    background: #222;
+    border: 1px solid #FFF;
+    box-shadow: 0px 0px 20px -2px #6EE3F4;
+    -webkit-transition: all 500ms cubic-bezier(0.715, 0.010, 0.380, 1); /* older webkit */
+    -webkit-transition: all 500ms cubic-bezier(0.715, 0.010, 0.380, 1.650); 
+       -moz-transition: all 500ms cubic-bezier(0.715, 0.010, 0.380, 1.650); 
+        -ms-transition: all 500ms cubic-bezier(0.715, 0.010, 0.380, 1.650); 
+         -o-transition: all 500ms cubic-bezier(0.715, 0.010, 0.380, 1.650); 
+            transition: all 500ms cubic-bezier(0.715, 0.010, 0.380, 1.650); /* custom */
+    -webkit-transition-timing-function: cubic-bezier(0.715, 0.010, 0.380, 1); /* older webkit */
+    -webkit-transition-timing-function: cubic-bezier(0.715, 0.010, 0.380, 1.650); 
+       -moz-transition-timing-function: cubic-bezier(0.715, 0.010, 0.380, 1.650); 
+        -ms-transition-timing-function: cubic-bezier(0.715, 0.010, 0.380, 1.650); 
+         -o-transition-timing-function: cubic-bezier(0.715, 0.010, 0.380, 1.650); 
+            transition-timing-function: cubic-bezier(0.715, 0.010, 0.380, 1.650); /* custom */
+  }
+  #game-over h1 {
+    text-align: center;
+    margin-top: 0;
+  }
+  .stat {
+    margin-top: 10px;
+  }
+  .stat .val {
+    font-weight: bold;
+  }
+  #game-over button {
+    margin: 20px auto 0;
+    display: block;
+    border-radius: 4px;
+    background: #222;
+    color: #FFF;
+    padding: 5px 20px;
+  }
+  </style>
+</head>
+
+<body onLoad="init();">
+
+  <div id="canvas-wrap">
+    <canvas id="game-canvas" width="640" height="640">
+  </div>
+  <div id="log-container">
+    <h2>Debugging Log</h2>
+    <div id="log">
+      <div id="vars"></div>
+    </div>
+  </div>
+
+</body>
+
+</html>
