@@ -420,14 +420,6 @@
 
     // Main game loop, called 60 times a second.
     function tick(e) {
-      // Last minute hack, warn people with shitty framerate that their browser probably sucks eggs.
-      if (createjs.Ticker.getMeasuredFPS() < 15) {
-        lowFrames++;
-        if (lowFrames > 60) {
-          lowFrames = -9999999;
-          alert('Game running like poop? Please make sure to try it in Google Chrome, I didn\'t have time to optimize it in all browsers, and Chrome seems to run the best!');
-        }
-      }
       if (gameStatus != 1) {
         return;
       }
