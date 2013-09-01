@@ -26,11 +26,11 @@
         KEY_D     = '68',
         MOUSE_LEFT = 'mouse0';
     // Colors
-    var WHITE     = 'FFFFFF',
-        BLACK     = '000000',
-        BLUE      = '6EE3F4',
-        RED       = 'FF0005',
-        ORANGE    = 'FFA305';
+    var WHITE     = '#FFFFFF',
+        BLACK     = '#000000',
+        BLUE      = '#6EE3F4',
+        RED       = '#FF0005',
+        ORANGE    = '#FFA305';
     // Assets
     var assets,
         assetManifest,
@@ -58,7 +58,8 @@
         difficulty,
         enemiesKilled,
         gameStatus,
-        volume;
+        volume,
+        lowFrames;
     // Testing stuff
     var firstFrame = true;
 
@@ -125,11 +126,12 @@
       timeScale = 1.0;
       difficulty = 1.0;
       enemiesKilled = 0;
+      lowFrames = 0;
       stage = new createjs.Stage("game-canvas");
 
       // Start up that background stuff.
       initBg();
-      bgMusic = createjs.Sound.play(assets.bgMusic.id, createjs.Sound.INTERRUPT_ANY, 0, 0, -1, 0.1);
+      bgMusic = createjs.Sound.play('bgMusic', createjs.Sound.INTERRUPT_ANY, 0, 0, -1, 0.1);
 
       // Projectiles in the back
       stage.addChild(projectiles);
@@ -208,7 +210,7 @@
       // Register control events
       document.onkeydown = handleKeyDown;
       document.onkeyup = handleKeyUp;
-      document.onmousemove = handleMouseMove;
+      stage.onMouseMove = handleMouseMove;
       document.onmousedown = handleKeyDown;
       document.onmouseup = handleKeyUp;
     }
@@ -351,7 +353,7 @@
       bullet.tick = basicbulletTick;
 
       projectiles.addChild(bullet);
-      createjs.Sound.play(assets.single_shot.id, createjs.Sound.INTERRUPT_ANY);
+      createjs.Sound.play('single_shot', createjs.Sound.INTERRUPT_ANY);
     }
     function shotgunAttack(target, speed) {
       for (var i = 0; i < 6; i++) {
@@ -370,7 +372,7 @@
         bullet.tick = basicbulletTick;
 
         projectiles.addChild(bullet);
-        createjs.Sound.play(assets.shotgun_shot.id, createjs.Sound.INTERRUPT_ANY);
+        createjs.Sound.play('shotgun_shot', createjs.Sound.INTERRUPT_ANY);
       }
     }
     function bombAttack(target, speed) {
@@ -401,13 +403,13 @@
               enemy.health -= bomb.damage;
             }
           });
-          createjs.Sound.play(assets.explosion.id, createjs.Sound.INTERRUPT_ANY);
+          createjs.Sound.play('explosion', createjs.Sound.INTERRUPT_ANY);
           projectiles.removeChild(this);
         }
       }
 
       projectiles.addChild(bomb);
-      createjs.Sound.play(assets.bomb_set.id, createjs.Sound.INTERRUPT_ANY);
+      createjs.Sound.play('bomb_set', createjs.Sound.INTERRUPT_ANY);
     }
     function basicbulletTick(e) {
       moveAngle(this, this.angle, this.speed);
@@ -418,6 +420,14 @@
 
     // Main game loop, called 60 times a second.
     function tick(e) {
+      // Last minute hack, warn people with shitty framerate that their browser probably sucks eggs.
+      if (createjs.Ticker.getMeasuredFPS() < 15) {
+        lowFrames++;
+        if (lowFrames > 60) {
+          lowFrames = -9999999;
+          alert('Game running like poop? Please make sure to try it in Google Chrome, I didn\'t have time to optimize it in all browsers, and Chrome seems to run the best!');
+        }
+      }
       if (gameStatus != 1) {
         return;
       }
@@ -495,12 +505,10 @@
       }
     }
     function handleMouseMove(e) {
-      if (e.toElement.id == 'game-canvas') {
-        mousePos.x = e.layerX;
-        mousePos.y = e.layerY;
-        crosshair.x = e.layerX;
-        crosshair.y = e.layerY;
-      }
+      mousePos.x = e.stageX;
+      mousePos.y = e.stageY;
+      crosshair.x = e.stageX;
+      crosshair.y = e.stageY;
     }
     function handleInput(e) {
       var vert = false;
@@ -582,7 +590,7 @@
           if (player.health <= 0) {
             endGame(e);
           }
-          createjs.Sound.play(assets.damage.id, createjs.Sound.INTERRUPT_ANY);
+          createjs.Sound.play('damage', createjs.Sound.INTERRUPT_ANY);
           enemies.removeChild(enemy);
           enemiesKilled++;
         }
@@ -592,7 +600,7 @@
 
     // 10 second event timer
     function updateTimer(e) {
-      timer.timeLeft -= scale(e.delta);
+      timer.timeLeft -= e.delta;
       var pct = timer.timeLeft / timer.time;
       var color = colorBetween('00FF00', 'FF0000', pct);
       timer.graphics.clear().beginFill(color).drawRect(0, 0, W * pct, 3);
@@ -603,7 +611,7 @@
       }
     }
     function tenSecondEvent(e) {
-      createjs.Sound.play(assets.timer.id, createjs.Sound.INTERRUPT_ANY);
+      createjs.Sound.play('timer', createjs.Sound.INTERRUPT_ANY);
       difficulty += 0.2;
       difficulty = Math.min(difficulty, 3);
       // Handle portals.

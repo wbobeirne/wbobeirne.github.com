@@ -47,11 +47,16 @@ function absMin(val, min) {
 // Credit to techfoobar
 // http://stackoverflow.com/questions/16360533/calculate-color-hex-having-2-colors-and-percent-position
 function colorBetween(c1, c2, pct) {
+  if (c1.charAt(0) == '#') {
+    c1 = c1.substring(1);
+  }
+  if (c2.charAt(0) == '#') {
+    c2 = c2.substring(1);
+  }
   var r = Math.ceil(parseInt(c1.substring(0,1), 16) * pct + parseInt(c2.substring(0,1), 16) * (1-pct));
   var g = Math.ceil(parseInt(c1.substring(2,3), 16) * pct + parseInt(c2.substring(2,3), 16) * (1-pct));
   var b = Math.ceil(parseInt(c1.substring(4,5), 16) * pct + parseInt(c2.substring(4,5), 16) * (1-pct));
-
-  return hex(r) + hex(r) + hex(g) + hex(g) + hex(b) + hex(b);
+  return '#' + hex(r) + hex(r) + hex(g) + hex(g) + hex(b) + hex(b);
 }
 function hex(x) {
   x = x.toString(16);
