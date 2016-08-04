@@ -1,0 +1,47 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:500,700|Libre+Baskerville);
+
+body {
+  font-family: $font-body;
+}
+
+h1, h2 {
+  font-family: $font-title;
+  font-weight: 700;
+}
+
+h1 {
+  @include phone-rule(font-size, $type-size-title);
+  @include phone-rule(line-height, $type-line-title);
+  @include phone-rule(margin-bottom, $type-margin-title);
+  color: $color-title;
+}
+
+h2 {
+  @include phone-rule(font-size, $type-size-subtitle);
+  @include phone-rule(line-height, $type-line-subtitle);
+  @include phone-rule(margin-bottom, $type-margin-subtitle);
+  color: $color-subtitle;
+}
+
+p {
+  @include phone-rule(font-size, $type-size-body);
+  @include phone-rule(line-height, $type-line-body);
+  @include phone-rule(margin-bottom, $type-margin-body);
+  color: $color-body;
+}
+
+a {
+  color: $color-a;
+  text-decoration: none;
+  &:hover {
+    color: $color-a-hover;
+  }
+}
+
+strong {
+  font-weight: 600;
+}
+
+em {
+  font-style: italic;
+}

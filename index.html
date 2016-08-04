@@ -1,25 +1,267 @@
 ---
+id: home
 layout: default
-title: William O'Beirne
 ---
 
-<div id="blog">
-  {% for post in site.posts limit:5 %}
-  <div class="post">
-  	<h2><a class="title" href="{{ post.url }}">{{post.title}}</a></h2>
-  	<div class="date">{{ post.date | date:"%B %d, %Y" }}</div>
-  	
-  	{{ post.content | truncatewords:100 }}
-  	<a class="read-more" href="{{ post.url }}">read more</a>
+<div class="home">
+  <div class="intro home-section">
+    <canvas class="intro-hexes"></canvas>
+    <div class="intro-hexcover"></div>
+    <div class="intro-waves">
+      {% comment %}20 of these {% endcomment %}
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+      <div class="intro-waves-line"></div>
+    </div>
+    <div class="home-section-inner">
+      <h1 class="intro-text" data-scroll-trigger="middle" data-scroll-toggle>
+        <span>Somewhere in a sea of good ideas,</span>
+        <span>unsolved problems, and awful jokes,</span>
+        <span>Will's just trying to make it happen</span>
+      </h1>
+
+      <div class="intro-arrow"></div>
+    </div>
   </div>
-  {% endfor %}
-  <h1>Older posts</h1>
-  <ul class="archive">
-  	{% for post in site.posts offset:5 %}
-  	<li>
-  		<span class="date">{{ post.date | date:"%B %d, %Y" }}</span>
-  		<a href="{{ post.url }}">{{ post.title}}</a>
-  	</li>
-  	{% endfor %}
-  </ul>
+
+
+
+  <div id="me" class="about home-section">
+    <div class="about-inner home-section-inner">
+      <div class="about-text">
+        <h2>A little about me</h2>
+        <p>
+          I'm a self taught programmer who has spent enough time coding to
+          know that it's true love I feel for what I do. I'm really passionate
+          about everything I take part in, and am always on the lookout for
+          inspiring products. As you can see, I hold all my
+          <a data-smooth-anchor href="#work">work</a> in very high regard.
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div id="work" class="work home-section">
+    <div class="home-section-inner">
+      <div class="work-projects">
+        {% assign sorted_work = site.work | sort: 'importance' %}
+        {% for work in sorted_work %}
+          <div class="project">
+            {% if work.screenshots %}
+              <div class="project-screens">
+                {% for screen in work.screenshots %}
+                  {% if screen.type == "desktop" %}
+                    <div class="screen isDesktop">
+                      <div class="inner">
+                        <div class="screen-ui">
+                          <div class="screen-ui-buttons">
+                            <div class="screen-ui-buttons-button isRed"></div>
+                            <div class="screen-ui-buttons-button isYellow"></div>
+                            <div class="screen-ui-buttons-button isGreen"></div>
+                          </div>
+                          <div class="screen-ui-address">
+                            {{ screen.url }}
+                          </div>
+                        </div>
+                        <div
+                          class="screen-image"
+                          style="background-image: url('/img/screenshots/{{ screen.name }}.jpg')"
+                        ></div>
+                      </div>
+                    </div>
+                  {% elsif screen.type == "phone" %}
+                    <div class="screen isPhone">
+                      <div class="inner">
+                        <div class="screen-ui">
+                          <div class="screen-ui-speaker"></div>
+                          <div class="screen-ui-button"></div>
+                        </div>
+                        <div
+                          class="screen-image"
+                          style="background-image: url('/img/screenshots/{{ screen.name }}.jpg')"
+                        ></div>
+                        <div class="screen-overlay"></div>
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+            {% if work.tiles %}
+              <div class="project-tiles">
+                {% for tile in work.tiles %}
+                  <div class="project-tiles-tile">
+                    <div
+                      class="project-tiles-tile-bg"
+                      style="background-image: url('/img/screenshots/{{ tile.name }}.jpg"
+                    ></div>
+                    <a
+                      href="{{ tile.url }}"
+                      class="project-tiles-tile-caption"
+                      target="_blank"
+                    >
+                      {{ tile.caption }}
+                    </a>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <div class="project-info">
+              <h2 class="project-info-title">
+                {{ work.name }}
+              </h2>
+              <div class="project-info-role">
+                {{ work.role }}
+              </div>
+              <div class="project-info-dates">
+                {{ work.start_date | date: '%B %Y' }}
+              </div>
+              <p class="project-info-description">
+                {{ work.blurb }}
+              </p>
+
+              {% if work.site %}
+                <a class="project-info-button" href="{{ work.site }}" target="_blank">
+                  {{ work.cta }}
+                  <div class="project-info-button-shadow"></div>
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="work-arrow"></div>
+    </div>
+  </div>
+
+
+
+  <div id="posts" class="posts home-section">
+    <div class="home-section-inner">
+      <h2 class="posts-title">Sometimes I post things on the internet</h2>
+
+      <div class="posts-list posts-list--blurred">
+        {% for post in site.posts limit:2 %}
+          {% comment %}
+          <a class="post" href="{{ post.url }}">
+            <h3 class="post-title">
+              {{ post.title }}
+            </h3>
+            <div class="post-date">
+              {{ post.date | date: '%B %-d, %Y' }}
+            </div>
+            <div class="post-excerpt">
+              {{ post.excerpt }}
+            </div>
+          </a>
+          {% endcomment %}
+          <div class="post">
+            <h3 class="post-title">
+              I'm a sample post. Don't squint too hard.
+            </h3>
+            <div class="post-date">
+              Dec 31, 1969
+            </div>
+            <div class="post-excerpt">
+              One of these days I'll get off my lazy ass and finish a few
+              of the drafts I started. But today is not that day. Tomorrow's
+              not looking too hot either. But yeah, it'll happen at some point.
+              Stay tuned, folks. Maybe I'll even add RSS or somethin'.
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="posts-tbd">
+        But not quite yet.
+        <br/>
+        Still working on my prose, yo.
+      </div>
+    </div>
+  </div>
+
+
+
+  <div id="contact" class="contact home-section">
+    <div class="home-section-inner">
+      <h2 class="contact-title">Hit me up</h2>
+      <div class="contact-sources">
+        <a
+          class="contact-sources-link isText"
+          target="_blank"
+          href="mailto:wbobeirne@gmail.com"
+        >
+          <i class="fa fa-envelope"></i><span>wbobeirne@gmail.com</span>
+        </a>
+
+        <a
+          class="contact-sources-link isText"
+          target="_blank"
+          href="https://www.linkedin.com/in/wbobeirne"
+        >
+          <i class="fa fa-linkedin-square"></i><span>wbobeirne</span>
+        </a>
+
+        <a
+          class="contact-sources-link isIcon"
+          target="_blank"
+          href="https://github.com/wbobeirne"
+        >
+          <i class="fa fa-github"></i>
+        </a>
+
+        <a
+          class="contact-sources-link isIcon"
+          target="_blank"
+          href="https://twitter.com/wbobeirne"
+        >
+          <i class="fa fa-twitter"></i>
+        </a>
+
+        <a
+          class="contact-sources-link isIcon"
+          target="_blank"
+          href="http://codepen.io/wbobeirne/"
+        >
+          <i class="fa fa-codepen"></i>
+        </a>
+
+        <a
+          class="contact-sources-link isIcon"
+          target="_blank"
+          href="https://dribbble.com/wbobeirne"
+        >
+          <i class="fa fa-dribbble"></i>
+        </a>
+      </div>
+
+      <h2 class="contact-title">Proud Resident of</h2>
+      <div></div>
+      <div class="contact-address">Brooklyn, NY</div>
+    </div>
+  </div>
 </div>
+
+<script>
+  Home.register();
+</script>

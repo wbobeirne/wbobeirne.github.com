@@ -1,0 +1,83 @@
+.fullpost {
+  &-header {
+    position: relative;
+    height: 400px;
+    @include phone-rule(margin-bottom, 40px);
+    background: $color-gray-1;
+
+    &-info {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      max-width: 920px;
+      padding: 0 20px;
+      left: 50%;
+      @include transform(translateX(-50%));
+
+      &-date {
+        position: absolute;
+        top: 0;
+        left: 20px;
+        @include phone-rule(width, 100px);
+        @include phone-rule(height, 100px);
+        border: 2px solid #FFF;
+        font-family: $font-title;
+        color: #FFF;
+        text-align: center;
+        border-radius: 10px;
+        opacity: 0.8;
+
+        &-d {
+          @include phone-rule(font-size, 56px);
+          @include phone-rule(line-height, 60px);
+        }
+
+        &-my {
+          @include phone-rule(font-size, 20px);
+          @include phone-rule(line-height, 36px);
+        }
+      }
+
+      &-title {
+        color: #FFF;
+        margin: 0;
+        @include phone-rule(padding-left, 120px);
+        @include phone-rule(line-height, 100px);
+      }
+    }
+  }
+
+  &-content {
+    max-width: 920px;
+    margin: auto;
+    padding: 0 20px;
+  }
+}
+
+.fauxquote {
+  display: block;
+  margin: 20px 0;
+  padding: 20px 20px 0;
+  background: $color-red-2;
+  box-shadow: -500px 0 0 0 $color-red-2,
+               500px 0 0 0 $color-red-2;
+
+  &-portrait {
+    height: 220px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: bottom left;
+    &.onRight {
+      background-position: bottom right;
+    }
+  }
+
+  &-quote {
+
+  }
+
+  &-attribution {
+
+  }
+}

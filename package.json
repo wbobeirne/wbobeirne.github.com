@@ -1,0 +1,22 @@
+{
+  "name": "wbobeirne",
+  "version": "1.0.0",
+  "description": "Personal website",
+  "main": "js/index.js",
+  "scripts": {
+    "watch": "webpack --progress --watch --config _js/webpack.config.js",
+    "build": "webpack --progress -p --config _js/webpack.config.js"
+  },
+  "author": "Will O'Beirne",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^1.12.13"
+  },
+  "dependencies": {
+    "coffee-loader": "^0.7.2",
+    "jquery": "^2.2.0",
+    "lodash": "^4.5.0",
+    "underscore": "^1.8.3",
+    "yargs": "^4.1.0"
+  }
+}

@@ -1,0 +1,15 @@
+- name: "About"
+  href: "/"
+  file: "/index.html"
+
+- name: "Projects"
+  href: "/projects"
+  file: "/projects.html"
+
+- name: "Résumé"
+  href: "/resume"
+  file: "/resume.html"
+
+- name: "Blog"
+  href: "/blog"
+  file: "/blog.html"

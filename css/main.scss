@@ -1,0 +1,140 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+@charset "utf-8";
+
+///////////////////////////////////////////////////////////
+// VARIABLES
+///////////////////////////////////////////////////////////
+
+// Colors
+$color-white: #F9FBF4;
+$color-gray-1: #2B2D42;
+$color-gray-2: #8D99AE;
+$color-red-1: #D90429;
+$color-red-2: #EF233C;
+$color-blue-1: #344582;
+
+$color-body: $color-gray-1;
+$color-title: $color-gray-1;
+$color-subtitle: $color-gray-2;
+$color-a: #4C7BD9;
+$color-a-hover: saturate(lighten($color-a, 10%), 10%);
+
+// Typography variables
+$font-title: "Raleway", sans;
+$font-body: "Libre Baskerville", Georgia, Cambria, "Times New Roman", Times, serif;
+
+$type-size-title: 32px;
+$type-line-title: 38px;
+$type-margin-title: 40px;
+
+$type-size-subtitle: 24px;
+$type-line-subtitle: 28px;
+$type-margin-subtitle: 20px;
+
+$type-size-body: 18px;
+$type-line-body: 32px;
+$type-margin-body: 30px;
+
+
+// Z-indecies
+$z-home-arrows: 10;
+$z-nav: 100;
+
+
+// Navigation
+$nav-height: 64px;
+$nav-height-phone: 80px;
+$nav-overflow: 50px;
+
+
+// Home
+$home-section-width: 1280px;
+$home-section-padding: 20px;
+$home-arrow-size: 60px;
+$home-load-time: 1200ms;
+
+$home-title-size: 38px;
+$home-title-line: 52px;
+
+$home-screen-address-height: 36px;
+$home-screen-button-size: 11px;
+$home-screen-button-margin: 4px;
+
+$home-screen-desktop-ratio: 0.65;
+$home-screen-desktop-width: 720px;
+$home-screen-desktop-height: $home-screen-desktop-width * $home-screen-desktop-ratio;
+$home-screen-desktop-radius: 6px;
+
+$home-screen-phone-ratio: 1.8;
+$home-screen-phone-width: 260px;
+$home-screen-phone-height: $home-screen-phone-width * $home-screen-phone-ratio;
+$home-screen-phone-radius: 16px;
+
+
+
+///////////////////////////////////////////////////////////
+// MIXINS
+///////////////////////////////////////////////////////////
+
+$device-tablet: 1100px;
+$device-phone: 680px;
+
+@mixin media-query($device) {
+    @media screen and (max-width: $device) {
+        @content;
+    }
+}
+
+@mixin phone-rule($rule, $px) {
+  $vw-multiplier: $device-phone / 100;
+  $px-multiplier: 1;
+
+  $px-vals: '';
+  $vw-vals: '';
+
+  // Convert multiple args into the proper values, i.e. 10px 20px 5px
+  @if type-of($px) == 'list' {
+    @each $val in $px {
+      // 0 and 'auto' or 'none' don't like being mathed
+      @if type-of($val) == 'string' or unitless($val) {
+        $px-vals: #{$px-vals} #{$val};
+        $vw-vals: #{$vw-vals} #{$val};
+      }
+      @else {
+        $px-vals: #{$px-vals} #{$val * $px-multiplier};
+        $vw-vals: #{$vw-vals} #{($val / $vw-multiplier) * 1vw};
+      }
+    }
+  }
+  // Convert a regular single value, i.e. 100px
+  @else {
+    $px-vals: $px * $px-multiplier;
+    $vw-vals: ($px / $vw-multiplier) * 1vw;
+  }
+
+  #{$rule}: $px-vals;
+  #{$rule}: $vw-vals;
+  @media screen and (min-width: $device-phone) {
+    #{$rule}: $px-vals;
+  }
+}
+
+
+///////////////////////////////////////////////////////////
+// FILES
+///////////////////////////////////////////////////////////
+
+// Import partials from `sass_dir` (defaults to `_sass`)
+@import
+  "bourbon/bourbon",
+  "reset",
+  "template",
+  "typography",
+  "header",
+  "home",
+  "post",
+
+  "syntax-highlighting"
+;
