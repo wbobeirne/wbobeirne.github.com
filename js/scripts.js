@@ -56,11 +56,11 @@
 
 	window.Home = {
 	  register: function() {
-	    return $(window).on('load', function() {
+	    return $(window).on("load", function() {
 	      Home.init();
-	      $('.site').addClass('isLoaded');
-	      $(window).trigger('resize');
-	      return $(window).trigger('scroll');
+	      $(".site").addClass("isLoaded");
+	      $(window).trigger("resize");
+	      return $(window).trigger("scroll");
 	    });
 	  },
 	  init: function() {
@@ -74,12 +74,13 @@
 	      }
 	    };
 	    this.Dom = {
-	      body: $('body'),
-	      header: $('.site-header'),
-	      hexes: $('.intro-hexes'),
-	      projects: $('.project'),
-	      scrollers: $('[data-scroll-trigger]'),
-	      smoothAnchors: $('[data-smooth-anchor]')
+	      body: $("body"),
+	      header: $(".site-header"),
+	      hexes: $(".intro-hexes"),
+	      projects: $(".project"),
+	      scrollers: $("[data-scroll-trigger]"),
+	      smoothAnchors: $("[data-smooth-anchor]"),
+	      lazyBgs: $("[data-lazy-bg]")
 	    };
 	    setTimeout((function(_this) {
 	      return function() {
@@ -105,10 +106,10 @@
 	    return this.bind();
 	  },
 	  bind: function() {
-	    $(window).on('resize focus', (function(_this) {
+	    $(window).on("resize focus", (function(_this) {
 	      return function(ev) {
 	        var $window, fn, i, len, ref;
-	        _this.Dom.body.addClass('notransition');
+	        _this.Dom.body.addClass("notransition");
 	        $window = $(window);
 	        _this.Data.window.scrollTop = $window.scrollTop();
 	        _this.Data.window.height = $window.height();
@@ -120,11 +121,11 @@
 	        }
 	        clearTimeout(noTransTimeout);
 	        return noTransTimeout = setTimeout(function() {
-	          return _this.Dom.body.removeClass('notransition');
+	          return _this.Dom.body.removeClass("notransition");
 	        }, 40);
 	      };
 	    })(this));
-	    $(window).on('scroll', (function(_this) {
+	    $(window).on("scroll", (function(_this) {
 	      return function(ev) {
 	        var $window, fn, i, len, ref, results;
 	        $window = $(window);
@@ -159,7 +160,7 @@
 	    var activeLink, headerLinks, markActiveLink, retargetHeaderLinks;
 	    activeLink = null;
 	    headerLinks = [];
-	    this.Dom.header.find('[data-smooth-anchor]').each(function(idx, el) {
+	    this.Dom.header.find("[data-smooth-anchor]").each(function(idx, el) {
 	      var $target;
 	      $target = $(el.hash);
 	      if (!$target.length) {
@@ -191,14 +192,14 @@
 	              return;
 	            }
 	            if (activeLink != null) {
-	              activeLink.removeClass('isActive');
+	              activeLink.removeClass("isActive");
 	            }
 	            activeLink = link.el;
-	            activeLink.addClass('isActive');
+	            activeLink.addClass("isActive");
 	            return;
 	          }
 	        }
-	        return activeLink != null ? activeLink.removeClass('isActive') : void 0;
+	        return activeLink != null ? activeLink.removeClass("isActive") : void 0;
 	      };
 	    })(this);
 	    retargetHeaderLinks();
@@ -219,7 +220,7 @@
 	        }
 	        ev.preventDefault();
 	        window.history.replaceState(null, null, ev.currentTarget.hash);
-	        return $('html, body').animate({
+	        return $("html, body").animate({
 	          scrollTop: $target.offset().top - _this.Dom.header.height() + 1
 	        }, 600);
 	      };
@@ -240,29 +241,54 @@
 	  },
 	  cacheScrollers: function() {
 	    this.Data.scrollers = [];
-	    return this.Dom.scrollers.each((function(_this) {
+	    this.Data.lazyBgs = [];
+	    this.Dom.scrollers.each((function(_this) {
 	      return function(idx, el) {
 	        var $el, trigger;
 	        $el = $(el);
 	        trigger = $el.offset().top + ($el.height() / 2) - (_this.Data.window.height / 2);
 	        return _this.Data.scrollers.push({
 	          trigger: trigger,
-	          toggle: $el.is('[data-scroll-toggle]'),
+	          toggle: $el.is("[data-scroll-toggle]"),
+	          el: $el
+	        });
+	      };
+	    })(this));
+	    return this.Dom.lazyBgs.each((function(_this) {
+	      return function(idx, el) {
+	        var $el, trigger;
+	        $el = $(el);
+	        trigger = $el.offset().top + _this.Data.window.height * 1.2;
+	        return _this.Data.lazyBgs.push({
+	          trigger: trigger,
+	          bg: $el.data("lazy-bg"),
 	          el: $el
 	        });
 	      };
 	    })(this));
 	  },
 	  checkScrollers: function() {
-	    var i, len, ref, results, scroller;
+	    var i, j, lazyBg, len, len1, ref, ref1, results, scroller;
 	    ref = this.Data.scrollers;
-	    results = [];
 	    for (i = 0, len = ref.length; i < len; i++) {
 	      scroller = ref[i];
 	      if (this.Data.window.scrollTop >= scroller.trigger) {
-	        results.push(scroller.el.addClass('isScrolled'));
+	        scroller.el.addClass("isScrolled");
 	      } else if (scroller.toggle) {
-	        results.push(scroller.el.removeClass('isScrolled'));
+	        scroller.el.removeClass("isScrolled");
+	      }
+	    }
+	    ref1 = this.Data.lazyBgs;
+	    results = [];
+	    for (j = 0, len1 = ref1.length; j < len1; j++) {
+	      lazyBg = ref1[j];
+	      if (lazyBg.loaded) {
+	        continue;
+	      }
+	      if (this.Data.window.scrollTop >= lazyBg.trigger) {
+	        lazyBg.el.css("background-image", "url('" + lazyBg.bg + "')");
+	        lazyBg.loaded = true;
+	        results.push(lazyBg.addClass("isLoaded"));
 	      } else {
 	        results.push(void 0);
 	      }
@@ -277,7 +303,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	 * jQuery JavaScript Library v2.2.0
+	 * jQuery JavaScript Library v2.2.4
 	 * http://jquery.com/
 	 *
 	 * Includes Sizzle.js
@@ -287,7 +313,7 @@
 	 * Released under the MIT license
 	 * http://jquery.org/license
 	 *
-	 * Date: 2016-01-08T20:02Z
+	 * Date: 2016-05-20T17:23Z
 	 */
 
 	(function( global, factory ) {
@@ -343,7 +369,7 @@
 
 
 	var
-		version = "2.2.0",
+		version = "2.2.4",
 
 		// Define a local copy of jQuery
 		jQuery = function( selector, context ) {
@@ -554,6 +580,7 @@
 		},
 
 		isPlainObject: function( obj ) {
+			var key;
 
 			// Not plain objects:
 			// - Any object or value whose internal [[Class]] property is not "[object Object]"
@@ -563,14 +590,18 @@
 				return false;
 			}
 
+			// Not own constructor property must be Object
 			if ( obj.constructor &&
-					!hasOwn.call( obj.constructor.prototype, "isPrototypeOf" ) ) {
+					!hasOwn.call( obj, "constructor" ) &&
+					!hasOwn.call( obj.constructor.prototype || {}, "isPrototypeOf" ) ) {
 				return false;
 			}
 
-			// If the function hasn't returned already, we're confident that
-			// |obj| is a plain object, created by {} or constructed with new Object
-			return true;
+			// Own properties are enumerated firstly, so to speed up,
+			// if last one is own, then all properties are own
+			for ( key in obj ) {}
+
+			return key === undefined || hasOwn.call( obj, key );
 		},
 
 		isEmptyObject: function( obj ) {
@@ -4757,7 +4788,7 @@
 		if ( fn === false ) {
 			fn = returnFalse;
 		} else if ( !fn ) {
-			return this;
+			return elem;
 		}
 
 		if ( one === 1 ) {
@@ -5279,13 +5310,14 @@
 		isDefaultPrevented: returnFalse,
 		isPropagationStopped: returnFalse,
 		isImmediatePropagationStopped: returnFalse,
+		isSimulated: false,
 
 		preventDefault: function() {
 			var e = this.originalEvent;
 
 			this.isDefaultPrevented = returnTrue;
 
-			if ( e ) {
+			if ( e && !this.isSimulated ) {
 				e.preventDefault();
 			}
 		},
@@ -5294,7 +5326,7 @@
 
 			this.isPropagationStopped = returnTrue;
 
-			if ( e ) {
+			if ( e && !this.isSimulated ) {
 				e.stopPropagation();
 			}
 		},
@@ -5303,7 +5335,7 @@
 
 			this.isImmediatePropagationStopped = returnTrue;
 
-			if ( e ) {
+			if ( e && !this.isSimulated ) {
 				e.stopImmediatePropagation();
 			}
 
@@ -5406,14 +5438,14 @@
 		rscriptTypeMasked = /^true\/(.*)/,
 		rcleanScript = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g;
 
+	// Manipulating tables requires a tbody
 	function manipulationTarget( elem, content ) {
-		if ( jQuery.nodeName( elem, "table" ) &&
-			jQuery.nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ) {
+		return jQuery.nodeName( elem, "table" ) &&
+			jQuery.nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ?
 
-			return elem.getElementsByTagName( "tbody" )[ 0 ] || elem;
-		}
-
-		return elem;
+			elem.getElementsByTagName( "tbody" )[ 0 ] ||
+				elem.appendChild( elem.ownerDocument.createElement( "tbody" ) ) :
+			elem;
 	}
 
 	// Replace/restore the type attribute of script elements for safe DOM manipulation
@@ -5920,7 +5952,7 @@
 			// FF meanwhile throws on frame elements through "defaultView.getComputedStyle"
 			var view = elem.ownerDocument.defaultView;
 
-			if ( !view.opener ) {
+			if ( !view || !view.opener ) {
 				view = window;
 			}
 
@@ -6069,15 +6101,18 @@
 			style = elem.style;
 
 		computed = computed || getStyles( elem );
+		ret = computed ? computed.getPropertyValue( name ) || computed[ name ] : undefined;
+
+		// Support: Opera 12.1x only
+		// Fall back to style even without computed
+		// computed is undefined for elems on document fragments
+		if ( ( ret === "" || ret === undefined ) && !jQuery.contains( elem.ownerDocument, elem ) ) {
+			ret = jQuery.style( elem, name );
+		}
 
 		// Support: IE9
 		// getPropertyValue is only needed for .css('filter') (#12537)
 		if ( computed ) {
-			ret = computed.getPropertyValue( name ) || computed[ name ];
-
-			if ( ret === "" && !jQuery.contains( elem.ownerDocument, elem ) ) {
-				ret = jQuery.style( elem, name );
-			}
 
 			// A tribute to the "awesome hack by Dean Edwards"
 			// Android Browser returns percentage for some values,
@@ -6230,19 +6265,6 @@
 			val = name === "width" ? elem.offsetWidth : elem.offsetHeight,
 			styles = getStyles( elem ),
 			isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box";
-
-		// Support: IE11 only
-		// In IE 11 fullscreen elements inside of an iframe have
-		// 100x too small dimensions (gh-1764).
-		if ( document.msFullscreenElement && window.top !== window ) {
-
-			// Support: IE11 only
-			// Running getBoundingClientRect on a disconnected node
-			// in IE throws an error.
-			if ( elem.getClientRects().length ) {
-				val = Math.round( elem.getBoundingClientRect()[ name ] * 100 );
-			}
-		}
 
 		// Some non-html elements return undefined for offsetWidth, so check for null/undefined
 		// svg - https://bugzilla.mozilla.org/show_bug.cgi?id=649285
@@ -7600,6 +7622,12 @@
 		}
 	} );
 
+	// Support: IE <=11 only
+	// Accessing the selectedIndex property
+	// forces the browser to respect setting selected
+	// on the option
+	// The getter ensures a default option is selected
+	// when in an optgroup
 	if ( !support.optSelected ) {
 		jQuery.propHooks.selected = {
 			get: function( elem ) {
@@ -7608,6 +7636,16 @@
 					parent.parentNode.selectedIndex;
 				}
 				return null;
+			},
+			set: function( elem ) {
+				var parent = elem.parentNode;
+				if ( parent ) {
+					parent.selectedIndex;
+
+					if ( parent.parentNode ) {
+						parent.parentNode.selectedIndex;
+					}
+				}
 			}
 		};
 	}
@@ -7802,7 +7840,8 @@
 
 
 
-	var rreturn = /\r/g;
+	var rreturn = /\r/g,
+		rspaces = /[\x20\t\r\n\f]+/g;
 
 	jQuery.fn.extend( {
 		val: function( value ) {
@@ -7878,9 +7917,15 @@
 			option: {
 				get: function( elem ) {
 
-					// Support: IE<11
-					// option.value not trimmed (#14858)
-					return jQuery.trim( elem.value );
+					var val = jQuery.find.attr( elem, "value" );
+					return val != null ?
+						val :
+
+						// Support: IE10-11+
+						// option.text throws exceptions (#14686, #14858)
+						// Strip and collapse whitespace
+						// https://html.spec.whatwg.org/#strip-and-collapse-whitespace
+						jQuery.trim( jQuery.text( elem ) ).replace( rspaces, " " );
 				}
 			},
 			select: {
@@ -7933,7 +7978,7 @@
 					while ( i-- ) {
 						option = options[ i ];
 						if ( option.selected =
-								jQuery.inArray( jQuery.valHooks.option.get( option ), values ) > -1
+							jQuery.inArray( jQuery.valHooks.option.get( option ), values ) > -1
 						) {
 							optionSet = true;
 						}
@@ -8111,6 +8156,7 @@
 		},
 
 		// Piggyback on a donor event to simulate a different one
+		// Used only for `focus(in | out)` events
 		simulate: function( type, elem, event ) {
 			var e = jQuery.extend(
 				new jQuery.Event(),
@@ -8118,27 +8164,10 @@
 				{
 					type: type,
 					isSimulated: true
-
-					// Previously, `originalEvent: {}` was set here, so stopPropagation call
-					// would not be triggered on donor event, since in our own
-					// jQuery.event.stopPropagation function we had a check for existence of
-					// originalEvent.stopPropagation method, so, consequently it would be a noop.
-					//
-					// But now, this "simulate" function is used only for events
-					// for which stopPropagation() is noop, so there is no need for that anymore.
-					//
-					// For the compat branch though, guard for "click" and "submit"
-					// events is still used, but was moved to jQuery.event.stopPropagation function
-					// because `originalEvent` should point to the original event for the constancy
-					// with other events and for more focused logic
 				}
 			);
 
 			jQuery.event.trigger( e, null, elem );
-
-			if ( e.isDefaultPrevented() ) {
-				event.preventDefault();
-			}
 		}
 
 	} );
@@ -9628,18 +9657,6 @@
 
 
 
-	// Support: Safari 8+
-	// In Safari 8 documents created via document.implementation.createHTMLDocument
-	// collapse sibling forms: the second one becomes a child of the first one.
-	// Because of that, this security measure has to be disabled in Safari 8.
-	// https://bugs.webkit.org/show_bug.cgi?id=137337
-	support.createHTMLDocument = ( function() {
-		var body = document.implementation.createHTMLDocument( "" ).body;
-		body.innerHTML = "<form></form><form></form>";
-		return body.childNodes.length === 2;
-	} )();
-
-
 	// Argument "data" should be string of html
 	// context (optional): If specified, the fragment will be created in this context,
 	// defaults to document
@@ -9652,12 +9669,7 @@
 			keepScripts = context;
 			context = false;
 		}
-
-		// Stop scripts or inline event handlers from being executed immediately
-		// by using document.implementation
-		context = context || ( support.createHTMLDocument ?
-			document.implementation.createHTMLDocument( "" ) :
-			document );
+		context = context || document;
 
 		var parsed = rsingleTag.exec( data ),
 			scripts = !keepScripts && [];
@@ -9739,7 +9751,7 @@
 			// If it fails, this function gets "jqXHR", "status", "error"
 			} ).always( callback && function( jqXHR, status ) {
 				self.each( function() {
-					callback.apply( self, response || [ jqXHR.responseText, status, jqXHR ] );
+					callback.apply( this, response || [ jqXHR.responseText, status, jqXHR ] );
 				} );
 			} );
 		}
@@ -9897,11 +9909,8 @@
 				}
 
 				// Add offsetParent borders
-				// Subtract offsetParent scroll positions
-				parentOffset.top += jQuery.css( offsetParent[ 0 ], "borderTopWidth", true ) -
-					offsetParent.scrollTop();
-				parentOffset.left += jQuery.css( offsetParent[ 0 ], "borderLeftWidth", true ) -
-					offsetParent.scrollLeft();
+				parentOffset.top += jQuery.css( offsetParent[ 0 ], "borderTopWidth", true );
+				parentOffset.left += jQuery.css( offsetParent[ 0 ], "borderLeftWidth", true );
 			}
 
 			// Subtract parent offsets and element margins

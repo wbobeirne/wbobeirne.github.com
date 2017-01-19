@@ -1,16 +1,16 @@
-$ = require('jquery')
-_ = require('underscore')
-Hexes = require('libs/hexes')
+$ = require("jquery")
+_ = require("underscore")
+Hexes = require("libs/hexes")
 
 noTransTimeout = null
 
 window.Home = {
   register: ->
-    $(window).on('load', ->
+    $(window).on("load", ->
       Home.init()
-      $('.site').addClass('isLoaded')
-      $(window).trigger('resize')
-      $(window).trigger('scroll')
+      $(".site").addClass("isLoaded")
+      $(window).trigger("resize")
+      $(window).trigger("scroll")
     )
 
   init: ->
@@ -25,12 +25,13 @@ window.Home = {
     }
 
     @Dom = {
-      body: $('body')
-      header: $('.site-header')
-      hexes: $('.intro-hexes')
-      projects: $('.project')
-      scrollers: $('[data-scroll-trigger]')
-      smoothAnchors: $('[data-smooth-anchor]')
+      body: $("body")
+      header: $(".site-header")
+      hexes: $(".intro-hexes")
+      projects: $(".project")
+      scrollers: $("[data-scroll-trigger]")
+      smoothAnchors: $("[data-smooth-anchor]")
+      lazyBgs: $("[data-lazy-bg]")
     }
 
     setTimeout( =>
@@ -55,8 +56,8 @@ window.Home = {
     @bind()
 
   bind: ->
-    $(window).on('resize focus', (ev) =>
-      @Dom.body.addClass('notransition')
+    $(window).on("resize focus", (ev) =>
+      @Dom.body.addClass("notransition")
       $window = $(window)
       @Data.window.scrollTop = $window.scrollTop()
       @Data.window.height = $window.height()
@@ -66,10 +67,10 @@ window.Home = {
 
       clearTimeout(noTransTimeout)
       noTransTimeout = setTimeout( =>
-        @Dom.body.removeClass('notransition')
+        @Dom.body.removeClass("notransition")
       , 40)
     )
-    $(window).on('scroll', (ev) =>
+    $(window).on("scroll", (ev) =>
       $window = $(window)
       @Data.window.scrollTop = $window.scrollTop()
       for fn in @Data.onScrolls
@@ -96,7 +97,7 @@ window.Home = {
   bindHeaderLinks: ->
     activeLink = null
     headerLinks = []
-    @Dom.header.find('[data-smooth-anchor]').each((idx, el) ->
+    @Dom.header.find("[data-smooth-anchor]").each((idx, el) ->
       $target = $(el.hash)
       return if !$target.length
       headerLinks.push({
@@ -113,11 +114,11 @@ window.Home = {
       for link in headerLinks
         if @Data.window.scrollTop > link.scrollTop
           return if activeLink == link.el
-          activeLink?.removeClass('isActive')
+          activeLink?.removeClass("isActive")
           activeLink = link.el
-          activeLink.addClass('isActive')
+          activeLink.addClass("isActive")
           return
-      activeLink?.removeClass('isActive')
+      activeLink?.removeClass("isActive")
 
     retargetHeaderLinks()
     @Data.onScrolls.push(markActiveLink)
@@ -135,7 +136,7 @@ window.Home = {
       ev.preventDefault()
       window.history.replaceState(null, null, ev.currentTarget.hash)
 
-      $('html, body').animate({
+      $("html, body").animate({
         scrollTop: $target.offset().top - @Dom.header.height() + 1
       }, 600)
     )
@@ -155,6 +156,7 @@ window.Home = {
 
   cacheScrollers: ->
     @Data.scrollers = []
+    @Data.lazyBgs = []
 
     @Dom.scrollers.each((idx, el) =>
       $el = $(el)
@@ -162,16 +164,33 @@ window.Home = {
 
       @Data.scrollers.push({
         trigger: trigger
-        toggle: $el.is('[data-scroll-toggle]')
+        toggle: $el.is("[data-scroll-toggle]")
         el: $el
       })
+    )
+
+    @Dom.lazyBgs.each((idx, el) =>
+      $el = $(el)
+      trigger = $el.offset().top + @Data.window.height * 1.2
+      @Data.lazyBgs.push({
+        trigger: trigger
+        bg: $el.data("lazy-bg")
+        el: $el
+      });
     )
 
   checkScrollers: ->
     for scroller in @Data.scrollers
       if @Data.window.scrollTop >= scroller.trigger
-        scroller.el.addClass('isScrolled')
+        scroller.el.addClass("isScrolled")
       else if scroller.toggle
-        scroller.el.removeClass('isScrolled')
+        scroller.el.removeClass("isScrolled")
+
+    for lazyBg in @Data.lazyBgs
+      continue if lazyBg.loaded
+      if @Data.window.scrollTop >= lazyBg.trigger
+        lazyBg.el.css("background-image", "url('#{lazyBg.bg}')")
+        lazyBg.loaded = true
+        lazyBg.addClass("isLoaded")
 
 }
