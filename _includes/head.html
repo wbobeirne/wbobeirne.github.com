@@ -14,10 +14,9 @@
     site.description
   }}{% endif %}">
 
-  <script src="{{ "/js/scripts.js" | prepend: site.baseurl }}"></script>
+  <script src="{{ "/js/scripts" | prepend: site.baseurl | append: site.jsext }}"></script>
 
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
   <link rel="canonical" href="{{
     page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url

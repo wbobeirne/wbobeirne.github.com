@@ -5,7 +5,9 @@
   "main": "js/index.js",
   "scripts": {
     "watch": "webpack --progress --watch --config _js/webpack.config.js",
-    "build": "webpack --progress -p --config _js/webpack.config.js"
+    "build": "webpack --progress -p --config _js/webpack.config.js",
+    "jekyll": "jekyll serve --config _config.dev.yml",
+    "jekyll-prod": "jekyll serve"
   },
   "author": "Will O'Beirne",
   "license": "ISC",

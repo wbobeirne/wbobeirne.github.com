@@ -106,9 +106,14 @@
 	    return this.bind();
 	  },
 	  bind: function() {
+	    var $window;
+	    $window = $(window);
+	    this.Data.window.scrollTop = $window.scrollTop();
+	    this.Data.window.height = $window.height();
+	    this.Data.window.width = $window.width();
 	    $(window).on("resize focus", (function(_this) {
 	      return function(ev) {
-	        var $window, fn, i, len, ref;
+	        var fn, i, len, ref;
 	        _this.Dom.body.addClass("notransition");
 	        $window = $(window);
 	        _this.Data.window.scrollTop = $window.scrollTop();
@@ -127,7 +132,7 @@
 	    })(this));
 	    $(window).on("scroll", (function(_this) {
 	      return function(ev) {
-	        var $window, fn, i, len, ref, results;
+	        var fn, i, len, ref, results;
 	        $window = $(window);
 	        _this.Data.window.scrollTop = $window.scrollTop();
 	        ref = _this.Data.onScrolls;
@@ -258,7 +263,7 @@
 	      return function(idx, el) {
 	        var $el, trigger;
 	        $el = $(el);
-	        trigger = $el.offset().top + _this.Data.window.height * 1.2;
+	        trigger = $el.offset().top - _this.Data.window.height * 1.4;
 	        return _this.Data.lazyBgs.push({
 	          trigger: trigger,
 	          bg: $el.data("lazy-bg"),
@@ -282,18 +287,28 @@
 	    results = [];
 	    for (j = 0, len1 = ref1.length; j < len1; j++) {
 	      lazyBg = ref1[j];
-	      if (lazyBg.loaded) {
+	      if (lazyBg.loading) {
 	        continue;
 	      }
+	      console.log(this.Data.window.scrollTop);
+	      console.log(lazyBg.trigger);
 	      if (this.Data.window.scrollTop >= lazyBg.trigger) {
-	        lazyBg.el.css("background-image", "url('" + lazyBg.bg + "')");
-	        lazyBg.loaded = true;
-	        results.push(lazyBg.addClass("isLoaded"));
+	        lazyBg.loading = true;
+	        results.push(this.loadBg(lazyBg.el, lazyBg.bg));
 	      } else {
 	        results.push(void 0);
 	      }
 	    }
 	    return results;
+	  },
+	  loadBg: function(el, bg) {
+	    var img;
+	    img = new Image();
+	    img.onload = function() {
+	      el.css("background-image", "url('" + bg + "')");
+	      return el.addClass("isLoaded");
+	    };
+	    return img.src = bg;
 	  }
 	};
 

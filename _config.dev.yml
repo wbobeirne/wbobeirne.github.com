@@ -13,7 +13,7 @@ description: > # this means to ignore newlines until "baseurl:"
   aspiring bass player, and fake adult.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://wbobeirne.github.io/" # the base hostname & protocol for your site
-jsext: ".min.js"
+jsext: ".js"
 
 # Collections
 collections:
@@ -26,4 +26,3 @@ exclude:
   - node_modules
 sass:
   sass_dir: _sass
-  style: compressed

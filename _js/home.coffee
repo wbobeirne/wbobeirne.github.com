@@ -56,6 +56,11 @@ window.Home = {
     @bind()
 
   bind: ->
+    $window = $(window)
+    @Data.window.scrollTop = $window.scrollTop()
+    @Data.window.height = $window.height()
+    @Data.window.width = $window.width()
+
     $(window).on("resize focus", (ev) =>
       @Dom.body.addClass("notransition")
       $window = $(window)
@@ -146,6 +151,7 @@ window.Home = {
   # as they're scrolled past.
   bindScrollers: ->
     @cacheScrollers()
+
     @Data.onResizes.push(_.debounce( =>
       @cacheScrollers()
     , 100))
@@ -171,7 +177,7 @@ window.Home = {
 
     @Dom.lazyBgs.each((idx, el) =>
       $el = $(el)
-      trigger = $el.offset().top + @Data.window.height * 1.2
+      trigger = $el.offset().top - @Data.window.height * 1.4
       @Data.lazyBgs.push({
         trigger: trigger
         bg: $el.data("lazy-bg")
@@ -187,10 +193,19 @@ window.Home = {
         scroller.el.removeClass("isScrolled")
 
     for lazyBg in @Data.lazyBgs
-      continue if lazyBg.loaded
+      continue if lazyBg.loading
+      console.log(@Data.window.scrollTop)
+      console.log(lazyBg.trigger)
       if @Data.window.scrollTop >= lazyBg.trigger
-        lazyBg.el.css("background-image", "url('#{lazyBg.bg}')")
-        lazyBg.loaded = true
-        lazyBg.addClass("isLoaded")
+        lazyBg.loading = true
+        @loadBg(lazyBg.el, lazyBg.bg)
 
+
+
+  loadBg: (el, bg) ->
+    img = new Image()
+    img.onload = ->
+      el.css("background-image", "url('#{bg}')")
+      el.addClass("isLoaded")
+    img.src = bg
 }

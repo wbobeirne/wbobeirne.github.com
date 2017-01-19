@@ -334,9 +334,14 @@ $wave-color: #8D99AE;
         background-position: center;
         background-size: 112%;
         -webkit-background-size: 112%;
+        opacity: 0;
         @include transition-property(opacity, background-size);
         @include transition-duration(300ms);
         @include transition-timing-function(ease);
+
+        &.isLoaded {
+          opacity: 1;
+        }
       }
 
       &-caption {
@@ -369,9 +374,11 @@ $wave-color: #8D99AE;
         }
 
         .project-tiles-tile-bg {
-          opacity: 0.4;
-          background-size: 100%;
-          -webkit-background-size: 100%;
+          &, &.isLoaded {
+            opacity: 0.4;
+            background-size: 100%;
+            -webkit-background-size: 100%;
+          }
         }
 
         .project-tiles-tile-caption {
@@ -535,6 +542,12 @@ $wave-color: #8D99AE;
   &-image {
     background-color: #EEE;
     background-size: 100% auto;
+    opacity: 0;
+    @include transition(opacity 500ms ease);
+
+    &.isLoaded {
+      opacity: 1;
+    }
   }
 
   &-overlay {
