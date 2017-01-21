@@ -80,7 +80,7 @@ $wave-color: #8D99AE;
     @include media-query($device-phone) {
       bottom: 40px;
       left: 30px;
-      @include phone-rule(font-size, 32px);
+      @include phone-rule(font-size, 30px);
       @include phone-rule(line-height, 52px);
     }
   }

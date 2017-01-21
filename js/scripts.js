@@ -290,8 +290,6 @@
 	      if (lazyBg.loading) {
 	        continue;
 	      }
-	      console.log(this.Data.window.scrollTop);
-	      console.log(lazyBg.trigger);
 	      if (this.Data.window.scrollTop >= lazyBg.trigger) {
 	        lazyBg.loading = true;
 	        results.push(this.loadBg(lazyBg.el, lazyBg.bg));

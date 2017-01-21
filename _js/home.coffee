@@ -194,8 +194,6 @@ window.Home = {
 
     for lazyBg in @Data.lazyBgs
       continue if lazyBg.loading
-      console.log(@Data.window.scrollTop)
-      console.log(lazyBg.trigger)
       if @Data.window.scrollTop >= lazyBg.trigger
         lazyBg.loading = true
         @loadBg(lazyBg.el, lazyBg.bg)
