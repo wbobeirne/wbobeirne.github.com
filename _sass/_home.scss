@@ -5,6 +5,8 @@
 
 // Shared stuff
 .home {
+  overflow-x: hidden;
+
   &-section {
     position: relative;
     padding: 0 $home-section-padding;
@@ -65,6 +67,7 @@ $wave-color: #8D99AE;
 
     span {
       display: block;
+      width: 200vw;
     }
 
     &.isScrolled {
