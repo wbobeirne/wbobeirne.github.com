@@ -22,12 +22,12 @@
 
 
 // Intro section
-$wave-count: 20;
+$wave-count: 14;
 $wave-max: 125vw;
 $wave-min: 1vw;
 $wave-range: $wave-max - $wave-min;
 $wave-speed: 12000ms;
-$wave-width: 2vw;
+$wave-width: 3.2vw;
 $wave-color: #8D99AE;
 
 @keyframes wave-line {
@@ -232,7 +232,13 @@ $wave-color: #8D99AE;
       @include phone-rule(font-size, $home-title-size);
       @include phone-rule(line-height, $home-title-line);
       @include phone-rule(margin-bottom, 10px);
+
+      small {
+        @include phone-rule(font-size, $home-title-size * .4);
+        opacity: 0.6;
+      }
     }
+
     &-role,
     &-role:after,
     &-dates {

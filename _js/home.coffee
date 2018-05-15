@@ -1,5 +1,5 @@
 $ = require("jquery")
-_ = require("underscore")
+debounce = require("lodash/debounce")
 Hexes = require("libs/hexes")
 
 noTransTimeout = null
@@ -33,25 +33,6 @@ window.Home = {
       smoothAnchors: $("[data-smooth-anchor]")
       lazyBgs: $("[data-lazy-bg]")
     }
-
-    setTimeout( =>
-      ###
-      Replacements, in order of cool:
-      http://codepen.io/isuttell/pen/OPVELL
-      http://codepen.io/katydecorah/pen/fFlpk
-      http://codepen.io/podrivo/pen/EBtpk
-      http://codepen.io/magnus16/pen/rhEIl
-
-      @Data.hexes = new Hexes(@Dom.hexes, {
-        length: 60
-        count: 25
-        speed: 45.0
-        dieChance: 0.03
-        background: '43, 45, 66'
-      })
-      window.hexes = @Data.hexes
-      ###
-    , 1000)
 
     @bind()
 
@@ -152,7 +133,7 @@ window.Home = {
   bindScrollers: ->
     @cacheScrollers()
 
-    @Data.onResizes.push(_.debounce( =>
+    @Data.onResizes.push(debounce( =>
       @cacheScrollers()
     , 100))
 
