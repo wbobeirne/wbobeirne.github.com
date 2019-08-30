@@ -37,21 +37,13 @@ $wave-color: #8D99AE;
 .intro {
   min-height: 460px;
   height: 460px;
-  height: 92vh;
+  height: 98vh;
   background: $color-gray-1;
-
-  &-arrow:after {
-    position: absolute;
-    content: "";
-    bottom: -$home-arrow-size / 2;
-    right: 200px;
-    z-index: $z-home-arrows;
-    @include triangle(60px, $color-gray-1, down);
-  }
+  overflow: hidden;
 
   &-text {
     position: absolute;
-    bottom: 60px;
+    bottom: 90px;
     left: 80px;
     margin: 0;
     font-size: 4.0vw;
@@ -88,59 +80,24 @@ $wave-color: #8D99AE;
     }
   }
 
-  &-hexes,
-  &-hexcover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-  }
-  &-hexes {
-    @include filter(blur(8px));
-  }
-  &-hexcover {
-    @include linear-gradient(rgba($color-gray-1, 0), rgba($color-gray-1, 1));
-  }
-
 
   &-waves {
     position: absolute;
     bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: none;
+  }
+
+  &-arrow {
+    position: absolute;
+    bottom: -2px;
     left: 50%;
-    width: $wave-max;
-    height: $wave-max / 2;
-    overflow: hidden;
-    opacity: 0.3;
-    @include transform(translateX(-50%));
-
-    &-line {
-      position: absolute;
-      border-width: $wave-width;
-      border-style: solid;
-      border-radius: 100%;
-      @include animation(wave-line $wave-speed infinite alternate);
-      @include transform(rotate(-44.5deg));
-
-      $line-alpha: 1;
-      @for $i from 1 through $wave-count {
-        &:nth-child(#{$i}) {
-          $size: $wave-max - (($wave-range / $wave-count) * $i);
-          @if $i > 1 {
-            $line-alpha: 1 - ((1 / ($wave-count + 1)) * $i);
-          }
-          width: $size;
-          height: $size;
-          bottom: $size / -2;
-          left: ($wave-max - $size) / 2;
-          @include animation-delay($i * ($wave-speed / $wave-count));
-          border-color: transparent
-                        transparent
-                        rgba($wave-color, $line-alpha)
-                        rgba($wave-color, $line-alpha);
-        }
-      }
-    }
+    transform: translateX(-50%);
+    pointer-events: none;
+    overflow: none;
   }
 }
 
@@ -628,7 +585,7 @@ $wave-color: #8D99AE;
 
 // Posts
 .posts {
-  @include phone-rule(padding, 60px 0);
+  @include phone-rule(padding, 60px 30px);
   background-color: $color-white;
 
   &-title {
@@ -639,90 +596,45 @@ $wave-color: #8D99AE;
     text-align: center;
   }
 
-  &-list {
-    &--blurred {
-      pointer-events: none;
-      opacity: 0.6;
-      @include filter(blur(8px));
-    }
-  }
-
-  &-tbd {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    text-align: center;
-    text-shadow: 0 0 8px #FFF;
-    @include phone-rule(font-size, 36px);
-    @include phone-rule(line-height, 50px);
-    @include transform(translateX(-50%) translateY(-50%));
-  }
-}
-
-.post {
-  display: block;
-  max-width: 920px;
-  @include phone-rule(margin, 0 auto 40px);
-  @include phone-rule(padding, 0 20px);
-  @include transform-origin(50% 50%);
-
-  &:nth-child(0n+2) {
-    opacity: 0.92;
-  }
-  &:nth-child(0n+3) {
-    opacity: 0.84;
-  }
-
-  &,
-  &-title,
-  &-excerpt {
+  &-more {
+    display: block;
+    max-width: 800px;
+    margin: 0 auto;
     color: $color-gray-1;
-  }
 
-  &-title {
-    font-family: $font-title;
-    @include phone-rule(font-size, 32px);
-    @include phone-rule(line-height, 46px);
-  }
-  &-date {
-    display: inline-block;
-    @include phone-rule(margin-bottom, 15px);
-    @include phone-rule(font-size, 13px);
-    @include phone-rule(line-height, 20px);
-    font-family: $font-title;
-    color: $color-gray-2;
-    border-bottom: 2px solid rgba($color-gray-2, 0.4);
-  }
-  &-excerpt {
-    &, p {
-      @include phone-rule(font-size, $type-size-body);
-      @include phone-rule(line-height, $type-line-body);
+    &:hover {
+      color: $color-blue-1;
     }
   }
 
-  &,
-  .post-date {
-    @include transition(all 150ms ease);
-  }
+  .medium-widget {
+    max-width: 800px;
+    margin: 0 auto;
+    @include phone-rule(margin-bottom, 20px);
 
-  &:hover {
-    opacity: 1;
+    &-article__title {
+      @include phone-rule(font-size, 24px);
+      @include phone-rule(margin-bottom, 10px);
+      font-family: $font-title;
 
-    .post-date {
-      border-color: $color-red-1;
+      &:hover {
+        color: $color-blue-1;
+      }
+    }
+
+    &-article__description {
+      @include phone-rule(font-size, 16px);
+      @include phone-rule(margin-bottom, 10px);
     }
   }
 }
-
-
 
 // Contact
 .contact {
-  padding: 80px 20px 500px;
+  padding: 80px 20px 280px;
   text-align: center;
   background-color: $color-gray-1;
-  background-image: url('/img/home/brooklyn-bridge.svg');
+  background-image: url('/img/home/austin.svg');
   background-position: bottom;
   background-size: 100% auto;
   background-repeat: no-repeat;
@@ -773,7 +685,7 @@ $wave-color: #8D99AE;
   &-address {
     display: inline-block;
     position: relative;
-    font-size: 22px;
+    font-size: 32px;
     line-height: 36px;
     color: $color-white;
 

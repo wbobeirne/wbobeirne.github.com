@@ -5,22 +5,13 @@ layout: default
 
 <div class="home">
   <div class="intro home-section">
-    <div class="intro-waves">
-      {% comment %}14 of these {% endcomment %}
-      <div class="intro-waves-line"></div>
-      <div class="intro-waves-line"></div>
-      <div class="intro-waves-line"></div>
-      <div class="intro-waves-line"></div>
-      <div class="intro-waves-line"></div>
-      <div class="intro-waves-line"></div>
-      <div class="intro-waves-line"></div>
-      <div class="intro-waves-line"></div>
-      <div class="intro-waves-line"></div>
-      <div class="intro-waves-line"></div>
-      <div class="intro-waves-line"></div>
-      <div class="intro-waves-line"></div>
-      <div class="intro-waves-line"></div>
-      <div class="intro-waves-line"></div>
+    <div class="intro-waves"></div>
+    <div class="intro-arrow">
+      <svg width="3127px" height="32px" viewBox="0 0 3127 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <polygon fill="#F9FBF4" points="3127 0 1907 0 1877 30 1848 0 0 0 0 32 3127 32"></polygon>
+      </svg>
+    </div>
+
     </div>
     <div class="home-section-inner">
       <h1 class="intro-text" data-scroll-trigger="middle" data-scroll-toggle>
@@ -28,8 +19,6 @@ layout: default
         <span>unsolved problems, and awful jokes,</span>
         <span>Will's just trying to make it happen</span>
       </h1>
-
-      <div class="intro-arrow"></div>
     </div>
   </div>
 
@@ -152,43 +141,11 @@ layout: default
     <div class="home-section-inner">
       <h2 class="posts-title">Sometimes I post things on the internet</h2>
 
-      <div class="posts-list posts-list--blurred">
-        {% for post in site.posts limit:2 %}
-          {% comment %}
-          <a class="post" href="{{ post.url }}">
-            <h3 class="post-title">
-              {{ post.title }}
-            </h3>
-            <div class="post-date">
-              {{ post.date | date: '%B %-d, %Y' }}
-            </div>
-            <div class="post-excerpt">
-              {{ post.excerpt }}
-            </div>
-          </a>
-          {% endcomment %}
-          <div class="post">
-            <h3 class="post-title">
-              I'm a sample post. Don't squint too hard.
-            </h3>
-            <div class="post-date">
-              Dec 31, 1969
-            </div>
-            <div class="post-excerpt">
-              One of these days I'll get off my lazy ass and finish a few
-              of the drafts I started. But today is not that day. Tomorrow's
-              not looking too hot either. But yeah, it'll happen at some point.
-              Stay tuned, folks. Maybe I'll even add RSS or somethin'.
-            </div>
-          </div>
-        {% endfor %}
-      </div>
+      <div id="medium-widget"></div>
 
-      <div class="posts-tbd">
-        But not quite yet.
-        <br/>
-        Still working on my prose, yo.
-      </div>
+      <a class="posts-more" href="https://medium.com/@wbobeirne" target="_blank">
+        Read more on Medium.com →
+      </a>
     </div>
   </div>
 
@@ -233,6 +190,14 @@ layout: default
         <a
           class="contact-sources-link isIcon"
           target="_blank"
+          href="https://medium.com/@wbobeirne"
+        >
+          <i class="fa fa-medium"></i>
+        </a>
+
+        <a
+          class="contact-sources-link isIcon"
+          target="_blank"
           href="http://codepen.io/wbobeirne/"
         >
           <i class="fa fa-codepen"></i>
@@ -249,11 +214,27 @@ layout: default
 
       <h2 class="contact-title">Proud Resident of</h2>
       <div></div>
-      <div class="contact-address">Brooklyn, NY</div>
+      <div class="contact-address">Austin, TX</div>
     </div>
   </div>
 </div>
 
+<script src="{{ "/js/three.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/js/vanta.waves.min.js" | prepend: site.baseurl }}"></script>
 <script>
   Home.register();
+</script>
+<script src="https://medium-widget.pixelpoint.io/widget.js"></script>
+<script>
+  MediumWidget.Init({
+    renderTo: '#medium-widget',
+    params: {
+      resource: "https://medium.com/@wbobeirne",
+      postsPerLine: 1,
+      limit: 3,
+      picture: "none",
+      fields: ["description","claps","publishAt"],
+      ratio: "landscape"
+    }
+  });
 </script>

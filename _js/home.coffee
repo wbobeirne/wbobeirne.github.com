@@ -1,16 +1,21 @@
 $ = require("jquery")
 debounce = require("lodash/debounce")
-Hexes = require("libs/hexes")
 
 noTransTimeout = null
 
 window.Home = {
   register: ->
-    $(window).on("load", ->
+    console.log('Whatup')
+    $(window).on("load", =>
       Home.init()
       $(".site").addClass("isLoaded")
       $(window).trigger("resize")
       $(window).trigger("scroll")
+      console.log(@Dom.waves)
+      VANTA.WAVES({
+        el: @Dom.waves[0]
+        color: 0x2B2D42
+      })
     )
 
   init: ->
@@ -27,7 +32,7 @@ window.Home = {
     @Dom = {
       body: $("body")
       header: $(".site-header")
-      hexes: $(".intro-hexes")
+      waves: $(".intro-waves")
       projects: $(".project")
       scrollers: $("[data-scroll-trigger]")
       smoothAnchors: $("[data-smooth-anchor]")

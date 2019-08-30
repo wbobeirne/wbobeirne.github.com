@@ -44,23 +44,26 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var $, Hexes, debounce, noTransTimeout;
+	var $, debounce, noTransTimeout;
 
 	$ = __webpack_require__(1);
 
 	debounce = __webpack_require__(2);
 
-	Hexes = __webpack_require__(14);
-
 	noTransTimeout = null;
 
 	window.Home = {
 	  register: function() {
+	    console.log('Whatup');
 	    return $(window).on("load", function() {
 	      Home.init();
 	      $(".site").addClass("isLoaded");
 	      $(window).trigger("resize");
-	      return $(window).trigger("scroll");
+	      $(window).trigger("scroll");
+	      console.log(this.Dom.waves);
+	      return VANTA.WAVES({
+	        el: this.Dom.waves[0]
+	      });
 	    });
 	  },
 	  init: function() {
@@ -76,7 +79,7 @@
 	    this.Dom = {
 	      body: $("body"),
 	      header: $(".site-header"),
-	      hexes: $(".intro-hexes"),
+	      waves: $(".intro-waves"),
 	      projects: $(".project"),
 	      scrollers: $("[data-scroll-trigger]"),
 	      smoothAnchors: $("[data-smooth-anchor]"),
@@ -11214,216 +11217,6 @@
 	}
 
 	module.exports = isObjectLike;
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports) {
-
-	var BASE_RAD, HexLine, Hexes;
-
-	BASE_RAD = Math.PI * 2 / 6;
-
-	Hexes = (function() {
-	  Hexes.prototype.playing = false;
-
-	  Hexes.prototype.lastTime = 0;
-
-	  Hexes.prototype.canvas = null;
-
-	  Hexes.prototype.context = null;
-
-	  Hexes.prototype.width = 0;
-
-	  Hexes.prototype.height = 0;
-
-	  Hexes.prototype.centerX = 0;
-
-	  Hexes.prototype.centerY = 0;
-
-	  Hexes.prototype.dieW = 0;
-
-	  Hexes.prototype.dieH = 0;
-
-	  function Hexes(el, config) {
-	    var attr, val;
-	    if (config == null) {
-	      config = {};
-	    }
-	    this.lines = [];
-	    this.config = {
-	      length: 20,
-	      count: 50,
-	      baseTime: 10000,
-	      addedTime: 10000,
-	      dieChance: 0.05,
-	      speed: 80.0,
-	      lineSize: 3,
-	      spawnChance: 1,
-	      sparkChance: 0.10,
-	      sparkDistance: 15,
-	      sparkSize: 3,
-	      background: '0, 0, 0',
-	      color: 'hsl(hue,100%,light%)',
-	      repaintAlpha: 0.04,
-	      hueChange: 5,
-	      baseLight: 50,
-	      addedLight: 10,
-	      timeShadowRatio: 6,
-	      baseLightMultiplier: 0.01,
-	      addedLightMultiplier: 0.02
-	    };
-	    for (attr in config) {
-	      val = config[attr];
-	      if (this.config[attr] != null) {
-	        this.config[attr] = val;
-	      }
-	    }
-	    this.updateCanvas(el);
-	    this.start();
-	    window.addEventListener('resize', (function(_this) {
-	      return function() {
-	        if (_this.playing) {
-	          return _this.updateCanvas(_this.canvas);
-	        }
-	      };
-	    })(this));
-	    return this;
-	  }
-
-	  Hexes.prototype.start = function() {
-	    this.playing = true;
-	    window.requestAnimationFrame(this.draw.bind(this));
-	    return this;
-	  };
-
-	  Hexes.prototype.stop = function() {
-	    this.playing = false;
-	    return this;
-	  };
-
-	  Hexes.prototype.draw = function(time) {
-	    var delta, i, j, len, line, ref;
-	    if (!this.playing) {
-	      return;
-	    }
-	    delta = 0;
-	    if (this.lastTime) {
-	      delta = time - this.lastTime;
-	    }
-	    delta = delta * this.config.speed;
-	    this.context.globalCompositeOperation = "source-over";
-	    this.context.shadowBlur = 0;
-	    this.context.fillStyle = "rgba(" + this.config.background + ", " + this.config.repaintAlpha + ")";
-	    this.context.fillRect(0, 0, this.width, this.height);
-	    this.context.globalCompositeOperation = "lighter";
-	    if (this.lines.length < this.config.count && Math.random() < this.config.spawnChance) {
-	      this.lines.push(new HexLine(this));
-	    }
-	    ref = this.lines;
-	    for (i = j = 0, len = ref.length; j < len; i = ++j) {
-	      line = ref[i];
-	      line.draw(delta, i);
-	    }
-	    this.lastTime = time;
-	    window.requestAnimationFrame(this.draw.bind(this));
-	    return this;
-	  };
-
-	  Hexes.prototype.updateCanvas = function(el) {
-	    var rect;
-	    if (el.jquery) {
-	      el = el.get(0);
-	    }
-	    rect = el.getBoundingClientRect();
-	    el.width = rect.width;
-	    el.height = rect.height;
-	    this.canvas = el;
-	    this.context = el.getContext("2d");
-	    this.width = el.width;
-	    this.height = el.height;
-	    this.centerX = this.width / 2;
-	    this.centerY = this.height / 2;
-	    this.dieX = this.centerX / 2 / this.config.length;
-	    this.dieY = this.centerY / 2 / this.config.length;
-	    return this;
-	  };
-
-	  return Hexes;
-
-	})();
-
-	HexLine = (function() {
-	  function HexLine(parent) {
-	    this.parent = parent;
-	    this.reset();
-	  }
-
-	  HexLine.prototype.draw = function(delta, i) {
-	    var cfg, drawX, drawY, light, lightMultiplier, prop, wave, x, y;
-	    if (this.stepLifetime >= this.targetLifetime) {
-	      this.begin();
-	    }
-	    cfg = this.parent.config;
-	    prop = this.stepLifetime / this.targetLifetime;
-	    wave = Math.sin(prop * Math.PI / 2);
-	    x = this.addedX * wave;
-	    y = this.addedY * wave;
-	    drawX = this.parent.centerX + (this.x + x) * cfg.length;
-	    drawY = this.parent.centerY + (this.y + y) * cfg.length;
-	    lightMultiplier = Math.sin(this.lifetime * this.lightMultiplier);
-	    light = cfg.baseLight + cfg.addedLight * lightMultiplier;
-	    this.parent.context.shadowBlur = prop * cfg.timeShadowRatio;
-	    this.parent.context.fillStyle = this.color.replace("light", light);
-	    this.parent.context.shadowColor = this.parent.context.fillStyle;
-	    this.parent.context.fillRect(drawX, drawY, cfg.lineSize, cfg.lineSize);
-	    if (Math.random() > cfg.sparkChance) {
-	      this.parent.context.fillRect(this.getRandomCoord(drawX, cfg.sparkSize, cfg.sparkDist), this.getRandomCoord(drawY, cfg.sparkSize, cfg.sparkDist), cfg.sparkSize, cfg.sparkSize);
-	    }
-	    this.lifetime += delta;
-	    return this.stepLifetime += delta;
-	  };
-
-	  HexLine.prototype.reset = function() {
-	    this.lifetime = 0;
-	    this.x = 0;
-	    this.y = 0;
-	    this.addedX = 0;
-	    this.addedY = 0;
-	    this.rad = 0;
-	    this.color = this.parent.config.color.replace("hue", this.parent.lastTime * this.parent.config.hueChange / 1000);
-	    this.lightMultiplier = this.parent.config.baseLightMultiplier * this.parent.config.addedLightMultiplier;
-	    return this.begin();
-	  };
-
-	  HexLine.prototype.begin = function() {
-	    this.x += this.addedX;
-	    this.y += this.addedY;
-	    this.stepLifetime = 0;
-	    this.targetLifetime = this.parent.config.baseTime + this.parent.config.addedTime * Math.random();
-	    this.rad += BASE_RAD * (Math.random() < .5 ? 1 : -1);
-	    this.addedX = Math.cos(this.rad);
-	    this.addedY = Math.sin(this.rad);
-	    if (Math.random() < this.parent.config.dieChance) {
-	      return this.reset();
-	    } else if (this.x > this.parent.config.dieX || this.x < -this.parent.config.dieX) {
-	      return this.reset();
-	    } else if (this.y > this.parent.config.dieY || this.y < -this.parent.config.dieY) {
-	      return this.reset();
-	    }
-	  };
-
-	  HexLine.prototype.getRandomCoord = function(seed, size, mult) {
-	    var dir;
-	    dir = Math.random() < .5 ? 1 : -1;
-	    return seed + Math.random() * mult * dir - size / 2;
-	  };
-
-	  return HexLine;
-
-	})();
-
-	module.exports = Hexes;
 
 
 /***/ })
