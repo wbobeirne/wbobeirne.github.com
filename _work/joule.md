@@ -10,7 +10,7 @@ cta: Make a payment
 screenshots:
   - type: desktop
     name: joule-desktop
-    url: https://grant.io
+    url: https://lightningjoule.com
   - type: phone
     name: joule-mobile
 ---
