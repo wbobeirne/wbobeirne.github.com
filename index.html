@@ -137,9 +137,9 @@ layout: default
 
 
 
-  <div id="posts" class="posts home-section">
+  <!-- <div id="articles" class="posts home-section">
     <div class="home-section-inner">
-      <h2 class="posts-title">Sometimes I post things on the internet</h2>
+      <h2 class="posts-title">Sometimes I write things on the internet</h2>
 
       <div id="medium-widget"></div>
 
@@ -147,7 +147,7 @@ layout: default
         Read more on Medium.com →
       </a>
     </div>
-  </div>
+  </div> -->
 
 
 
@@ -223,18 +223,4 @@ layout: default
 <script src="{{ "/js/vanta.waves.min.js" | prepend: site.baseurl }}"></script>
 <script>
   Home.register();
-</script>
-<script src="https://medium-widget.pixelpoint.io/widget.js"></script>
-<script>
-  MediumWidget.Init({
-    renderTo: '#medium-widget',
-    params: {
-      resource: "https://medium.com/@wbobeirne",
-      postsPerLine: 1,
-      limit: 3,
-      picture: "none",
-      fields: ["description","claps","publishAt"],
-      ratio: "landscape"
-    }
-  });
 </script>
