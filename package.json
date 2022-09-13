@@ -1,26 +1,31 @@
 {
   "name": "wbobeirne",
-  "version": "1.0.0",
-  "description": "Personal website",
-  "main": "js/index.js",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "watch": "webpack --progress --watch --config _js/webpack.config.js",
-    "build": "webpack --progress -p --config _js/webpack.config.js",
-    "jekyll": "jekyll serve --config _config.dev.yml",
-    "jekyll-prod": "jekyll serve"
-  },
-  "author": "Will O'Beirne",
-  "license": "ISC",
-  "devDependencies": {
-    "webpack": "^1.12.13"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "babel-core": "^6.21.0",
-    "babel-loader": "^6.2.10",
-    "coffee-loader": "^0.7.2",
-    "coffee-script": "^1.12.2",
-    "jquery": "3.3.1",
-    "lodash": "^4.5.0",
-    "yargs": "^4.1.0"
+    "gsap": "^3.11.1",
+    "lil-gui": "^0.17.0",
+    "next": "12.2.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "three": "^0.144.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.7.6",
+    "@types/react": "18.0.17",
+    "@types/react-dom": "18.0.6",
+    "@types/three": "^0.144.0",
+    "eslint": "8.22.0",
+    "eslint-config-next": "12.2.5",
+    "eslint-config-prettier": "^8.5.0",
+    "lint-staged": "^13.0.3",
+    "sass": "^1.54.4",
+    "typescript": "4.7.4"
   }
 }

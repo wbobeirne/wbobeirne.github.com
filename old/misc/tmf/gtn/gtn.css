@@ -1,0 +1,45 @@
+/* Remove site css */
+
+#sidebar-left-wrapper {
+  display: none;
+}
+
+#content-wrapper {
+  width: auto;
+  float: none;
+  max-width: none;
+  padding: 40px;
+}
+
+/* End site CSS removal */
+
+ul.messages {
+  height: 300px;
+  margin: 10px 0;
+  background-color: #EEE;
+  border: 1px solid #CCC;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  border-radius: 4px;
+  overflow-y: scroll;
+}
+  ul.messages li.message {
+    display: block;
+    padding: 5px 10px;
+  }
+    ul.messages li.message.success {
+      color: #8B0;
+    }
+    ul.messages li.message.warning {
+      color: #DA0;
+    }
+    ul.messages li.message.error {
+      color: #D44;
+    }
+    
+    
+#guess {
+  display: block;
+  float: none;
+}
