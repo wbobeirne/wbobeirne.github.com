@@ -1,28 +1,39 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useRef } from "react";
-import { ThreeBG } from "../../lib/three-bg";
+import React from "react";
+import { Canvas } from "@react-three/fiber";
 import styles from "./style.module.scss";
-
+import {
+  ContactShadows,
+  Environment,
+  OrbitControls,
+  Plane,
+} from "@react-three/drei";
+import { Howdy } from "./Howdy";
+import { Camera } from "./Camera";
+import { Lights } from "./Lights";
+import { Workspace } from "./Workspace";
 export const WebGLBackground: React.FC = () => {
   const { pathname } = useRouter();
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const threeBgRef = useRef<ThreeBG | null>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    threeBgRef.current = new ThreeBG(canvas);
-    threeBgRef.current;
-  }, []);
-
-  useEffect(() => {
-    if (!threeBgRef.current) return;
-    threeBgRef.current.updatePathname(pathname);
-  }, [pathname]);
 
   return (
     <div className={styles.container}>
-      <canvas ref={canvasRef} />
+      <Canvas dpr={[1, 2]}>
+        <group>
+          <Howdy />
+          <Workspace />
+          <ContactShadows
+            scale={25}
+            blur={3}
+            opacity={0.4}
+            far={20}
+            frames={1}
+          />
+        </group>
+        <Camera pathname={pathname} />
+        <Lights />
+        {/* <Environment preset="warehouse" /> */}
+        {/* <OrbitControls makeDefault /> */}
+      </Canvas>
     </div>
   );
 };

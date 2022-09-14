@@ -9,12 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-spring/three": "^9.5.4",
+    "@react-three/drei": "^9.29.1",
+    "@react-three/fiber": "^8.7.3",
+    "camera-controls": "^1.36.2",
     "gsap": "^3.11.1",
     "lil-gui": "^0.17.0",
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "three": "^0.144.0"
+    "three": "^0.144.0",
+    "three-stdlib": "^2.15.0"
   },
   "devDependencies": {
     "@types/node": "18.7.6",

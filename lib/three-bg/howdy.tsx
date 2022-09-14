@@ -6,8 +6,11 @@ import {
   MeshPhongMaterial,
   RepeatWrapping,
   TextureLoader,
+  Vector3,
 } from "three";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 import gsap from "gsap";
 import GUI from "lil-gui";
@@ -27,6 +30,7 @@ const fontParameters = {
 
 export class HowdySet extends ThreeBGSet {
   howdy: Group;
+  person: Group;
   letters: Mesh<TextGeometry>[];
 
   constructor(threebg: ThreeBG) {
@@ -35,6 +39,7 @@ export class HowdySet extends ThreeBGSet {
     this.howdy.scale.set(4, 4, 4);
     this.howdy.rotation.y = -Math.PI * 0.1;
     this.howdy.rotation.x = Math.PI * 0.03;
+    this.person = new Group();
     this.letters = [];
   }
 
@@ -42,16 +47,27 @@ export class HowdySet extends ThreeBGSet {
     // Load fonts & textures
     const fontLoader = new FontLoader();
     const textureLoader = new TextureLoader();
-    const [font, pattern1, pattern2, pattern3, pattern4, pattern5, pattern6] =
-      await Promise.all([
-        fontLoader.loadAsync("/threejs/fonts/Tondu-Howdy.json"),
-        textureLoader.load("/threejs/textures/pattern1.jpg"),
-        textureLoader.load("/threejs/textures/pattern2.jpg"),
-        textureLoader.load("/threejs/textures/pattern3.jpg"),
-        textureLoader.load("/threejs/textures/pattern4.jpg"),
-        textureLoader.load("/threejs/textures/pattern5.png"),
-        textureLoader.load("/threejs/textures/pattern6.png"),
-      ]);
+    const gltfLoader = new GLTFLoader();
+
+    const [
+      font,
+      pattern1,
+      pattern2,
+      pattern3,
+      pattern4,
+      pattern5,
+      pattern6,
+      abel,
+    ] = await Promise.all([
+      fontLoader.loadAsync("/threejs/fonts/Tondu-Howdy.json"),
+      textureLoader.loadAsync("/threejs/textures/pattern1.jpg"),
+      textureLoader.loadAsync("/threejs/textures/pattern2.jpg"),
+      textureLoader.loadAsync("/threejs/textures/pattern3.jpg"),
+      textureLoader.loadAsync("/threejs/textures/pattern4.jpg"),
+      textureLoader.loadAsync("/threejs/textures/pattern5.png"),
+      textureLoader.loadAsync("/threejs/textures/pattern6.png"),
+      gltfLoader.loadAsync("/threejs/models/abel.gltf"),
+    ]);
     [pattern1, pattern2, pattern3, pattern4, pattern5, pattern6].forEach(
       (pattern) => {
         pattern.wrapS = RepeatWrapping;
@@ -99,10 +115,18 @@ export class HowdySet extends ThreeBGSet {
       .getCenter(this.howdy.position)
       .multiplyScalar(-1);
     this.howdy.position.x = this.howdy.position.x * 1.18;
-
-    // Light
-
     this.scene.add(this.howdy);
+
+    // Person
+    this.person = abel.scene;
+    this.person.position.set(0, 0.6, 0);
+    this.person.scale.set(0.03, 0.03, 0.03);
+    this.scene.add(this.person);
+    const box = new Box3();
+    box.setFromObject(this.person);
+    console.log(this.person);
+    console.log(this.person.position);
+    console.log(box.getSize(new Vector3()));
   }
 
   configureGUI(gui: GUI) {
