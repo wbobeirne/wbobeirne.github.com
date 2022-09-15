@@ -8,7 +8,9 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
       <Nav />
-      <Component {...pageProps} />
+      <div style={{ display: "none" }}>
+        <Component {...pageProps} />
+      </div>
       <WebGLBackground />
     </>
   );

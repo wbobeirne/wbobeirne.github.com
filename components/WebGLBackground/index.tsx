@@ -2,24 +2,22 @@ import { useRouter } from "next/router";
 import React from "react";
 import { Canvas } from "@react-three/fiber";
 import styles from "./style.module.scss";
-import {
-  ContactShadows,
-  Environment,
-  OrbitControls,
-  Plane,
-} from "@react-three/drei";
+import { ContactShadows } from "@react-three/drei";
 import { Howdy } from "./Howdy";
 import { Camera } from "./Camera";
 import { Lights } from "./Lights";
 import { Workspace } from "./Workspace";
+import { Avatar } from "./Avatar";
+
 export const WebGLBackground: React.FC = () => {
   const { pathname } = useRouter();
 
   return (
     <div className={styles.container}>
-      <Canvas dpr={[1, 2]}>
+      <Canvas dpr={[1, 2]} orthographic>
         <group>
           <Howdy />
+          <Avatar />
           <Workspace />
           <ContactShadows
             scale={25}

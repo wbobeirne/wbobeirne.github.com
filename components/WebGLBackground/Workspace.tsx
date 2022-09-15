@@ -19,10 +19,4 @@ export const Workspace: React.FC = () => {
       rotation={[0, Math.PI, 0]}
     />
   );
-  // return (
-  //   <mesh
-  //     material={materials["Material.001"]}
-  //     geometry={(nodes.Suzanne as Mesh).geometry}
-  //   />
-  // );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { useHelper } from "@react-three/drei";
 import { DirectionalLightHelper, PointLightHelper, Vector3 } from "three";
 
@@ -14,8 +14,9 @@ export const Lights: React.FC = () => {
       <directionalLight
         ref={dirLightRef}
         args={[0xffffff]}
-        position={[0, 5, 4]}
-        intensity={5}
+        position={[0.1, 5, 4]}
+        intensity={3}
+        castShadow
       />
       <directionalLight
         ref={dirLightRef2}
