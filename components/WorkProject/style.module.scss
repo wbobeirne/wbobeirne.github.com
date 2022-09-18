@@ -1,0 +1,34 @@
+.container {
+  width: 100%;
+  max-width: 480px;
+  background: #FAFAFA;
+  border: 10px solid #DDD;
+  border-left-color: transparent;
+  border-top-color: transparent;
+  margin-bottom: 20px;
+}
+
+.list {
+  a {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+  }
+
+  .logo {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    margin-right: 16px;
+  }
+
+  .name {
+    font-size: 28px;
+    font-weight: 400;
+  }
+}
+
+.full {
+  display: none;
+  padding: 16px;
+}

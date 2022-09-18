@@ -1,7 +1,12 @@
 .nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
 
   a {
-    padding: 20px;
+    padding: 1.4vw;
+    font-size: 2vw;
   }
 }

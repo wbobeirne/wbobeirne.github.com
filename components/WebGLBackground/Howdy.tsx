@@ -85,11 +85,7 @@ export const Howdy: React.FC = () => {
         <group>
           {letters.map((letter, i) => (
             <React.Fragment key={letter.char}>
-              <mesh
-                key={letter.char}
-                position={[letter.x, 0, 0]}
-                receiveShadow={letter.shadows}
-              >
+              <mesh position={[letter.x, 0, 0]} receiveShadow={letter.shadows}>
                 <textGeometry args={[letter.char, config]} />
                 <meshBasicMaterial attach="material-0" map={patterns[i]} />
                 <meshPhongMaterial
@@ -98,7 +94,7 @@ export const Howdy: React.FC = () => {
                   flatShading={false}
                 />
               </mesh>
-              <mesh key={letter.char} position={[letter.x, 0, -0.02]}>
+              <mesh position={[letter.x, 0, -0.02]}>
                 <textGeometry
                   args={[
                     letter.char,
