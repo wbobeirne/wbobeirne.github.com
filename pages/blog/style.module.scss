@@ -1,0 +1,48 @@
+$post-depth: 12px;
+
+.post {
+  display: block;
+  position: relative;
+  max-width: 780px;
+  padding: 20px;
+  background: #FFF;
+  margin: 0 0 40px;
+
+  img {
+    max-width: 100%;
+  }
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: '';
+  }
+
+  &::before {
+    bottom: -$post-depth;
+    left: $post-depth / 2;
+    width: 100%;
+    height: $post-depth;
+    background: #CCC;
+    transform: skewX(45deg);
+  }
+
+  &::after {
+    right: -$post-depth;
+    bottom: -$post-depth / 2;
+    height: 100%;
+    width: $post-depth;
+    background: #DDD;
+    transform: skewY(45deg);
+  }
+
+  .readMore {
+    color: #C00;
+  }
+
+  &:hover {
+    .readMore {
+      color: #F00;
+    }
+  }
+}

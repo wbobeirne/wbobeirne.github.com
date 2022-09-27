@@ -1,0 +1,7 @@
+.projects {
+  position: relative;
+  display: grid;
+  max-width: 600px;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3vw;
+}

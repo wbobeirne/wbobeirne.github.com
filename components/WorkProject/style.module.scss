@@ -1,34 +1,114 @@
+$btn-depth: 12px;
+$btn-sink: 6px;
+
 .container {
-  width: 100%;
-  max-width: 480px;
-  background: #FAFAFA;
-  border: 10px solid #DDD;
-  border-left-color: transparent;
-  border-top-color: transparent;
+  width: 160px;
+  height: 160px;
+}
+
+.content {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 160px;
+  height: 160px;
   margin-bottom: 20px;
+  list-style: none;
+  background: var(--color-secondary);
+  transform: translate(0);
+  box-shadow: 0 0 0 1px var(--color-secondary-dark) inset;
+
+  &.isActive {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+  }
+
+  &,
+  &::before,
+  &::after {
+    transition: all 150ms ease;
+  }
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: '';
+  }
+
+  &::before {
+    bottom: -$btn-depth;
+    left: $btn-depth / 2;
+    width: 100%;
+    height: $btn-depth;
+    background: var(--color-secondary-darker);
+    transform: skewX(45deg);
+  }
+  
+  &::after {
+    right: -$btn-depth;
+    bottom: -$btn-depth / 2;
+    height: 100%;
+    width: $btn-depth;
+    background: var(--color-secondary-dark);
+    transform: skewY(45deg);
+  }
+  
+  &:not(.isActive) {
+    &:active,
+    &:hover {
+      top: $btn-sink;
+      left: $btn-sink;
+
+      &::before {
+        bottom: -$btn-depth + $btn-sink;
+        height: $btn-depth - $btn-sink;
+        left: $btn-depth / 2 - $btn-sink / 2;
+      }
+
+      &::after {
+        right: -$btn-depth +$btn-sink;
+        width: $btn-depth - $btn-sink;
+        bottom: -($btn-depth / 2 - $btn-sink / 2);
+      }
+    }
+  }
 }
 
 .list {
+  width: 100%;
+  height: 100%;
+
   a {
-    padding: 16px;
     display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
     align-items: center;
+    justify-content: center;
   }
 
   .logo {
     position: relative;
-    width: 48px;
-    height: 48px;
-    margin-right: 16px;
+    width: 72px;
+    height: 72px;
   }
 
   .name {
-    font-size: 28px;
-    font-weight: 400;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin: 24px 0 0;
+    text-transform: uppercase;
+    color: var(--color-primary);
   }
 }
 
 .full {
-  display: none;
   padding: 16px;
 }

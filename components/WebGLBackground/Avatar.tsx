@@ -1,25 +1,24 @@
-import { Shadow, useGLTF } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import React, { useEffect, useRef } from "react";
-import { AnimationMixer } from "three";
+import { AnimationMixer, LoopOnce } from "three";
 
 export const Avatar: React.FC = () => {
-  // const gltf = useGLTF("/threejs/models/will.glb");
-  const gltf = useGLTF("/threejs/models/will-altlighting.glb");
+  const gltf = useGLTF("/threejs/models/will-rigify.glb");
   const mixer = useRef<AnimationMixer>();
 
   useEffect(() => {
-    console.log(gltf);
-    gltf.scene.castShadow = true;
+    console.log({ gltf });
     gltf.scene.traverse((node: any) => {
-      if (node.isMesh) {
-        node.castShadow = true;
-        node.receiveShadow = true;
-        node.geometry.computeVertexNormals();
-      }
+      node.frustumCulled = false;
     });
+    const vaultAnim = gltf.animations.find((a) => a.name === "VaultAndSit");
+    if (!vaultAnim) return;
     mixer.current = new AnimationMixer(gltf.scene);
-    const action = mixer.current.clipAction(gltf.animations[2]);
+    const action = mixer.current.clipAction(vaultAnim);
+    action.setLoop(LoopOnce, 1);
+    action.clampWhenFinished = true;
+    action.enabled = true;
     action.play();
   }, [gltf]);
 
@@ -27,5 +26,5 @@ export const Avatar: React.FC = () => {
     if (mixer.current) mixer.current.update(delta);
   });
 
-  return <primitive object={gltf.scene} position={[0.9, 3.4, 0.5]} />;
+  return <primitive object={gltf.scene} position={[0.9, 3.46, 0.5]} />;
 };

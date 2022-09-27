@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { Template } from "../../components/Template";
+import styles from "./style.module.scss";
 
 const POSTS = [
   {
@@ -74,11 +75,15 @@ const Blog: NextPage = () => {
       <div>
         {POSTS.map((post) => (
           <Link key={post.url} href={post.url}>
-            <a target="_blank" rel="noopener noreferrer">
+            <a
+              className={styles.post}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img src={post.image} />
-              <h3>{post.title}</h3>
-              <p>{post.preview}</p>
-              <div>Read more →</div>
+              <h3 className={styles.title}>{post.title}</h3>
+              <p className={styles.preview}>{post.preview}</p>
+              <div className={styles.readMore}>Read more →</div>
             </a>
           </Link>
         ))}

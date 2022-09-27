@@ -3,7 +3,11 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Vector3 } from "three";
 import { CameraControls } from "./CameraControls";
 
-const ZOOM = 50;
+const ZOOM_MULTIPLIER = 50;
+const POSITION_MULTIPLIER = 1;
+
+const makeZoom = (zoom: number, width: number, height: number) =>
+  zoom * ZOOM_MULTIPLIER;
 
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
@@ -20,23 +24,24 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
   const [mouseY, setMouseY] = useState(0); // -1 to 1
 
   const pageConfigs = useMemo(() => {
+    console.log(camConRef.current);
     const aspect = width / height;
     return [
       {
         route: "/bio",
         position: new Vector3(
-          1 - clamp(aspect * 0.5, 0, 1),
-          2.2 + clamp(aspect * 5, 0, 2),
-          3
+          1 - clamp(aspect * 0.5, 0, 1) * POSITION_MULTIPLIER,
+          2.2 + clamp(aspect * 5, 0, 2) * POSITION_MULTIPLIER,
+          10 * POSITION_MULTIPLIER
         ),
         target: new Vector3(
           1 - clamp(aspect * 0.5, 0, 1),
           2 + clamp(aspect * 5, 0, 2),
-          -10
+          0
         ),
-        positionWiggle: 0.05,
-        targetWiggle: 0,
-        zoom: 5 + clamp(aspect * 5, 2, 10) * ZOOM,
+        positionWiggle: 0.1,
+        targetWiggle: 0.05,
+        zoom: makeZoom(0 + clamp(aspect * 5, 2, 10), width, height),
       },
       {
         route: "/work",
@@ -44,7 +49,7 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
         target: new Vector3(0, 1.1, -1),
         positionWiggle: 0.1,
         targetWiggle: 0.05,
-        zoom: clamp(aspect * 4, 4, 8) * ZOOM,
+        zoom: makeZoom(clamp(aspect * 4, 4, 8), width, height),
       },
       {
         route: "/blog",
@@ -52,15 +57,19 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
         target: new Vector3(2, 4.35, 0),
         positionWiggle: 0.15,
         targetWiggle: 0,
-        zoom: 5 + clamp(aspect * 5, 2, 10) * ZOOM,
+        zoom: makeZoom(5 + clamp(aspect * 5, 2, 10), width, height),
       },
       {
         route: "/",
-        position: new Vector3(8, 5, 10),
+        position: new Vector3(
+          8 * POSITION_MULTIPLIER,
+          5 * POSITION_MULTIPLIER,
+          10 * POSITION_MULTIPLIER
+        ),
         target: new Vector3(0, 1.8, 0),
         positionWiggle: 1,
         targetWiggle: 0.1,
-        zoom: clamp(aspect * 0.9, 0.5, 2) * ZOOM,
+        zoom: makeZoom(clamp(aspect * 0.9, 0.5, 2), width, height),
       },
     ];
   }, [width, height]);
