@@ -48,25 +48,29 @@ const letters = [
   },
 ];
 
+const patterns = [
+  { path: "/threejs/textures/pattern1.jpg", size: 0.18, offset: 0 },
+  { path: "/threejs/textures/pattern2.jpg", size: 0.1, offset: 0 },
+  { path: "/threejs/textures/pattern3.jpg", size: 0.15, offset: 0 },
+  { path: "/threejs/textures/pattern4.jpg", size: 0.15, offset: 0 },
+  { path: "/threejs/textures/pattern5.png", size: 0.5, offset: 0 },
+  { path: "/threejs/textures/pattern6.png", size: 1, offset: 0 },
+];
+
 export const Howdy: React.FC = () => {
   useMemo(() => extend({ TextGeometry }), []);
   const font = useLoader(FontLoader, "/threejs/fonts/Tondu-Howdy.json");
-  const patterns = useTexture([
-    "/threejs/textures/pattern1.jpg",
-    "/threejs/textures/pattern2.jpg",
-    "/threejs/textures/pattern3.jpg",
-    "/threejs/textures/pattern4.jpg",
-    "/threejs/textures/pattern5.png",
-    "/threejs/textures/pattern6.png",
-  ]);
+  const textures = useTexture(patterns.map((p) => p.path));
 
   useMemo(() => {
-    patterns.forEach((pattern) => {
-      pattern.wrapS = RepeatWrapping;
-      pattern.wrapT = RepeatWrapping;
-      pattern.repeat.set(0.1, 0.1);
+    textures.forEach((t, idx) => {
+      const pattern = patterns[idx];
+      t.wrapS = RepeatWrapping;
+      t.wrapT = RepeatWrapping;
+      t.repeat.set(pattern.size, pattern.size);
+      t.offset.set(pattern.offset, pattern.offset);
     });
-  }, [patterns]);
+  }, [textures]);
 
   const renderedLetters = useMemo(() => {
     const config = {
@@ -87,7 +91,7 @@ export const Howdy: React.FC = () => {
             <React.Fragment key={letter.char}>
               <mesh position={[letter.x, 0, 0]} receiveShadow={letter.shadows}>
                 <textGeometry args={[letter.char, config]} />
-                <meshBasicMaterial attach="material-0" map={patterns[i]} />
+                <meshBasicMaterial attach="material-0" map={textures[i]} />
                 <meshPhongMaterial
                   attach="material-1"
                   color={0xffffff}
@@ -112,7 +116,7 @@ export const Howdy: React.FC = () => {
         </group>
       </Center>
     );
-  }, [font, patterns]);
+  }, [font, textures]);
 
   return <Suspense fallback={null}>{renderedLetters}</Suspense>;
 };

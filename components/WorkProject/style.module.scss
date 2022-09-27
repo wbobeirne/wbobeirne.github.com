@@ -2,32 +2,20 @@ $btn-depth: 12px;
 $btn-sink: 6px;
 
 .container {
-  width: 160px;
-  height: 160px;
+  position: absolute;
 }
 
 .content {
-  position: relative;
+  position: absolute;
   top: 0;
   left: 0;
-  width: 160px;
-  height: 160px;
+  width: 100%;
+  height: 100%;
   margin-bottom: 20px;
   list-style: none;
   background: var(--color-secondary);
   transform: translate(0);
   box-shadow: 0 0 0 1px var(--color-secondary-dark) inset;
-
-  &.isActive {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-  }
 
   &,
   &::before,

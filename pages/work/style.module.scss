@@ -1,7 +1,7 @@
 .projects {
   position: relative;
-  display: grid;
   max-width: 600px;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 3vw;
+  width: 100%;
+  min-height: 480px;
+  height: calc(100vh - 160px);
 }
