@@ -52,7 +52,12 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
     <motion.div
       className={styles.container}
       animate={containerStyle}
-      transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
+      transition={{
+        type: "spring",
+        bounce: 0.2,
+        duration: dur(0.5),
+        delay: isActive ? 0 : dur(0.2),
+      }}
       initial={false}
     >
       <motion.div
@@ -73,12 +78,14 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
           } as any
         }
       >
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence mode="wait">
           {isActive ? (
             <motion.div
+              key="full"
               animate={{ opacity: 1, translateY: 0 }}
               exit={{ opacity: 0, translateY: -20 }}
-              transition={{ duration: dur(0.3) }}
+              initial={{ opacity: 0, translateY: -20 }}
+              transition={{ duration: dur(0.2) }}
               className={styles.full}
             >
               <Link href="/work" shallow>
@@ -102,9 +109,10 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
             </motion.div>
           ) : (
             <motion.div
-              animate={{ opacity: 1, translateY: 0 }}
-              exit={{ opacity: 0, translateY: -20 }}
-              transition={{ duration: dur(0.3) }}
+              key="list"
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: dur(0.2), delay: isActive ? 0 : 0.3 }}
               className={styles.list}
             >
               <Link href={`/work/${id}`} shallow>

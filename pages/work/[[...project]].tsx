@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { Template } from "../../components/Template";
 import { WorkProject } from "../../components/WorkProject";
-import { PROJECTS, PROJECT_ORDER } from "../../util/projects";
+import { ProjectKey, PROJECTS, PROJECT_ORDER } from "../../util/projects";
 import styles from "./style.module.scss";
 
 // Generate pages for real projects, 404 if not in list.
@@ -26,11 +26,13 @@ export function getStaticProps() {
   };
 }
 
-function getProjectQuery(q: string | string[] | undefined) {
-  if (Array.isArray(q)) {
-    return q[0];
+function getProjectQuery(
+  q: string | string[] | undefined
+): ProjectKey | undefined {
+  const key = Array.isArray(q) ? q[0] : q;
+  if (key && key in PROJECTS) {
+    return key as ProjectKey;
   }
-  return q;
 }
 
 const Work: NextPage = () => {
@@ -69,7 +71,10 @@ const Work: NextPage = () => {
   return (
     <Template>
       <Head>
-        <title>Work | William O’Beirne</title>
+        <title>
+          {activeProject ? PROJECTS[activeProject].name : "Work"} | William
+          O’Beirne
+        </title>
         <meta name="description" content="Don’t forget to fill me out dummy" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

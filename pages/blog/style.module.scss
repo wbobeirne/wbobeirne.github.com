@@ -5,7 +5,7 @@ $post-depth: 12px;
   position: relative;
   max-width: 780px;
   padding: 20px;
-  background: #FFF;
+  background: var(--palette-background);
   margin: 0 0 40px;
 
   img {
@@ -23,7 +23,7 @@ $post-depth: 12px;
     left: $post-depth / 2;
     width: 100%;
     height: $post-depth;
-    background: #CCC;
+    background: var(--palette-shadowDark);
     transform: skewX(45deg);
   }
 
@@ -32,7 +32,7 @@ $post-depth: 12px;
     bottom: -$post-depth / 2;
     height: 100%;
     width: $post-depth;
-    background: #DDD;
+    background: var(--palette-shadowLight);
     transform: skewY(45deg);
   }
 

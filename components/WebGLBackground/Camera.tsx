@@ -24,7 +24,6 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
   const [mouseY, setMouseY] = useState(0); // -1 to 1
 
   const pageConfigs = useMemo(() => {
-    console.log(camConRef.current);
     const aspect = width / height;
     return [
       {

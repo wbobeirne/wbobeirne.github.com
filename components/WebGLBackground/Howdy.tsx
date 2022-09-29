@@ -1,8 +1,11 @@
 import { Center, useTexture } from "@react-three/drei";
 import { useLoader, extend, Node } from "@react-three/fiber";
+import { useMotionValue } from "framer-motion";
 import React, { Suspense, useMemo } from "react";
 import { RepeatWrapping } from "three";
 import { FontLoader, TextGeometry } from "three-stdlib";
+import { useTheme } from "../../contexts/theme";
+import { hexInt } from "../../util/color";
 
 declare global {
   namespace JSX {
@@ -61,6 +64,9 @@ export const Howdy: React.FC = () => {
   useMemo(() => extend({ TextGeometry }), []);
   const font = useLoader(FontLoader, "/threejs/fonts/Tondu-Howdy.json");
   const textures = useTexture(patterns.map((p) => p.path));
+  const theme = useTheme();
+  const borderColor = useMotionValue(theme.palette.background);
+  const backColor = useMotionValue(theme.palette.shadowDark);
 
   useMemo(() => {
     textures.forEach((t, idx) => {
@@ -72,6 +78,8 @@ export const Howdy: React.FC = () => {
     });
   }, [textures]);
 
+  const borderColorHex = hexInt(theme.palette.background); // hexInt(borderColor.get());
+  const backColorHex = hexInt(theme.palette.shadowDark); // hexInt(backColor.get());
   const renderedLetters = useMemo(() => {
     const config = {
       font,
@@ -89,14 +97,10 @@ export const Howdy: React.FC = () => {
         <group>
           {letters.map((letter, i) => (
             <React.Fragment key={letter.char}>
-              <mesh position={[letter.x, 0, 0]} receiveShadow={letter.shadows}>
+              <mesh position={[letter.x, 0, 0]} receiveShadow>
                 <textGeometry args={[letter.char, config]} />
-                <meshBasicMaterial attach="material-0" map={textures[i]} />
-                <meshPhongMaterial
-                  attach="material-1"
-                  color={0xffffff}
-                  flatShading={false}
-                />
+                <meshStandardMaterial attach="material-0" map={textures[i]} />
+                <meshPhongMaterial attach="material-1" color={borderColorHex} />
               </mesh>
               <mesh position={[letter.x, 0, -0.02]}>
                 <textGeometry
@@ -106,7 +110,7 @@ export const Howdy: React.FC = () => {
                   ]}
                 />
                 <meshToonMaterial
-                  color={0x777777}
+                  color={backColorHex}
                   polygonOffset
                   polygonOffsetFactor={-1}
                 />
@@ -116,7 +120,7 @@ export const Howdy: React.FC = () => {
         </group>
       </Center>
     );
-  }, [font, textures]);
+  }, [font, textures, borderColorHex, backColorHex]);
 
   return <Suspense fallback={null}>{renderedLetters}</Suspense>;
 };

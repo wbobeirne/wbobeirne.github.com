@@ -4,11 +4,12 @@ import type { AppProps } from "next/app";
 import { AnimatePresence } from "framer-motion";
 import { Nav } from "../components/Nav";
 import { WebGLBackground } from "../components/WebGLBackground";
+import { ThemeProvider } from "../contexts/theme";
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps, router }) => {
   const url = `https://wbobeirne.com/${router.route}`;
   return (
-    <>
+    <ThemeProvider>
       <Nav />
       <AnimatePresence
         mode="wait"
@@ -18,7 +19,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps, router }) => {
         <Component {...pageProps} canonical={url} key={url} />
       </AnimatePresence>
       <WebGLBackground />
-    </>
+    </ThemeProvider>
   );
 };
 

@@ -22,6 +22,11 @@ const Bio: NextPage = () => {
           Ever since I was a wee lad, I always liked knowing how computers did
           what they do.
         </p>
+        <p>
+          In my spare time, I enjoy <strong>bicycling around Austin</strong>,
+          being very mediocre at <strong>rock climbing</strong>, and{" "}
+          <strong>building digital toys</strong>.
+        </p>
       </div>
     </Template>
   );

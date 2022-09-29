@@ -1,5 +1,9 @@
+export function hexInt(color: string) {
+  return parseInt(color.replace("#", ""), 16);
+}
+
 export function isLightColor(color: string) {
-  const rgb = parseInt(color.replace("#", ""), 16);
+  const rgb = hexInt(color);
   const r = (rgb >> 16) & 0xff;
   const g = (rgb >> 8) & 0xff;
   const b = (rgb >> 0) & 0xff;
@@ -8,7 +12,7 @@ export function isLightColor(color: string) {
 }
 
 export function shadeColor(color: string, amt: number) {
-  const num = parseInt(color.replace("#", ""), 16);
+  const num = hexInt(color);
 
   let r = (num >> 16) + amt;
   if (r > 255) r = 255;

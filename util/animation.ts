@@ -1,3 +1,3 @@
 export function dur(duration: number) {
-  return duration * 2.0;
+  return duration * 1;
 }

@@ -6,15 +6,17 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+html {
+  color-scheme: var(--palette-colorScheme);
+}
+
 body {
-    /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
-    /* background-size: 400% 400%; */
-    /* animation: gradient 15s ease infinite; */
-    background: #FAFAFA;
-    background: linear-gradient(0deg, #ddd, #fff);
+    background: var(--palette-background);
+    background: linear-gradient(0deg, var(--palette-backgroundShaded), var(--palette-background));
     height: 100vh;
     background-position: 0% 50%;
     background-attachment: fixed;
+    color: var(--palette-text);
 }
 
 a {
@@ -24,14 +26,4 @@ a {
 
 * {
   box-sizing: border-box;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
 }

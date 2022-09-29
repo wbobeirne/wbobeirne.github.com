@@ -1,16 +1,30 @@
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import React, { useEffect, useRef } from "react";
-import { AnimationMixer, LoopOnce } from "three";
+import { AnimationMixer, LoopOnce, MeshToonMaterial } from "three";
 
 export const Avatar: React.FC = () => {
   const gltf = useGLTF("/threejs/models/will-rigify.glb");
   const mixer = useRef<AnimationMixer>();
 
+  // const threeTone = textureLoader.load(
+  //   "../../examples/textures/gradientMaps/threeTone.jpg"
+  // );
+  // threeTone.minFilter = THREE.NearestFilter;
+  // threeTone.magFilter = THREE.NearestFilter;
+
   useEffect(() => {
     console.log({ gltf });
     gltf.scene.traverse((node: any) => {
       node.frustumCulled = false;
+      if ("receiveShadow" in node) {
+        node.receiveShadow = true;
+      }
+      if (node.isMesh) {
+        const oldMaterial = node.material;
+        node.material = new MeshToonMaterial();
+        node.material.map = oldMaterial.map;
+      }
     });
     const vaultAnim = gltf.animations.find((a) => a.name === "VaultAndSit");
     if (!vaultAnim) return;

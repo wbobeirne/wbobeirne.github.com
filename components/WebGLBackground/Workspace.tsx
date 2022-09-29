@@ -5,7 +5,6 @@ export const Workspace: React.FC = () => {
   const gltf = useGLTF("/threejs/models/workspace.glb");
   useEffect(() => {
     (gltf as any).materials["Material.003"].flatShading = true;
-    (gltf as any).scene.castShadow = true;
     (gltf as any).scene.traverse((node: any) => {
       if (node.isMesh) {
         node.castShadow = true;
