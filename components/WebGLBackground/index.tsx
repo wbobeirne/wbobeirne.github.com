@@ -28,7 +28,7 @@ export const WebGLBackground: React.FC = () => {
                   key={theme.mode}
                   scale={25}
                   blur={3}
-                  opacity={0.4}
+                  opacity={theme.mode === "light" ? 0.4 : 0.8}
                   far={20}
                   frames={1}
                 />

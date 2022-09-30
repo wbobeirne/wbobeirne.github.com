@@ -2,6 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 100;
   width: 100%;
   display: flex;
   padding: 20px;
@@ -12,7 +13,7 @@
     text-transform: uppercase;
 
     &.isActive {
-      color: #F00;
+      color: var(--palette-primary);
     }
   }
 

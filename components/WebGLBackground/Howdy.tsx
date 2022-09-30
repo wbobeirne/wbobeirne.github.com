@@ -78,8 +78,8 @@ export const Howdy: React.FC = () => {
     });
   }, [textures]);
 
-  const borderColorHex = hexInt(theme.palette.background); // hexInt(borderColor.get());
-  const backColorHex = hexInt(theme.palette.shadowDark); // hexInt(backColor.get());
+  const borderColorHex = hexInt(theme.palette.letterBorder); // hexInt(borderColor.get());
+  const backColorHex = hexInt(theme.palette.letterBack); // hexInt(backColor.get());
   const renderedLetters = useMemo(() => {
     const config = {
       font,

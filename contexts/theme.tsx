@@ -4,21 +4,38 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 const PALETTE = {
   light: {
     colorScheme: "light",
+    primary: "#D65A31",
     text: "#000000",
     textInvert: "#FFFFFF",
-    background: "#FFFFFF",
-    backgroundShaded: "#DDDDDD",
+    background: "#FFFFFF", // F5EFE6
+    backgroundShaded: "#DDDDDD", // E8DFCA
     shadowLight: "#DDDDDD",
     shadowDark: "#CCCCCC",
+    letterBorder: "#FFFFFF", // AEBDCA
+    letterBack: "#999999", // 7895B2
   },
   dark: {
     colorScheme: "dark",
+    primary: "#D65A31",
     text: "#FFFFFF",
     textInvert: "#000000",
-    background: "#2c2d28",
-    backgroundShaded: "#090806",
+    background: "#414141",
+    backgroundShaded: "#313131",
     shadowLight: "#2c2d28",
     shadowDark: "#393b36",
+    letterBorder: "#414141",
+    letterBack: "#525252",
+  },
+  darkBlue: {
+    colorScheme: "dark",
+    text: "#FFFFFF",
+    textInvert: "#000000",
+    background: "#1D2D50",
+    backgroundShaded: "#1D2D50",
+    shadowLight: "#2c2d28",
+    shadowDark: "#393b36",
+    letterBorder: "#133B5C",
+    letterBack: "#1E5F74",
   },
 };
 

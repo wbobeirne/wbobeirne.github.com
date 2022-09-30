@@ -4,7 +4,6 @@ import {
   DirectionalLightHelper,
   PointLightHelper,
   SpotLightHelper,
-  Vector3,
 } from "three";
 import { useTheme } from "../../contexts/theme";
 import { useFrame } from "@react-three/fiber";
@@ -19,9 +18,9 @@ export const Lights: React.FC = () => {
   const dirLightRef2 = useRef<any>();
   const [hasMovedTarget, setHasMovedTarget] = useState(false);
 
-  let ambientIntensity = theme.mode === "light" ? 0.5 : 0.5;
-  let spotIntensity = theme.mode === "light" ? 1.0 : 0.5;
-  let directionalIntensity = theme.mode === "light" ? 0.3 : 0.2;
+  let ambientIntensity = theme.mode === "light" ? 0.5 : 0.2;
+  let spotIntensity = theme.mode === "light" ? 0.4 : 2.0;
+  let directionalIntensity = theme.mode === "light" ? 0.3 : 0.4;
 
   // useHelper(pointLightRef, PointLightHelper, 1, "red");
   // useHelper(spotLightRef, SpotLightHelper, "blue");
@@ -35,7 +34,7 @@ export const Lights: React.FC = () => {
     scene.add(spotLightRef.current.target);
     spotLightRef.current.target.position.set(1, 4, 1);
     scene.add(spotLightRef2.current.target);
-    spotLightRef2.current.target.position.set(0.5, 2, -2);
+    spotLightRef2.current.target.position.set(0.25, 2, -1.75);
     setHasMovedTarget(true);
   });
 
@@ -50,7 +49,7 @@ export const Lights: React.FC = () => {
       <spotLight
         ref={spotLightRef}
         args={[0xffffff]}
-        position={[4, 10, 5]}
+        position={[4, 7, 5]}
         intensity={spotIntensity}
         distance={15}
         penumbra={0.8}
@@ -66,18 +65,18 @@ export const Lights: React.FC = () => {
       <spotLight
         ref={spotLightRef2}
         args={[0xffffff]}
-        position={[1, 6, -5]}
-        intensity={spotIntensity * 5}
-        distance={15}
+        position={[1, 5, -3]}
+        intensity={spotIntensity * 2}
+        distance={8}
         penumbra={0.8}
-        angle={Math.PI / 8}
+        angle={Math.PI / 6}
         castShadow
       />
       <directionalLight
         ref={dirLightRef2}
         args={[0xffffff]}
         position={[0, 4, -4]}
-        intensity={directionalIntensity * 2}
+        intensity={directionalIntensity}
       />
     </>
   );
