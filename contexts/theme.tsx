@@ -1,109 +1,106 @@
-import { useMotionValue } from "framer-motion";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
+import { useTheme as useNextTheme } from "next-themes";
 
 const PALETTE = {
   light: {
     colorScheme: "light",
+
     primary: "#D65A31",
     text: "#000000",
     textInvert: "#FFFFFF",
+
     background: "#FFFFFF", // F5EFE6
     backgroundShaded: "#DDDDDD", // E8DFCA
+
     shadowLight: "#DDDDDD",
     shadowDark: "#CCCCCC",
+
     letterBorder: "#FFFFFF", // AEBDCA
-    letterBack: "#999999", // 7895B2
+    letterBack: "#AAAAAA", // 7895B2
   },
   dark: {
     colorScheme: "dark",
+
     primary: "#D65A31",
     text: "#FFFFFF",
     textInvert: "#000000",
+
     background: "#414141",
     backgroundShaded: "#313131",
+
     shadowLight: "#2c2d28",
     shadowDark: "#393b36",
+
     letterBorder: "#414141",
     letterBack: "#525252",
   },
-  darkBlue: {
-    colorScheme: "dark",
-    text: "#FFFFFF",
-    textInvert: "#000000",
-    background: "#1D2D50",
-    backgroundShaded: "#1D2D50",
-    shadowLight: "#2c2d28",
-    shadowDark: "#393b36",
-    letterBorder: "#133B5C",
-    letterBack: "#1E5F74",
-  },
+  // darkBlue: {
+  //   colorScheme: "dark",
+  //   text: "#FFFFFF",
+  //   textInvert: "#000000",
+  //   background: "#1D2D50",
+  //   backgroundShaded: "#1D2D50",
+  //   shadowLight: "#2c2d28",
+  //   shadowDark: "#393b36",
+  //   letterBorder: "#133B5C",
+  //   letterBack: "#1E5F74",
+  // },
 };
+
+const themeCss = (() => {
+  const makeVars = (palette: Record<string, string>) =>
+    Object.entries(palette)
+      .map(([key, value]) => `--palette-${key}: ${value};`)
+      .join("\r\n");
+  return `
+    :root {
+      ${makeVars(PALETTE.light)}
+    }
+
+    [data-theme=dark] {
+      ${makeVars(PALETTE.dark)}
+    }
+
+    body.isChangingTheme * {
+      transition: all 0ms ease !important;
+    }
+  `;
+})();
 
 type ThemeMode = keyof typeof PALETTE;
 
 const initialState = {
-  mode: "light" as ThemeMode,
-  palette: PALETTE.light,
+  mode: undefined as ThemeMode | undefined,
+  palette: undefined as typeof PALETTE[ThemeMode] | undefined,
   toggleMode: () => null,
 };
-
-function getTheme(): ThemeMode {
-  if (typeof window === "undefined") {
-    return "light";
-  }
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-}
 
 export const ThemeContext = React.createContext(initialState);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [mode, setMode] = useState(getTheme());
-  const palette = PALETTE[mode];
+  const { resolvedTheme: mode, setTheme } = useNextTheme();
+  const palette = mode ? PALETTE[mode as ThemeMode] : undefined;
   const toggleMode = useCallback(() => {
     document.body.classList.add("isChangingTheme");
     requestAnimationFrame(() => {
-      setMode((mode) => (mode === "light" ? "dark" : "light"));
+      setTheme(mode === "light" ? "dark" : "light");
       setTimeout(() => {
         document.body.classList.remove("isChangingTheme");
       }, 200);
     });
     return null;
-  }, []);
+  }, [mode, setTheme]);
+
   const value = useMemo(
-    () => ({ mode, toggleMode, palette }),
+    () => ({ mode: mode as ThemeMode | undefined, toggleMode, palette }),
     [mode, toggleMode, palette]
   );
 
-  // Listen to dark mode changes
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const handle = () => setMode(getTheme());
-    mq.addEventListener("change", handle);
-    return () => mq.removeEventListener("change", handle);
-  }, []);
-
-  const cssVars = useMemo(() => {
-    const vars = Object.entries(palette)
-      .map(([key, value]) => `--palette-${key}: ${value};`)
-      .join("\r\n");
-    return `
-      :root {
-        ${vars}
-      }
-
-      body.isChangingTheme * {
-        transition: all 150ms ease !important;
-      }
-    `;
-  }, [palette]);
-
   return (
     <ThemeContext.Provider value={value}>
-      <style key={mode}>{cssVars}</style>
+      <style>{themeCss}</style>
       {children}
     </ThemeContext.Provider>
   );
@@ -111,15 +108,4 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
 export const useTheme = () => {
   return React.useContext(ThemeContext);
-};
-
-export const useThemeMotion = () => {
-  const theme = useTheme();
-  const mv = useMotionValue(theme.mode === "light" ? 0 : 100);
-
-  useEffect(() => {
-    mv.set(theme.mode === "light" ? 0 : 100);
-  }, [mv, theme.mode]);
-
-  return mv;
 };

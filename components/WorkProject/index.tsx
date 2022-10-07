@@ -7,6 +7,7 @@ import tinycolor from "tinycolor2";
 import { dur } from "../../util/animation";
 import styles from "./style.module.scss";
 import { ProjectKey, PROJECTS } from "../../util/projects";
+import { useTheme } from "../../contexts/theme";
 
 interface WorkProjectProps {
   id: ProjectKey;
@@ -22,6 +23,7 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
   isActive,
   containerWidth,
 }) => {
+  const theme = useTheme();
   const { name, shortName, title, logo, dates, color, description } =
     PROJECTS[id];
   const isLight = tinycolor(color.secondary).isLight();
@@ -75,6 +77,7 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
             "--color-secondary-darker": isLight
               ? tinycolor(color.secondary).desaturate(10).darken(10)
               : tinycolor(color.secondary).desaturate(10).lighten(10),
+            "--color-text": isLight ? "#000000" : "#FFFFFF",
           } as any
         }
       >

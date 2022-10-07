@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { Template } from "../../components/Template";
 import { WorkProject } from "../../components/WorkProject";
+import { useAppContext } from "../../contexts/app";
 import { ProjectKey, PROJECTS, PROJECT_ORDER } from "../../util/projects";
 import styles from "./style.module.scss";
 
@@ -26,18 +27,19 @@ export function getStaticProps() {
   };
 }
 
-function getProjectQuery(
-  q: string | string[] | undefined
-): ProjectKey | undefined {
+function getProjectQuery(q: string | string[] | undefined): ProjectKey | null {
   const key = Array.isArray(q) ? q[0] : q;
   if (key && key in PROJECTS) {
     return key as ProjectKey;
   }
+  return null;
 }
 
 const Work: NextPage = () => {
   const router = useRouter();
   const isPresent = useIsPresent();
+  const { setActiveProject: setContextActiveProject, setIsViewingProjects } =
+    useAppContext();
   const [activeProject, setActiveProject] = useState(
     getProjectQuery(router.query.project)
   );
@@ -51,11 +53,22 @@ const Work: NextPage = () => {
     }
   }, [isPresent, router.query.project]);
 
+  // Reset scroll when changing to activeProject
   useEffect(() => {
     if (activeProject) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [activeProject]);
+
+  // Update context when activeProject changes
+  useEffect(() => {
+    setContextActiveProject(activeProject);
+  }, [activeProject, setContextActiveProject]);
+
+  // Update context when projects is in view
+  useEffect(() => {
+    setIsViewingProjects(isPresent);
+  }, [isPresent, setIsViewingProjects]);
 
   useEffect(() => {
     const updateProjectsWidth = () => {

@@ -9,6 +9,7 @@ import { Lights } from "./Lights";
 import { Workspace } from "./Workspace";
 import { Avatar } from "./Avatar";
 import { ThemeContext } from "../../contexts/theme";
+import { AppContext } from "../../contexts/app";
 
 export const WebGLBackground: React.FC = () => {
   const { pathname } = useRouter();
@@ -17,27 +18,31 @@ export const WebGLBackground: React.FC = () => {
     <div className={styles.container}>
       <ThemeContext.Consumer>
         {(theme) => (
-          <Canvas dpr={[1, 2]} orthographic shadows={true}>
-            <ThemeContext.Provider value={theme}>
-              <Lights />
-              <group>
-                <Howdy />
-                <Avatar />
-                <Workspace />
-                <ContactShadows
-                  key={theme.mode}
-                  scale={25}
-                  blur={3}
-                  opacity={theme.mode === "light" ? 0.4 : 0.8}
-                  far={20}
-                  frames={1}
-                />
-              </group>
-              <Camera pathname={pathname} />
-              {/* <Environment preset="warehouse" /> */}
-              {/* <OrbitControls makeDefault /> */}
-            </ThemeContext.Provider>
-          </Canvas>
+          <AppContext.Consumer>
+            {(app) => (
+              <Canvas dpr={[1, 2]} orthographic shadows={true}>
+                <ThemeContext.Provider value={theme}>
+                  <AppContext.Provider value={app}>
+                    <Lights />
+                    <group>
+                      <Howdy />
+                      <Avatar />
+                      <Workspace />
+                      <ContactShadows
+                        key={theme.mode}
+                        scale={25}
+                        blur={3}
+                        opacity={theme.mode === "light" ? 0.4 : 0.8}
+                        far={20}
+                        frames={1}
+                      />
+                    </group>
+                    <Camera pathname={pathname} />
+                  </AppContext.Provider>
+                </ThemeContext.Provider>
+              </Canvas>
+            )}
+          </AppContext.Consumer>
         )}
       </ThemeContext.Consumer>
     </div>

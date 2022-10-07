@@ -7,9 +7,11 @@ import {
 } from "three";
 import { useTheme } from "../../contexts/theme";
 import { useFrame } from "@react-three/fiber";
+import { useAppContext } from "../../contexts/app";
 
 export const Lights: React.FC = () => {
   const theme = useTheme();
+  const { debug } = useAppContext();
   const ambientLightRef = useRef<any>();
   const pointLightRef = useRef<any>();
   const spotLightRef = useRef<any>();
@@ -18,15 +20,16 @@ export const Lights: React.FC = () => {
   const dirLightRef2 = useRef<any>();
   const [hasMovedTarget, setHasMovedTarget] = useState(false);
 
-  let ambientIntensity = theme.mode === "light" ? 0.5 : 0.2;
-  let spotIntensity = theme.mode === "light" ? 0.4 : 2.0;
-  let directionalIntensity = theme.mode === "light" ? 0.3 : 0.4;
+  const ambientIntensity = theme.mode === "light" ? 0.5 : 0.2;
+  const spotIntensity = theme.mode === "light" ? 0.1 : 2.0;
+  const frontDirIntensity = theme.mode === "light" ? 0.6 : 0.4;
+  const backDirIntensity = theme.mode === "light" ? 0.3 : 0.4;
 
-  // useHelper(pointLightRef, PointLightHelper, 1, "red");
-  // useHelper(spotLightRef, SpotLightHelper, "blue");
-  // useHelper(dirLightRef, DirectionalLightHelper, 1, "green");
-  // useHelper(spotLightRef2, SpotLightHelper, "blue");
-  // useHelper(dirLightRef2, DirectionalLightHelper, 1, "green");
+  useHelper(debug ? pointLightRef : null, PointLightHelper, 1, "red");
+  useHelper(debug ? spotLightRef : null, SpotLightHelper, "blue");
+  useHelper(debug ? dirLightRef : null, DirectionalLightHelper, 1, "green");
+  useHelper(debug ? spotLightRef2 : null, SpotLightHelper, "blue");
+  useHelper(debug ? dirLightRef2 : null, DirectionalLightHelper, 1, "green");
 
   useFrame(({ scene }) => {
     if (hasMovedTarget) return;
@@ -60,7 +63,7 @@ export const Lights: React.FC = () => {
         ref={dirLightRef}
         args={[0xffffff]}
         position={[0.1, 5, 4]}
-        intensity={directionalIntensity}
+        intensity={frontDirIntensity}
       />
       <spotLight
         ref={spotLightRef2}
@@ -76,7 +79,7 @@ export const Lights: React.FC = () => {
         ref={dirLightRef2}
         args={[0xffffff]}
         position={[0, 4, -4]}
-        intensity={directionalIntensity}
+        intensity={backDirIntensity}
       />
     </>
   );

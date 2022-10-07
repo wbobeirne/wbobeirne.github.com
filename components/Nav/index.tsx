@@ -5,7 +5,6 @@ import styles from "./style.module.scss";
 
 export const Nav: React.FC = () => {
   const theme = useTheme();
-  console.log({ theme });
 
   return (
     <nav className={styles.nav}>
@@ -22,7 +21,7 @@ export const Nav: React.FC = () => {
         <a>Blog</a>
       </ActiveLink>
       <button className={styles.themeToggle} onClick={() => theme.toggleMode()}>
-        Go {theme.mode === "light" ? "dark" : "light"}
+        Toggle theme
       </button>
     </nav>
   );

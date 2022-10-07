@@ -33,7 +33,6 @@ export const Avatar: React.FC = () => {
         newMaterial.map = oldMaterial.map;
         newMaterial.gradientMap = gradientTex;
         node.material = newMaterial;
-        console.log({ newMaterial, node });
       }
     });
   }, [gltf, gradientTex]);

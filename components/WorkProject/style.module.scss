@@ -17,6 +17,10 @@ $btn-sink: 6px;
   transform: translate(0);
   box-shadow: 0 0 0 1px var(--color-secondary-dark) inset;
 
+  * {
+    color: var(--color-text);
+  }
+
   &,
   &::before,
   &::after {
