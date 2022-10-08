@@ -3,3 +3,48 @@
     @content;
   }
 }
+
+@mixin border-3d($depth, $shadowLight, $shadowDark) {
+  position: relative;
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: '';
+  }
+
+  &::before {
+    bottom: -$depth;
+    left: $depth / 2;
+    width: 100%;
+    height: $depth;
+    background: $shadowDark;
+    transform: skewX(45deg);
+  }
+
+  &::after {
+    right: -$depth;
+    bottom: -$depth / 2;
+    height: 100%;
+    width: $depth;
+    background: $shadowLight;
+    transform: skewY(45deg);
+  }
+}
+
+@mixin border-3d-sunk($depth, $sink) {
+  top: $sink;
+  left: $sink;
+
+  &::before {
+    bottom: -$depth + $sink;
+    height: $depth - $sink;
+    left: $depth / 2 - $sink / 2;
+  }
+
+  &::after {
+    right: -$depth +$sink;
+    width: $depth - $sink;
+    bottom: -($depth / 2 - $sink / 2);
+  }
+}

@@ -63,11 +63,11 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
       },
       {
         route: "/blog",
-        position: new Vector3(10, 4.35, -0.75),
-        target: new Vector3(2.2, 4.15, 1),
-        positionWiggle: 0.15,
-        targetWiggle: 0,
-        zoom: makeZoom(0 + clamp(aspect * 5, 2, 10), width, height),
+        position: new Vector3(4, 4.35, -10),
+        target: new Vector3(4, 4.15, 1),
+        positionWiggle: 0,
+        targetWiggle: 0.04,
+        zoom: makeZoom(0 + clamp(aspect * 1, 2, 10), width, height),
       },
       {
         route: "/",

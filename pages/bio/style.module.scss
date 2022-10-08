@@ -1,8 +1,23 @@
+@import '~/styles/mixins.scss';
+
 .container {
-  width: 100%;
-  max-width: 680px;
+  width: calc(100% - 48px);
+  max-width: 720px;
   margin: 24px;
   padding: 24px;
-  background: var(--palette-background);
-  border-radius: 48px;
+  background: var(--palette-surface);
+  font-size: 28px;
+  line-height: 1.5;
+  @include border-3d(12px, var(--palette-shadowLight), var(--palette-shadowDark));
+
+  p:first-child {
+    margin-top: 0;
+  }
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 1280px) {
+    margin-bottom: calc(100vh - 200px);
+  }
 }

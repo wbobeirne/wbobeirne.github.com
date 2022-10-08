@@ -31,9 +31,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--palette-background);
-  color: var(--palette-text);
+  background: rgba(#FFF, 0.9);
+  color: #222;
   backdrop-filter: blur(10px);
+
+  @include dark-mode {
+    background: rgba(#222, 0.9);
+    color: #FFF;
+  }
 }
 .topBar > div {
   display: flex;
@@ -129,15 +134,72 @@
   width: 65%;
   height: 85%;
   background: #3c3c3c;
+
+  .titleBar .title {
+    color: #FFF;
+  }
+
   .content {
     display: flex;
     .sidebar {
-      width: 8%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 6%;
       background: #333;
+
+      .icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        color: #fff;
+        opacity: 0.5;
+
+        &:first-child {
+          opacity: 1;
+          border-left: 2px solid #FFF;
+        }
+
+        svg {
+          height: 50%;
+          width: 50%;
+        }
+      }
     }
     .files {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       width: 20%;
       background: #252526;
+
+      .filename {
+        padding: 4px 20px;
+        width: 100%;
+        color: #FFF;
+        opacity: 0.8;
+
+        &.projectTitle {
+          padding-left: 10px;
+          font-weight: bold;
+          text-transform: uppercase;
+          font-size: 11px;
+        }
+
+        &.indent {
+          padding-left: 40px;
+        }
+
+        &.faded {
+          opacity: 0.4;
+        }
+
+        &.selected {
+          background: rgba(#fff, 0.1);
+        }
+      }
     }
     .code {
       flex: 1;

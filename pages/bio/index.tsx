@@ -19,14 +19,24 @@ const Bio: NextPage = () => {
         <p>
           I’ve been doing <strong>Software Engineering</strong> professionally
           since 2012, but my love of coding goes much further back then that.
-          Ever since I was a wee lad, I always liked knowing how computers did
-          what they do.
         </p>
-        <p>
-          In my spare time, I enjoy <strong>bicycling around Austin</strong>,
-          being very mediocre at <strong>rock climbing</strong>, and{" "}
-          <strong>building digital toys</strong>.
-        </p>
+        <h3>Some of the stuff I like to work with</h3>
+        <div className={styles.stuffs}>
+          <div className={styles.stuff}>TypeScript</div>
+          <div className={styles.stuff}>React.js</div>
+          <div className={styles.stuff}>React Native</div>
+          <div className={styles.stuff}>Node.js</div>
+          <div className={styles.stuff}>Electron</div>
+          <div className={styles.stuff}>Python</div>
+          <div className={styles.stuff}>PostgreSQL</div>
+        </div>
+        <h3>Some of my hobbies</h3>
+        <div className={styles.stuffs}>
+          <div className={styles.stuff}>Bicycling</div>
+          <div className={styles.stuff}>Rock Climbing</div>
+          <div className={styles.stuff}>Programming (like, for fun)</div>
+          <div className={styles.stuff}>Live music</div>
+        </div>
       </div>
     </Template>
   );

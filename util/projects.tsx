@@ -4,7 +4,7 @@ import type { StaticImageData } from "next/image";
 // Images -- Static import provides all sorts of info around heights, widths etc.
 import servicebellDesktopScreenshot from "../public/screenshots/servicebell-desktop.jpg";
 import servicebellMobileScreenshot from "../public/screenshots/servicebell-mobile.jpg";
-import jouleDesktopScreenshot from "../public/screenshots/joule-desktop-full.png";
+import jouleDesktopScreenshot from "../public/screenshots/joule-desktop.jpg";
 import jouleMobileScreenshot from "../public/screenshots/joule-mobile.jpg";
 import phase2DesktopScreenshot from "../public/screenshots/phase2-desktop.jpg";
 import phase2MobileScreenshot from "../public/screenshots/phase2-mobile.jpg";
@@ -56,24 +56,50 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
     description: (
       <>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi rutrum
-          massa in arcu luctus, vel commodo dolor ullamcorper. Curabitur cursus
-          facilisis felis. Duis bibendum, quam et elementum dignissim, justo
-          mauris accumsan nisi, et mattis diam erat ut odio.
+          As a part of the founding engineering team, I developed the majority
+          of the architecture for ServiceBell, a{" "}
+          <strong>live video and voice chat widget</strong> that customers can
+          embed into their website to have low friction meetings with
+          propsective and existing customers.
         </p>
         <p>
-          Aliquam tincidunt tincidunt eros id dignissim. Duis in turpis libero.
-          Nunc eleifend lacus non semper tincidunt. Sed feugiat lorem nec dui
-          fringilla auctor. Sed viverra vulputate orci ac lobortis. Curabitur
-          ultrices velit in facilisis facilisis.
+          Beyond just the chat capabilities, ServiceBell also gives you a{" "}
+          <strong>
+            view of the visitor’s screen, and the ability to draw or control
+            their screen
+          </strong>{" "}
+          and guide them through your website. Both parties can also share their
+          entire screens, to be able to debug or demonstrate in real time.
+        </p>
+        <p>
+          <strong>Calls on ServiceBell can be recorded</strong> for sharing and
+          viewing. This was achieved using a combination of the latest browser
+          media APIs for capturing video streams and uploading them, as well as.
+          The synchronized playback is pixel perfect because it renders the
+          actual DOM the user had, and is synchronized perfectly with the video.
+        </p>
+        <p>
+          All of this interactivity is done in realtime through a combination of
+          server communications via <strong>WebSockets</strong> and peer-to-peer
+          communications via <strong>WebRTC</strong>. The React-based widget
+          connects to our central backend server via a WebSocket, and has the
+          visitor show up in a list. Once an agent clicks on a visitor, a WebRTC
+          connection is established to do the heavy lifting of communications.
+        </p>
+        <p>
+          While I focus primarily on the engineering above, I was also heavily
+          involved in a lot of product and design decision making. Whether I
+          built it or not, most product features received a polishing pass from
+          me to ensure it was up to snuff for our customers.
         </p>
         <h3>Technologies used</h3>
         <ul>
-          <li>TypeScript</li>
-          <li>React.js</li>
-          <li>Python</li>
-          <li>PostgreSQL</li>
-          <li>Node.JS</li>
+          <li>TypeScript w/ React.JS &amp; React Native</li>
+          <li>Python w/ Flask &amp; Sqlalchemy</li>
+          <li>PostgreSQL via AWS RDS</li>
+          <li>AWS API Gateway, Lambdas, and MediaConvert</li>
+          <li>Cloudflare Workers</li>
+          <li>Stripe</li>
         </ul>
       </>
     ),
@@ -92,61 +118,26 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
     description: (
       <>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi rutrum
-          massa in arcu luctus, vel commodo dolor ullamcorper. Curabitur cursus
-          facilisis felis. Duis bibendum, quam et elementum dignissim, justo
-          mauris accumsan nisi, et mattis diam erat ut odio.
+          The Joule browser extension is a way for Bitcoin Lightning users to
+          quickly make payments and authenticate using their Lightning node. By
+          injecting a small script into every page, websites can leverage the
+          WebLN standard to initiate interactions, a standard I developed
+          alongside Joule based on the Ethereum community’s Web3 standard.
         </p>
         <p>
-          Aliquam tincidunt tincidunt eros id dignissim. Duis in turpis libero.
-          Nunc eleifend lacus non semper tincidunt. Sed feugiat lorem nec dui
-          fringilla auctor. Sed viverra vulputate orci ac lobortis. Curabitur
-          ultrices velit in facilisis facilisis.
+          At its peak, Joule had over 1,500 active users, and was featured in
+          many publications and at many conferences. It has also inspired many
+          similar open source projects such as Alby and Jolt. The WebLN standard
+          has been adopted and extended by many applications, such as Sphinx.
+        </p>
+        <p>
+          The project ceased development in 2021 due to Google’s significant
+          changes to the web extensions API.
         </p>
         <h3>Technologies used</h3>
         <ul>
-          <li>TypeScript</li>
-          <li>React.js</li>
-          <li>Python</li>
-          <li>PostgreSQL</li>
-          <li>Node.JS</li>
-        </ul>
-      </>
-    ),
-  },
-  phase2: {
-    name: "Phase2 Technology",
-    shortName: "Phase2",
-    website: "https://phase2technology.com",
-    title: "Software Engineer",
-    dates: "Jan 2012 - Jul 2013",
-    logo: "/logos/phase2.svg",
-    color: { primary: "#FF7901", secondary: "#FFF4EB" },
-    screenshots: {
-      desktop: phase2DesktopScreenshot,
-      mobile: phase2MobileScreenshot,
-    },
-    description: (
-      <>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi rutrum
-          massa in arcu luctus, vel commodo dolor ullamcorper. Curabitur cursus
-          facilisis felis. Duis bibendum, quam et elementum dignissim, justo
-          mauris accumsan nisi, et mattis diam erat ut odio.
-        </p>
-        <p>
-          Aliquam tincidunt tincidunt eros id dignissim. Duis in turpis libero.
-          Nunc eleifend lacus non semper tincidunt. Sed feugiat lorem nec dui
-          fringilla auctor. Sed viverra vulputate orci ac lobortis. Curabitur
-          ultrices velit in facilisis facilisis.
-        </p>
-        <h3>Technologies used</h3>
-        <ul>
-          <li>TypeScript</li>
-          <li>React.js</li>
-          <li>Python</li>
-          <li>PostgreSQL</li>
-          <li>Node.JS</li>
+          <li>TypeScript w/ React.js &amp; Redux</li>
+          <li>Web Extension API</li>
         </ul>
       </>
     ),
@@ -165,24 +156,37 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
     description: (
       <>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi rutrum
-          massa in arcu luctus, vel commodo dolor ullamcorper. Curabitur cursus
-          facilisis felis. Duis bibendum, quam et elementum dignissim, justo
-          mauris accumsan nisi, et mattis diam erat ut odio.
+          From the developers of code-server, the original VSCode in the browser
+          implementation, Coder is building a{" "}
+          <strong>powerful and secure IDE</strong> for teams that live in the
+          cloud.
         </p>
         <p>
-          Aliquam tincidunt tincidunt eros id dignissim. Duis in turpis libero.
-          Nunc eleifend lacus non semper tincidunt. Sed feugiat lorem nec dui
-          fringilla auctor. Sed viverra vulputate orci ac lobortis. Curabitur
-          ultrices velit in facilisis facilisis.
+          Teams can onboard and collaborate better than ever before with
+          identical provisioned dev machines that are powered by Docker images,
+          all managed on a single Kubernetes cluster. Every machine is shareable
+          between other members of the team, allowing for the ideal debugging
+          experience.
+        </p>
+        <p>
+          In addition to the VSCode IDE in the browser, I was also a part of a
+          project called x11wasm, an effort to port any x11 based desktop
+          application to the browser using WebGL. We primarily supported the
+          JetBrains IDEs, but any app could work.
+        </p>
+        <p>
+          My job responsibilities also included working with the design and
+          marketing teams around our public facing content, and managing a team
+          of engineers focused on the enterprise dashboard.
         </p>
         <h3>Technologies used</h3>
         <ul>
-          <li>TypeScript</li>
-          <li>React.js</li>
-          <li>Python</li>
+          <li>TypeScript w/ React.js and jQuery</li>
+          <li>WebAssembly</li>
+          <li>WebGL</li>
+          <li>Golang</li>
           <li>PostgreSQL</li>
-          <li>Node.JS</li>
+          <li>Kubernetes &amp; Docker</li>
         </ul>
       </>
     ),
@@ -201,24 +205,39 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
     description: (
       <>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi rutrum
-          massa in arcu luctus, vel commodo dolor ullamcorper. Curabitur cursus
-          facilisis felis. Duis bibendum, quam et elementum dignissim, justo
-          mauris accumsan nisi, et mattis diam erat ut odio.
+          OkCupid was all about making the ineffible f’able. I worked on
+          bringing one of the earliest dating sites up to speed with modern
+          designs and performant and fun user experiences.
         </p>
         <p>
-          Aliquam tincidunt tincidunt eros id dignissim. Duis in turpis libero.
-          Nunc eleifend lacus non semper tincidunt. Sed feugiat lorem nec dui
-          fringilla auctor. Sed viverra vulputate orci ac lobortis. Curabitur
-          ultrices velit in facilisis facilisis.
+          When I first joined, the site was a mix of jQuery and YUI. The
+          frontend was delivered with a custom templating language called Pub,
+          part of the home grown OKWS, a C++ backend that was made in a time
+          before all of the amazing open source web servers and frameworks we
+          have today.
+        </p>
+        <p>
+          I was instrumental in guiding the team through the changing frontend
+          landscape, adopting standard technology like Webpack and Babel,
+          React.js, and SCSS. While I primarily focused on the desktop website,
+          I built many experiences in our previously web-based mobile app to
+          ship performant and identically function experiences to iOS and
+          Android users.
+        </p>
+        <p>
+          Experimentation was core to our product team. I conducted many A/B
+          tests, set up analytics tooling for determining experiment
+          performance, and finally wrapped my head around what a P actually
+          means. Bayes for life.
         </p>
         <h3>Technologies used</h3>
         <ul>
-          <li>TypeScript</li>
-          <li>React.js</li>
-          <li>Python</li>
-          <li>PostgreSQL</li>
-          <li>Node.JS</li>
+          <li>JavaScript w/ React.js</li>
+          <li>
+            C++ w/ OKWS{" "}
+            <small>(Custom web server and templating language)</small>
+          </li>
+          <li>MySQL</li>
         </ul>
       </>
     ),
@@ -234,7 +253,34 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
       desktop: grantioDesktopScreenshot,
       mobile: grantioMobileScreenshot,
     },
-    description: <></>,
+    description: (
+      <>
+        <p>
+          Our goal with Grant.io was to bring accessibility, accountability, and
+          community to the open source funding ecosystem. We came from the open
+          source Ethereum community having experienced a lot of misaligned
+          incentives and ”tokenomics” that left a bad taste in our mouth, and
+          felt that grant funding was a more noble way of getting money and
+          building cool stuff.
+        </p>
+        <p>
+          What started as a smart contract driven platform turned into a white
+          label service. We worked with organizations like the Zcash Foundation
+          and Tlon (urbit) to build a product that allowed them to organize
+          projects that needed funding, and match funders and builders together.
+        </p>
+        <p>
+          While our work still stands today, the idea of being a consultancy
+          rather than a product company didn’t match with our original vision,
+          and we disbanded in 2020.
+        </p>
+        <h3>Technologies used</h3>
+        <ul>
+          <li>TypeScript w/ React.js</li>
+          <li>Python w/ Flask and SQLAlchemy</li>
+        </ul>
+      </>
+    ),
   },
   mycrypto: {
     name: "MyCrypto",
@@ -263,11 +309,39 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
         </p>
         <h3>Technologies used</h3>
         <ul>
-          <li>TypeScript</li>
-          <li>React.js</li>
-          <li>Python</li>
-          <li>PostgreSQL</li>
-          <li>Node.JS</li>
+          <li>TypeScript w/ React.js</li>
+          <li>Electron</li>
+        </ul>
+      </>
+    ),
+  },
+  phase2: {
+    name: "Phase2 Technology",
+    shortName: "Phase2",
+    website: "https://phase2technology.com",
+    title: "Software Engineer",
+    dates: "Jan 2012 - Jul 2013",
+    logo: "/logos/phase2.svg",
+    color: { primary: "#FF7901", secondary: "#FFF4EB" },
+    screenshots: {
+      desktop: phase2DesktopScreenshot,
+      mobile: phase2MobileScreenshot,
+    },
+    description: (
+      <>
+        <p>
+          Primarily focused on the publishing and government sector, Phase2
+          Technology mainly built PHP CMS websites for our clients. In my time
+          there, I worked directly with clients at organizations such as the
+          PAC-12, Associated Press, Penn State University, and the Whitehouse
+          (Yes, <em>that</em> Whitehouse.)
+        </p>
+        <h3>Technologies used</h3>
+        <ul>
+          <li>PHP w/ Drupal &amp; CodeIgniter</li>
+          <li>MySQL</li>
+          <li>Jenkins CI</li>
+          <li>Apache Solr</li>
         </ul>
       </>
     ),
@@ -287,24 +361,19 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
     description: (
       <>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi rutrum
-          massa in arcu luctus, vel commodo dolor ullamcorper. Curabitur cursus
-          facilisis felis. Duis bibendum, quam et elementum dignissim, justo
-          mauris accumsan nisi, et mattis diam erat ut odio.
+          Outside of work I like to kick back, relax, and work some more. I love
+          multimedia experiences, and technology is like the missing 6th sense
+          for me. I’m at my best when I’m working across multiple disciplines,
+          mixing design, engineering, and user experience.
         </p>
-        <p>
-          Aliquam tincidunt tincidunt eros id dignissim. Duis in turpis libero.
-          Nunc eleifend lacus non semper tincidunt. Sed feugiat lorem nec dui
-          fringilla auctor. Sed viverra vulputate orci ac lobortis. Curabitur
-          ultrices velit in facilisis facilisis.
-        </p>
-        <h3>Technologies used</h3>
+        <h3>My favorite tech &amp; tooling</h3>
         <ul>
-          <li>TypeScript</li>
-          <li>React.js</li>
-          <li>Python</li>
-          <li>PostgreSQL</li>
-          <li>Node.JS</li>
+          <li>All things TypeScript and React</li>
+          <li>Jamstack</li>
+          <li>Blender</li>
+          <li>Figma</li>
+          <li>Docker</li>
+          <li>Bitcoin &amp; Lightning</li>
         </ul>
       </>
     ),

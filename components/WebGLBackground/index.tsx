@@ -10,6 +10,8 @@ import { Workspace } from "./Workspace";
 import { Avatar } from "./Avatar";
 import { ThemeContext } from "../../contexts/theme";
 import { AppContext } from "../../contexts/app";
+import { StarrySky } from "./StarrySky";
+import { Balloons } from "./Balloons";
 
 export const WebGLBackground: React.FC = () => {
   const { pathname } = useRouter();
@@ -20,9 +22,15 @@ export const WebGLBackground: React.FC = () => {
         {(theme) => (
           <AppContext.Consumer>
             {(app) => (
-              <Canvas dpr={[1, 2]} orthographic shadows={true}>
+              <Canvas
+                dpr={[1, 2]}
+                orthographic
+                shadows={true}
+                camera={{ near: 0.01, far: 10000 }}
+              >
                 <ThemeContext.Provider value={theme}>
                   <AppContext.Provider value={app}>
+                    <fog near={1} far={1} color={0x000000} />
                     <Lights />
                     <group>
                       <Howdy />
@@ -37,6 +45,10 @@ export const WebGLBackground: React.FC = () => {
                         frames={1}
                       />
                     </group>
+                    {theme.mode === "light" && (
+                      <Balloons show={pathname === "/blog"} />
+                    )}
+                    {theme.mode === "dark" && <StarrySky />}
                     <Camera pathname={pathname} />
                   </AppContext.Provider>
                 </ThemeContext.Provider>

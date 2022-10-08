@@ -5,6 +5,12 @@ import styles from "./style.module.scss";
 import { ProjectInfo, ProjectKey, PROJECTS } from "../../../util/projects";
 import Image from "next/image";
 
+import VscodeCodeIcon from "../../../public/icons/vscode-code.svg";
+import VscodeSearchIcon from "../../../public/icons/vscode-search.svg";
+import VscodeSourceControlIcon from "../../../public/icons/vscode-source-control.svg";
+import VscodeDebugIcon from "../../../public/icons/vscode-debug.svg";
+import VscodeExtensionsIcon from "../../../public/icons/vscode-extensions.svg";
+
 const windowVariants = {
   open: {
     scale: 1,
@@ -126,11 +132,52 @@ export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
               <button className={styles.minimize} />
               <button className={styles.maximize} />
             </div>
-            <div className={styles.title}>index.tsx - wbobeirne.github.com</div>
+            <div className={styles.title}>index.tsx - project</div>
           </div>
           <div className={styles.content}>
-            <div className={styles.sidebar} />
-            <div className={styles.files} />
+            <div className={styles.sidebar}>
+              <div className={styles.icon}>
+                <VscodeCodeIcon />
+              </div>
+              <div className={styles.icon}>
+                <VscodeSearchIcon />
+              </div>
+              <div className={styles.icon}>
+                <VscodeSourceControlIcon />
+              </div>
+              <div className={styles.icon}>
+                <VscodeDebugIcon />
+              </div>
+              <div className={styles.icon}>
+                <VscodeExtensionsIcon />
+              </div>
+            </div>
+            <div className={styles.files}>
+              <div className={clsx(styles.filename, styles.projectTitle)}>
+                › project
+              </div>
+              <div className={clsx(styles.filename, styles.faded)}>› .git</div>
+              <div className={clsx(styles.filename, styles.faded)}>› dist</div>
+              <div className={styles.filename}>› src</div>
+              <div
+                className={clsx(
+                  styles.filename,
+                  styles.indent,
+                  styles.selected
+                )}
+              >
+                index.tsx
+              </div>
+              <div className={clsx(styles.filename, styles.indent)}>
+                style.module.scss
+              </div>
+              <div className={styles.filename}>.eslintrc</div>
+              <div className={styles.filename}>.gitignore</div>
+              <div className={styles.filename}>package.json</div>
+              <div className={styles.filename}>README.md</div>
+              <div className={styles.filename}>tsconfig.json</div>
+              <div className={styles.filename}>yarn.lock</div>
+            </div>
             <div className={styles.code}></div>
           </div>
         </div>
@@ -173,6 +220,7 @@ export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
             <div className={styles.content}>
               <Image
                 src={project.screenshots.desktop}
+                placeholder="blur"
                 alt={`Screenshot of ${project.name}`}
                 onLoad={handleLoad}
               />

@@ -1,6 +1,5 @@
 import { Center, useTexture } from "@react-three/drei";
 import { useLoader, extend, Node } from "@react-three/fiber";
-import { useMotionValue } from "framer-motion";
 import React, { Suspense, useMemo } from "react";
 import { RepeatWrapping } from "three";
 import { FontLoader, TextGeometry } from "three-stdlib";
@@ -65,8 +64,6 @@ export const Howdy: React.FC = () => {
   const font = useLoader(FontLoader, "/threejs/fonts/Tondu-Howdy.json");
   const textures = useTexture(patterns.map((p) => p.path));
   const theme = useTheme();
-  const borderColor = useMotionValue(theme.palette.background);
-  const backColor = useMotionValue(theme.palette.shadowDark);
 
   useMemo(() => {
     textures.forEach((t, idx) => {
@@ -78,9 +75,10 @@ export const Howdy: React.FC = () => {
     });
   }, [textures]);
 
-  const borderColorHex = hexInt(theme.palette.letterBorder); // hexInt(borderColor.get());
-  const backColorHex = hexInt(theme.palette.letterBack); // hexInt(backColor.get());
   const renderedLetters = useMemo(() => {
+    if (!theme.palette) return null;
+    const borderColorHex = hexInt(theme.palette.letterBorder);
+    const backColorHex = hexInt(theme.palette.letterBack);
     const config = {
       font,
       size: 3,
@@ -120,7 +118,7 @@ export const Howdy: React.FC = () => {
         </group>
       </Center>
     );
-  }, [font, textures, borderColorHex, backColorHex]);
+  }, [font, textures, theme.palette]);
 
   return <Suspense fallback={null}>{renderedLetters}</Suspense>;
 };

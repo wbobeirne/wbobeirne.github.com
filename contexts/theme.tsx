@@ -9,14 +9,15 @@ const PALETTE = {
     text: "#000000",
     textInvert: "#FFFFFF",
 
-    background: "#FFFFFF", // F5EFE6
-    backgroundShaded: "#DDDDDD", // E8DFCA
+    background: "#FFFFFF",
+    backgroundShaded: "#DDDDDD",
+    surface: "#FFFFFF",
 
     shadowLight: "#DDDDDD",
     shadowDark: "#CCCCCC",
 
-    letterBorder: "#FFFFFF", // AEBDCA
-    letterBack: "#AAAAAA", // 7895B2
+    letterBorder: "#FFFFFF",
+    letterBack: "#AAAAAA",
   },
   dark: {
     colorScheme: "dark",
@@ -27,9 +28,10 @@ const PALETTE = {
 
     background: "#414141",
     backgroundShaded: "#313131",
+    surface: "#212121",
 
-    shadowLight: "#2c2d28",
-    shadowDark: "#393b36",
+    shadowLight: "#333333",
+    shadowDark: "#2C2C2C",
 
     letterBorder: "#414141",
     letterBack: "#525252",

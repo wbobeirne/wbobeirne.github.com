@@ -1,3 +1,4 @@
+@import '~/styles/mixins.scss';
 $btn-depth: 12px;
 $btn-sink: 6px;
 
@@ -16,6 +17,7 @@ $btn-sink: 6px;
   background: var(--color-secondary);
   transform: translate(0);
   box-shadow: 0 0 0 1px var(--color-secondary-dark) inset;
+  @include border-3d($btn-depth, var(--color-secondary-dark), var(--color-secondary-darker));
 
   * {
     color: var(--color-text);
@@ -27,46 +29,9 @@ $btn-sink: 6px;
     transition: all 150ms ease;
   }
 
-  &::before,
-  &::after {
-    position: absolute;
-    content: '';
-  }
-
-  &::before {
-    bottom: -$btn-depth;
-    left: $btn-depth / 2;
-    width: 100%;
-    height: $btn-depth;
-    background: var(--color-secondary-darker);
-    transform: skewX(45deg);
-  }
-  
-  &::after {
-    right: -$btn-depth;
-    bottom: -$btn-depth / 2;
-    height: 100%;
-    width: $btn-depth;
-    background: var(--color-secondary-dark);
-    transform: skewY(45deg);
-  }
-  
   &:not(.isActive) {
     &:active {
-      top: $btn-sink;
-      left: $btn-sink;
-
-      &::before {
-        bottom: -$btn-depth + $btn-sink;
-        height: $btn-depth - $btn-sink;
-        left: $btn-depth / 2 - $btn-sink / 2;
-      }
-
-      &::after {
-        right: -$btn-depth +$btn-sink;
-        width: $btn-depth - $btn-sink;
-        bottom: -($btn-depth / 2 - $btn-sink / 2);
-      }
+      @include border-3d-sunk($btn-depth, $btn-sink);
     }
   }
 }
