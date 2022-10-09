@@ -1,7 +1,18 @@
+@import '~/styles/mixins.scss';
+
 .projects {
   position: relative;
   max-width: 600px;
   width: 100%;
   min-height: 480px;
   height: calc(100vh - 160px);
+}
+
+.scrollSpacer {
+  display: none;
+  height: 40vh;
+
+  @include mq-slim {
+    display: block;
+  }
 }

@@ -38,6 +38,7 @@ const Bio: NextPage = () => {
           <div className={styles.stuff}>Live music</div>
         </div>
       </div>
+      <div className={styles.scrollSpacer} />
     </Template>
   );
 };

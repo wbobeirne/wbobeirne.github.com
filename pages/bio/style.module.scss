@@ -1,9 +1,8 @@
 @import '~/styles/mixins.scss';
 
 .container {
-  width: calc(100% - 48px);
+  width: calc(100% - 12px);
   max-width: 720px;
-  margin: 24px;
   padding: 24px;
   background: var(--palette-surface);
   font-size: 28px;
@@ -16,8 +15,13 @@
   p:last-child {
     margin-bottom: 0;
   }
+}
 
-  @media screen and (max-width: 1280px) {
-    margin-bottom: calc(100vh - 200px);
+.scrollSpacer {
+  display: none;
+  height: calc(100vh - 200px);
+
+  @include mq-slim {
+    display: block;
   }
 }

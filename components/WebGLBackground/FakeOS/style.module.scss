@@ -34,6 +34,7 @@
   background: rgba(#FFF, 0.9);
   color: #222;
   backdrop-filter: blur(10px);
+  z-index: 100;
 
   @include dark-mode {
     background: rgba(#222, 0.9);
@@ -176,7 +177,8 @@
       background: #252526;
 
       .filename {
-        padding: 4px 20px;
+        font-size: 11px;
+        padding: 1px 20px;
         width: 100%;
         color: #FFF;
         opacity: 0.8;

@@ -1,15 +1,14 @@
 import { useThree } from "@react-three/fiber";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Vector3 } from "three";
-import { FlyControls, OrbitControls } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { useAppContext } from "../../contexts/app";
 import { CameraControls } from "./CameraControls";
 
 const ZOOM_MULTIPLIER = 50;
-const POSITION_MULTIPLIER = 1;
 
 const makeZoom = (zoom: number, width: number, height: number) =>
-  zoom * ZOOM_MULTIPLIER;
+  zoom * ZOOM_MULTIPLIER * Math.min(width / 1000, height / 1000);
 
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
@@ -28,35 +27,49 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
 
   const pageConfigs = useMemo(() => {
     const aspect = width / height;
+    const widthOffset = (width - 720) / width;
+    const isMobile = width < 880;
     return [
       {
         route: "/bio",
-        position: new Vector3(
-          1 - clamp(aspect * 0.5, 0, 1) * POSITION_MULTIPLIER,
-          2.2 + clamp(aspect * 5, 0, 2) * POSITION_MULTIPLIER,
-          10 * POSITION_MULTIPLIER
-        ),
-        target: new Vector3(
-          1 - clamp(aspect * 0.5, 0, 1),
-          2 + clamp(aspect * 5, 0, 2),
-          0
-        ),
-        positionWiggle: 0.1,
-        targetWiggle: 0.05,
-        zoom: makeZoom(0 + clamp(aspect * 5, 2, 10), width, height),
-      },
-      {
-        route: "/work",
-        position: activeProject
-          ? new Vector3(1.2, 1.9, -5)
-          : new Vector3(0.6, 1.8, -10),
-        target: activeProject
-          ? new Vector3(0.2, 1.4, -1)
-          : new Vector3(0, 1.1, -1),
+        position: isMobile
+          ? new Vector3(0.8, 4.2, 10)
+          : new Vector3(
+              -0.8 + widthOffset * 1.35,
+              2.2 + clamp(aspect * 5, 0, 2),
+              10
+            ),
+        target: isMobile
+          ? new Vector3(0.8, 4, 0)
+          : new Vector3(
+              -0.8 + widthOffset * 1.35,
+              2 + clamp(aspect * 5, 0, 2),
+              0
+            ),
         positionWiggle: 0.1,
         targetWiggle: 0.05,
         zoom: makeZoom(
-          activeProject ? aspect * 10 : clamp(aspect * 4, 4, 8),
+          isMobile ? 12 : 0 + clamp(aspect * 5, 2, 10),
+          width,
+          height
+        ),
+      },
+      {
+        route: "/work",
+        position: isMobile
+          ? new Vector3(0, 4.4 - aspect * 2.4, -5)
+          : activeProject
+          ? new Vector3(2.3 - clamp(widthOffset * 1.8, 0, 100), 1.9, -5)
+          : new Vector3(2.7 - clamp(widthOffset * 2.8, 0, 100), 1.8, -10),
+        target: isMobile
+          ? new Vector3(0, 3.9 - aspect * 2.4, -1)
+          : activeProject
+          ? new Vector3(1.3 - clamp(widthOffset * 1.8, 0, 100), 1.4, -1)
+          : new Vector3(2.1 - clamp(widthOffset * 2.8, 0, 100), 1.1, -1),
+        positionWiggle: activeProject ? 0.05 : 0.1,
+        targetWiggle: activeProject ? 0.025 : 0.05,
+        zoom: makeZoom(
+          isMobile ? 6 : activeProject ? aspect * 10 : clamp(aspect * 4, 4, 8),
           width,
           height
         ),
@@ -71,15 +84,11 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
       },
       {
         route: "/",
-        position: new Vector3(
-          8 * POSITION_MULTIPLIER,
-          5 * POSITION_MULTIPLIER,
-          10 * POSITION_MULTIPLIER
-        ),
+        position: new Vector3(8, 5, 10),
         target: new Vector3(0, 1.8, 0),
         positionWiggle: 1,
         targetWiggle: 0.1,
-        zoom: makeZoom(clamp(aspect * 0.9, 0.5, 2), width, height),
+        zoom: makeZoom(clamp(aspect * 0.9, 1.2, 4), width, height),
       },
     ];
   }, [width, height, activeProject]);
@@ -92,7 +101,7 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
   useEffect(() => {
     if (!camConRef.current) return;
     camConRef.current.enabled = false;
-    camConRef.current.dampingFactor = 0.05;
+    camConRef.current.dampingFactor = 0.08;
   }, []);
 
   useEffect(() => {

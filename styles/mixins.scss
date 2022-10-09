@@ -48,3 +48,35 @@
     bottom: -($depth / 2 - $sink / 2);
   }
 }
+
+@mixin custom-scrollbar($track-color, $thumb-color) {
+  scrollbar-color: $track-color $thumb-color;
+  &::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 2px solid $track-color;
+    background: $thumb-color;
+    border-radius: 10px;
+  }
+    &::-webkit-scrollbar-thumb:horizontal:hover,
+    &::-webkit-scrollbar-thumb:vertical:hover {
+    filter: grayscale(1);
+  }
+}
+
+@mixin mq-slim {
+  @media screen and (max-width: 880px) {
+    @content;
+  }
+}
+
+@mixin mq-tiny {
+  @media screen and (max-width: 380px) {
+    @content;
+  }
+}

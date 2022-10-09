@@ -350,7 +350,7 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
     name: "Personal Projects",
     website: "https://wbobeirne.com",
     shortName: "My Projects",
-    title: "The Dude",
+    title: "The One and Only",
     dates: "Nov 1993 - ∞",
     logo: "/logos/projects.svg",
     color: { primary: "#FFFFFF", secondary: "#EF233C" },

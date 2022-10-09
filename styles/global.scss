@@ -1,9 +1,27 @@
+@import './mixins.scss';
+
 html,
 body {
   padding: 0;
   margin: 0;
+  line-height: 1.5;
+  font-size: 16px;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+@include mq-slim {
+  html,
+  body {
+    font-size: 14px;
+  }
+}
+
+@include mq-tiny {
+  html,
+  body {
+    font-size: 12px;
+  }
 }
 
 html {

@@ -85,16 +85,20 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
           {isActive ? (
             <motion.div
               key="full"
-              animate={{ opacity: 1, translateY: 0 }}
-              exit={{ opacity: 0, translateY: -20 }}
-              initial={{ opacity: 0, translateY: -20 }}
+              animate={{
+                opacity: 1,
+                translateY: 0,
+                transitionEnd: { overflow: "auto" },
+              }}
+              exit={{ opacity: 0, translateY: -20, overflow: "hidden" }}
+              initial={{ opacity: 0, translateY: -20, overflow: "hidden" }}
               transition={{ duration: dur(0.2) }}
               className={styles.full}
             >
               <Link href="/work" shallow>
-                <a className={styles.back}>See other projects</a>
+                <a className={styles.back}>← Back to other projects</a>
               </Link>
-              <div>
+              <div className={styles.top}>
                 <div className={styles.logo}>
                   <Image
                     src={logo}

@@ -11,6 +11,9 @@ import VscodeSourceControlIcon from "../../../public/icons/vscode-source-control
 import VscodeDebugIcon from "../../../public/icons/vscode-debug.svg";
 import VscodeExtensionsIcon from "../../../public/icons/vscode-extensions.svg";
 
+const OS_WIDTH = 1460;
+const OS_HEIGHT = 768;
+
 const windowVariants = {
   open: {
     scale: 1,
@@ -31,10 +34,13 @@ interface FakeOSProps {
 export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
   const [project, setProject] = useState<ProjectInfo>();
   const [imgLoadMap, setImgLoadMap] = useState<Record<string, boolean>>({});
+  const [isBrowserClosed, setIsBrowserClosed] = useState(false);
+  const [isCodeClosed, setIsCodeClosed] = useState(false);
 
   useEffect(() => {
     if (!activeProject) return;
     setProject(PROJECTS[activeProject]);
+    setIsBrowserClosed(false);
   }, [activeProject]);
 
   const screenshotUrl =
@@ -42,7 +48,8 @@ export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
   const isScreenshotLoaded = screenshotUrl
     ? !!imgLoadMap[screenshotUrl]
     : false;
-  const isBrowserOpen = activeProject && project && isScreenshotLoaded;
+  const isBrowserOpen =
+    !isBrowserClosed && activeProject && project && isScreenshotLoaded;
 
   const handleLoad: React.ReactEventHandler<HTMLImageElement> = useCallback(
     (ev) => {
@@ -186,12 +193,27 @@ export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
             className={clsx(styles.window, styles.browser)}
             variants={windowVariants}
             animate={isBrowserOpen ? "open" : "closed"}
-            transition={{ type: "inertia" }}
+            transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+            drag
+            dragElastic={0}
+            dragMomentum={false}
+            dragConstraints={{
+              top: -20,
+              bottom: OS_HEIGHT - 60,
+              left: -(OS_WIDTH * 0.5),
+              right: OS_WIDTH * 0.5,
+            }}
           >
             <div className={styles.titleBar}>
               <div className={styles.buttons}>
-                <button className={styles.close} />
-                <button className={styles.minimize} />
+                <button
+                  className={styles.close}
+                  onClick={() => setIsBrowserClosed(true)}
+                />
+                <button
+                  className={styles.minimize}
+                  onClick={() => setIsBrowserClosed(true)}
+                />
                 <button className={styles.maximize} />
               </div>
               <div className={styles.browserControls}>
