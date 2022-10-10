@@ -1,23 +1,35 @@
 .nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
+  position: relative;
   width: 100%;
   display: flex;
+  align-items: center;
   padding: 20px 24px;
+  z-index: 100;
+  
 
   a {
     padding-right: 32px;
     font-size: 2.4rem;
     text-transform: uppercase;
+    transition: transform 200ms ease, opacity 200ms ease;
 
     &.isActive {
       color: var(--palette-primary);
     }
   }
 
-  .themeToggle {
-    margin-left: auto;
+  .buttons {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    z-index: 101;
+  }
+
+  &.uiHidden a {
+    opacity: 0;
+    transform: translateY(-200%);
   }
 }

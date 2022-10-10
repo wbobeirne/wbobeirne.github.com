@@ -2,10 +2,9 @@
 
 .projects {
   position: relative;
-  max-width: 600px;
-  width: 100%;
   min-height: 480px;
   height: calc(100vh - 160px);
+  @include content-container;
 }
 
 .scrollSpacer {

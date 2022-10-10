@@ -1,12 +1,11 @@
 @import '~/styles/mixins.scss';
 
 .container {
-  width: calc(100% - 12px);
-  max-width: 720px;
   padding: 24px;
   background: var(--palette-surface);
-  font-size: 28px;
+  font-size: 1.5rem;
   line-height: 1.5;
+  @include content-container;
   @include border-3d(12px, var(--palette-shadowLight), var(--palette-shadowDark));
 
   p:first-child {

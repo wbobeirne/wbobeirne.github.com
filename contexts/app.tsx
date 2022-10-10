@@ -7,6 +7,8 @@ const initialState = {
   setIsViewingProjects: (is: boolean) => null,
   activeProject: null as ProjectKey | null,
   setActiveProject: (project: ProjectKey | null) => null,
+  isUiHidden: false,
+  toggleUi: () => null,
 };
 
 export const AppContext = React.createContext(initialState);
@@ -17,6 +19,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   const [debug, setDebug] = useState(false);
   const [isViewingProjects, _setIsViewingProjects] = useState(false);
   const [activeProject, _setActiveProject] = useState<ProjectKey | null>(null);
+  const [isUiHidden, setIsUiHidden] = useState(false);
 
   const setActiveProject = useCallback((project: ProjectKey | null) => {
     _setActiveProject(project);
@@ -25,6 +28,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const setIsViewingProjects = useCallback((is: boolean) => {
     _setIsViewingProjects(is);
+    return null;
+  }, []);
+
+  const toggleUi = useCallback(() => {
+    setIsUiHidden((is) => !is);
     return null;
   }, []);
 
@@ -46,6 +54,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       setIsViewingProjects,
       activeProject,
       setActiveProject,
+      isUiHidden,
+      toggleUi,
     }),
     [
       debug,
@@ -53,6 +63,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       setIsViewingProjects,
       activeProject,
       setActiveProject,
+      isUiHidden,
+      toggleUi,
     ]
   );
 

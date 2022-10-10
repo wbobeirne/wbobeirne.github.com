@@ -2,7 +2,7 @@ import { useIsPresent } from "framer-motion";
 import type { NextPage, GetStaticPathsResult } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Template } from "../../components/Template";
 import { WorkProject } from "../../components/WorkProject";
 import { useAppContext } from "../../contexts/app";
@@ -44,7 +44,9 @@ const Work: NextPage = () => {
     getProjectQuery(router.query.project)
   );
   const projectsRef = useRef<HTMLDivElement | null>(null);
-  const [projectsWidth, setProjectsWidth] = useState(600);
+  const [projectsWidth, setProjectsWidth] = useState(
+    typeof window === "undefined" ? 600 : Math.min(window.innerWidth - 76, 720)
+  );
 
   // Update activeProject, but only if we're not animating out.
   useEffect(() => {
@@ -70,16 +72,17 @@ const Work: NextPage = () => {
     setIsViewingProjects(isPresent);
   }, [isPresent, setIsViewingProjects]);
 
+  const updateProjectsWidth = useCallback(() => {
+    const el = projectsRef.current;
+    if (!el) return;
+    setProjectsWidth(el.clientWidth);
+  }, []);
+
   useEffect(() => {
-    const updateProjectsWidth = () => {
-      const el = projectsRef.current;
-      if (!el) return;
-      setProjectsWidth(el.clientWidth);
-    };
     updateProjectsWidth();
     window.addEventListener("resize", updateProjectsWidth);
     return () => window.removeEventListener("resize", updateProjectsWidth);
-  }, [projectsRef]);
+  }, [updateProjectsWidth]);
 
   return (
     <Template>
@@ -91,12 +94,19 @@ const Work: NextPage = () => {
         <meta name="description" content="Don’t forget to fill me out dummy" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={styles.projects} ref={projectsRef}>
+      <div
+        className={styles.projects}
+        ref={(ref) => {
+          projectsRef.current = ref;
+          updateProjectsWidth();
+        }}
+      >
         {PROJECT_ORDER.map((project, index) => (
           <WorkProject
             key={project}
             id={project}
             isActive={project === activeProject}
+            isInactive={activeProject ? project !== activeProject : false}
             index={index}
             containerWidth={projectsWidth}
             {...PROJECTS[project as keyof typeof PROJECTS]}

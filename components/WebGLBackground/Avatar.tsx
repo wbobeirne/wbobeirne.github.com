@@ -1,13 +1,22 @@
 import { useGLTF, useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import React, { useEffect, useRef } from "react";
-import { AnimationMixer, LoopOnce, MeshToonMaterial } from "three";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  AnimationAction,
+  AnimationMixer,
+  LoopOnce,
+  MeshToonMaterial,
+} from "three";
 import { useTheme } from "../../contexts/theme";
 import { applyNearestFilterToTextures } from "../../util/3d";
 
-export const Avatar: React.FC = () => {
+interface AvatarProps {
+  waving: boolean;
+}
+
+export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
   const theme = useTheme();
-  const gltf = useGLTF("/threejs/models/will-rigify.glb");
+  const gltf = useGLTF("/threejs/models/will-rigify2.glb");
   const gradientTexLight = useTexture(
     "/threejs/textures/gradient-light.png",
     applyNearestFilterToTextures
@@ -16,7 +25,12 @@ export const Avatar: React.FC = () => {
     "/threejs/textures/gradient-dark.png",
     applyNearestFilterToTextures
   );
-  const mixer = useRef<AnimationMixer>();
+  const [mixer, setMixer] = useState<AnimationMixer>();
+  const [hasEntered, setHasEntered] = useState(false);
+
+  const scene = gltf.scene;
+  const vaultAnim = gltf.animations.find((a) => a.name === "VaultAndSit");
+  const waveAnim = gltf.animations.find((a) => a.name === "SitAndWave");
 
   // Apply MeshToonMaterial
   const gradientTex =
@@ -37,21 +51,53 @@ export const Avatar: React.FC = () => {
     });
   }, [gltf, gradientTex]);
 
+  // Setup animation mixer
+  useEffect(() => {
+    const mixer = new AnimationMixer(scene);
+    setMixer(mixer);
+  }, [scene]);
+
   // Start initial animation
   useEffect(() => {
-    const vaultAnim = gltf.animations.find((a) => a.name === "VaultAndSit");
-    if (!vaultAnim) return;
-    mixer.current = new AnimationMixer(gltf.scene);
-    const action = mixer.current.clipAction(vaultAnim);
+    if (!vaultAnim || !mixer) return;
+    const action = mixer.clipAction(vaultAnim);
+    console.log({ vaultAnim, action });
     action.setLoop(LoopOnce, 1);
     action.clampWhenFinished = true;
     action.enabled = true;
     action.play();
-  }, [gltf]);
+    setTimeout(() => {
+      setHasEntered(true);
+    }, 2500);
+  }, [scene, vaultAnim, mixer]);
+
+  // Wave when we ought to
+  useEffect(() => {
+    if (!waving || !waveAnim || !mixer || !hasEntered) return;
+    const existingAction = mixer.existingAction(waveAnim);
+    let action: AnimationAction;
+    if (existingAction) {
+      if (existingAction.paused) {
+        action = existingAction;
+      } else {
+        return;
+      }
+    } else {
+      action = mixer.clipAction(waveAnim);
+      action.setLoop(LoopOnce, 1);
+      action.clampWhenFinished = true;
+      action.enabled = true;
+    }
+    const timeout = setTimeout(() => {
+      mixer.stopAllAction();
+      action.play();
+    }, 250);
+    return () => clearTimeout(timeout);
+  }, [waving, waveAnim, mixer, hasEntered]);
 
   useFrame((_, delta) => {
-    if (mixer.current) mixer.current.update(delta);
+    if (mixer) mixer.update(delta);
   });
 
-  return <primitive object={gltf.scene} position={[0.9, 3.46, 0.5]} />;
+  return <primitive object={scene} position={[0.9, 3.46, 0.5]} />;
 };

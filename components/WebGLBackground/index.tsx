@@ -34,7 +34,7 @@ export const WebGLBackground: React.FC = () => {
                     <Lights />
                     <group>
                       <Howdy />
-                      <Avatar />
+                      <Avatar waving={pathname === "/bio"} />
                       <Workspace />
                       <ContactShadows
                         key={theme.mode}

@@ -1,13 +1,16 @@
+import clsx from "clsx";
 import React from "react";
+import { useAppContext } from "../../contexts/app";
 import { useTheme } from "../../contexts/theme";
 import ActiveLink from "../ActiveLink";
 import styles from "./style.module.scss";
 
 export const Nav: React.FC = () => {
   const theme = useTheme();
+  const app = useAppContext();
 
   return (
-    <nav className={styles.nav}>
+    <nav className={clsx(styles.nav, app.isUiHidden && styles.uiHidden)}>
       <ActiveLink href="/" activeClassName={styles.isActive}>
         <a>WBO</a>
       </ActiveLink>
@@ -20,9 +23,15 @@ export const Nav: React.FC = () => {
       <ActiveLink href="/blog" activeClassName={styles.isActive}>
         <a>Blog</a>
       </ActiveLink>
-      <button className={styles.themeToggle} onClick={() => theme.toggleMode()}>
-        Toggle theme
-      </button>
+      <div className={styles.buttons}>
+        <button onClick={() => app.toggleUi()}>Toggle UI</button>
+        <button
+          className={styles.themeToggle}
+          onClick={() => theme.toggleMode()}
+        >
+          Toggle theme
+        </button>
+      </div>
     </nav>
   );
 };

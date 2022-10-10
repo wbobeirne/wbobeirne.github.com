@@ -10,6 +10,7 @@ import VscodeSearchIcon from "../../../public/icons/vscode-search.svg";
 import VscodeSourceControlIcon from "../../../public/icons/vscode-source-control.svg";
 import VscodeDebugIcon from "../../../public/icons/vscode-debug.svg";
 import VscodeExtensionsIcon from "../../../public/icons/vscode-extensions.svg";
+import { Window } from "./Window";
 
 const OS_WIDTH = 1460;
 const OS_HEIGHT = 768;
@@ -49,7 +50,7 @@ export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
     ? !!imgLoadMap[screenshotUrl]
     : false;
   const isBrowserOpen =
-    !isBrowserClosed && activeProject && project && isScreenshotLoaded;
+    !isBrowserClosed && !!activeProject && !!project && isScreenshotLoaded;
 
   const handleLoad: React.ReactEventHandler<HTMLImageElement> = useCallback(
     (ev) => {
@@ -189,6 +190,48 @@ export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
           </div>
         </div>
         {project && (
+          <Window
+            box={{
+              top: OS_HEIGHT * 0.06,
+              left: OS_WIDTH * 0.2,
+              width: OS_WIDTH * 0.72,
+              height: OS_WIDTH * 0.4,
+            }}
+            isOpen={isBrowserOpen}
+            title={
+              <div className={styles.browserControls}>
+                <div className={styles.navigation}>
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 384 512"
+                    >
+                      <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 278.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 384 512"
+                    >
+                      <path d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256 105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
+                    </svg>
+                  </div>
+                </div>
+                <div className={styles.urlBar}>{project.website}</div>
+                <div />
+              </div>
+            }
+          >
+            <Image
+              src={project.screenshots.desktop}
+              placeholder="blur"
+              alt={`Screenshot of ${project.name}`}
+              onLoad={handleLoad}
+            />
+          </Window>
+        )}
+        {false && project && (
           <motion.div
             className={clsx(styles.window, styles.browser)}
             variants={windowVariants}
@@ -235,17 +278,17 @@ export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
                     </svg>
                   </div>
                 </div>
-                <div className={styles.urlBar}>{project.website}</div>
+                {/* <div className={styles.urlBar}>{project.website}</div> */}
                 <div />
               </div>
             </div>
             <div className={styles.content}>
-              <Image
+              {/* <Image
                 src={project.screenshots.desktop}
                 placeholder="blur"
                 alt={`Screenshot of ${project.name}`}
                 onLoad={handleLoad}
-              />
+              /> */}
             </div>
           </motion.div>
         )}

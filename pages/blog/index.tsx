@@ -30,6 +30,7 @@ const Blog: NextPage = () => {
           </Link>
         ))}
       </div>
+      <div className={styles.scrollSpacer} />
     </Template>
   );
 };

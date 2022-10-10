@@ -18,7 +18,7 @@ interface CameraProps {
 }
 
 export const Camera: React.FC<CameraProps> = ({ pathname }) => {
-  const { activeProject, debug } = useAppContext();
+  const { activeProject, debug, isUiHidden } = useAppContext();
   const camConRef = useRef<CameraControls | null>(null);
   const width = useThree((s) => s.size.width);
   const height = useThree((s) => s.size.height);
@@ -27,22 +27,23 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
 
   const pageConfigs = useMemo(() => {
     const aspect = width / height;
-    const widthOffset = (width - 720) / width;
     const isMobile = width < 880;
+    const widthOffset = isMobile || isUiHidden ? 1 : (width - 820) / width;
+    console.log({ widthOffset });
     return [
       {
         route: "/bio",
         position: isMobile
           ? new Vector3(0.8, 4.2, 10)
           : new Vector3(
-              -0.8 + widthOffset * 1.35,
-              2.2 + clamp(aspect * 5, 0, 2),
+              0 + widthOffset * 1.0,
+              2.5 + clamp(aspect * 5, 0, 2),
               10
             ),
         target: isMobile
           ? new Vector3(0.8, 4, 0)
           : new Vector3(
-              -0.8 + widthOffset * 1.35,
+              -0.6 + widthOffset * 1.0,
               2 + clamp(aspect * 5, 0, 2),
               0
             ),
@@ -57,15 +58,15 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
       {
         route: "/work",
         position: isMobile
-          ? new Vector3(0, 4.4 - aspect * 2.4, -5)
+          ? new Vector3(0.5, 4.4 - aspect * 2.8, -5)
           : activeProject
           ? new Vector3(2.3 - clamp(widthOffset * 1.8, 0, 100), 1.9, -5)
-          : new Vector3(2.7 - clamp(widthOffset * 2.8, 0, 100), 1.8, -10),
+          : new Vector3(3.4 - clamp(widthOffset * 2.1, 0, 100), 1.8, -10),
         target: isMobile
-          ? new Vector3(0, 3.9 - aspect * 2.4, -1)
+          ? new Vector3(0, 3.9 - aspect * 2.8, -1)
           : activeProject
           ? new Vector3(1.3 - clamp(widthOffset * 1.8, 0, 100), 1.4, -1)
-          : new Vector3(2.1 - clamp(widthOffset * 2.8, 0, 100), 1.1, -1),
+          : new Vector3(1.8 - clamp(widthOffset * 2.1, 0, 100), 1.1, -1),
         positionWiggle: activeProject ? 0.05 : 0.1,
         targetWiggle: activeProject ? 0.025 : 0.05,
         zoom: makeZoom(
@@ -76,8 +77,8 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
       },
       {
         route: "/blog",
-        position: new Vector3(4, 4.35, -10),
-        target: new Vector3(4, 4.15, 1),
+        position: new Vector3(10 - widthOffset * 9, 4.35, -10),
+        target: new Vector3(10 - widthOffset * 9, 4.15, 1),
         positionWiggle: 0,
         targetWiggle: 0.04,
         zoom: makeZoom(0 + clamp(aspect * 1, 2, 10), width, height),
@@ -91,7 +92,7 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
         zoom: makeZoom(clamp(aspect * 0.9, 1.2, 4), width, height),
       },
     ];
-  }, [width, height, activeProject]);
+  }, [width, height, activeProject, isUiHidden]);
 
   const pageConfig = useMemo(() => {
     const conf = pageConfigs.find(({ route }) => pathname.startsWith(route));

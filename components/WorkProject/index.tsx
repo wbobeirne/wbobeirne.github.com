@@ -14,6 +14,7 @@ interface WorkProjectProps {
   index: number;
   description: React.ReactNode;
   isActive: boolean;
+  isInactive: boolean;
   containerWidth: number;
 }
 
@@ -21,6 +22,7 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
   id,
   index,
   isActive,
+  isInactive,
   containerWidth,
 }) => {
   const theme = useTheme();
@@ -33,20 +35,30 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
     let height: string | number = "100%";
     let top = 0;
     let left = 0;
+    let opacity = 1;
+    let scale = 1;
     let zIndex: undefined | number = 2;
     let transitionEnd: Target = {};
-    const columns = containerWidth > 500 ? 3 : 2;
+    const columns = containerWidth > 580 ? 3 : 2;
     if (!isActive) {
-      const padding = containerWidth * (1 / columns) * 0.2;
-      width = containerWidth * (1 / columns) * 0.8;
+      const paddingPct = columns === 2 ? 0.08 : 0.125;
+      const padding =
+        containerWidth *
+        (1 / columns) *
+        (paddingPct * (columns / (columns - 1)));
+      width = containerWidth * (1 / columns) * (1 - paddingPct);
       height = width;
       top = (height + padding) * Math.floor(index / columns);
       left = (width + padding) * (index % columns);
       zIndex = undefined;
       transitionEnd.zIndex = 1;
     }
-    return { width, height, top, left, zIndex, transitionEnd };
-  }, [index, isActive, containerWidth]);
+    if (isInactive) {
+      opacity = 0;
+      scale = 0.8;
+    }
+    return { width, height, top, left, opacity, scale, zIndex, transitionEnd };
+  }, [index, isActive, isInactive, containerWidth]);
 
   useEffect(() => {}, []);
 

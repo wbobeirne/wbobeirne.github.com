@@ -82,7 +82,7 @@ $btn-sink: 6px;
 }
 
 .full {
-  padding: 1rem;
+  padding: 1rem 2rem;
   max-height: 100%;
   @include custom-scrollbar(var(--color-secondary-darker), var(--color-secondary-dark));
 
