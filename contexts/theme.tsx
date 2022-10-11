@@ -6,6 +6,7 @@ const PALETTE = {
     colorScheme: "light",
 
     primary: "#D65A31",
+    primaryFaded: "#CFA191",
     text: "#000000",
     textInvert: "#FFFFFF",
 
@@ -17,14 +18,16 @@ const PALETTE = {
     shadowDark: "#CCCCCC",
 
     letterBorder: "#FFFFFF",
-    letterBack: "#AAAAAA",
+    letterBack: "#999999",
   },
   dark: {
     colorScheme: "dark",
 
     primary: "#D65A31",
+    primaryFaded: "#CFA191",
     text: "#FFFFFF",
     textInvert: "#000000",
+    textShadow: "#444444",
 
     background: "#414141",
     backgroundShaded: "#313131",

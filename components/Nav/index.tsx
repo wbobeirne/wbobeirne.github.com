@@ -9,6 +9,26 @@ import CameraIcon from "../../public/icons/camera.svg";
 import styles from "./style.module.scss";
 import { useHasRendered } from "../../util/hooks";
 
+const links = [
+  {
+    text: "WBO",
+    href: "/",
+    activeOnExact: true,
+  },
+  {
+    text: "Bio",
+    href: "/bio",
+  },
+  {
+    text: "Work",
+    href: "/work",
+  },
+  {
+    text: "Blog",
+    href: "/blog",
+  },
+];
+
 export const Nav: React.FC = () => {
   const theme = useTheme();
   const app = useAppContext();
@@ -16,18 +36,16 @@ export const Nav: React.FC = () => {
 
   return (
     <nav className={clsx(styles.nav, app.isUiHidden && styles.uiHidden)}>
-      <ActiveLink href="/" activeOnExact activeClassName={styles.isActive}>
-        <a>WBO</a>
-      </ActiveLink>
-      <ActiveLink href="/bio" activeClassName={styles.isActive}>
-        <a>Bio</a>
-      </ActiveLink>
-      <ActiveLink href="/work" activeClassName={styles.isActive}>
-        <a>Work</a>
-      </ActiveLink>
-      <ActiveLink href="/blog" activeClassName={styles.isActive}>
-        <a>Blog</a>
-      </ActiveLink>
+      {links.map((link) => (
+        <ActiveLink
+          key={link.href}
+          href={link.href}
+          activeOnExact={link.activeOnExact}
+          activeClassName={styles.isActive}
+        >
+          <a>{link.text}</a>
+        </ActiveLink>
+      ))}
       {hasRendered && (
         <div className={styles.buttons}>
           <button onClick={() => app.toggleUi()}>

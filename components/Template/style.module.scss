@@ -5,6 +5,13 @@
   min-height: 100vh;
   min-height: -webkit-fill-available;
   pointer-events: none;
+  transition: opacity 300ms ease, transform 300ms ease;
+
+  &.isHidden {
+    transform: translateX(-100%);
+    opacity: 0;
+    transition-duration: 300ms;
+  }
 }
 
 .container main > * {

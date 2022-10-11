@@ -11,8 +11,8 @@ export const Template: React.FC<TemplateProps> = ({ children }) => {
   const { isUiHidden } = useAppContext();
 
   return (
-    <div className={styles.container}>
-      <main className={clsx(isUiHidden && styles.isHidden)}>{children}</main>
+    <div className={clsx(styles.container, isUiHidden && styles.isHidden)}>
+      <main>{children}</main>
     </div>
   );
 };
