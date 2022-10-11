@@ -3,6 +3,7 @@
   z-index: 1;
   padding: 16px 24px 24px;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   pointer-events: none;
 }
 

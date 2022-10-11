@@ -7,6 +7,7 @@ import { Nav } from "../components/Nav";
 import { WebGLBackground } from "../components/WebGLBackground";
 import { ThemeProvider } from "../contexts/theme";
 import { AppProvider } from "../contexts/app";
+import { NoScriptBackground } from "../components/NoScriptBackground";
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps, router }) => {
   const url = `https://wbobeirne.com/${router.route}`;
@@ -23,6 +24,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps, router }) => {
             <Component {...pageProps} canonical={url} key={url} />
           </AnimatePresence>
           <WebGLBackground />
+          <NoScriptBackground />
         </AppProvider>
       </ThemeProvider>
     </NextThemesProvider>
