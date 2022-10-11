@@ -5,11 +5,13 @@ import React, { useState, useEffect } from "react";
 type ActiveLinkProps = LinkProps & {
   children: React.ReactElement;
   activeClassName: string;
+  activeOnExact?: boolean;
 };
 
 const ActiveLink: React.FC<ActiveLinkProps> = ({
   children,
   activeClassName,
+  activeOnExact,
   ...props
 }) => {
   const { asPath, isReady } = useRouter();
@@ -26,11 +28,13 @@ const ActiveLink: React.FC<ActiveLinkProps> = ({
       ).pathname;
 
       const activePathname = new URL(asPath, location.href).pathname;
+      const isActive = activeOnExact
+        ? activePathname === linkPathname
+        : activePathname.startsWith(linkPathname);
 
-      const newClassName =
-        linkPathname === activePathname
-          ? `${childClassName} ${activeClassName}`.trim()
-          : childClassName;
+      const newClassName = isActive
+        ? `${childClassName} ${activeClassName}`.trim()
+        : childClassName;
 
       if (newClassName !== className) {
         setClassName(newClassName);
@@ -45,6 +49,7 @@ const ActiveLink: React.FC<ActiveLinkProps> = ({
     activeClassName,
     setClassName,
     className,
+    activeOnExact,
   ]);
 
   return (

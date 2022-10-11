@@ -11,7 +11,7 @@ export const Nav: React.FC = () => {
 
   return (
     <nav className={clsx(styles.nav, app.isUiHidden && styles.uiHidden)}>
-      <ActiveLink href="/" activeClassName={styles.isActive}>
+      <ActiveLink href="/" activeOnExact activeClassName={styles.isActive}>
         <a>WBO</a>
       </ActiveLink>
       <ActiveLink href="/bio" activeClassName={styles.isActive}>

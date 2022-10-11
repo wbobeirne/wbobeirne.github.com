@@ -1,9 +1,23 @@
+@import '~/styles/mixins.scss';
+
 .window {
   display: flex;
   flex-direction: column;
   position: absolute;
   overflow: hidden;
   border-radius: 16px;
+  background: #FFF;
+  color: #323232;
+  box-shadow: 0 25px 50px rgba(#000, 0.4);
+
+  @include dark-mode {
+    background: #323232;
+    color: #FFF;
+  }
+
+  &.isMaximized {
+    border-radius: 0;
+  }
 
   .titleBar {
     display: flex;
@@ -12,6 +26,7 @@
     flex-shrink: 0;
     padding: 0 12px;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    z-index: 2;
 
     .buttons {
       display: flex;
@@ -68,5 +83,6 @@
     position: relative;
     flex: 1;
     overflow: auto;
+    z-index: 1;
   }
 }

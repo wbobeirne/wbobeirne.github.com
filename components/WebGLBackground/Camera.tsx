@@ -102,7 +102,7 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
   useEffect(() => {
     if (!camConRef.current) return;
     camConRef.current.enabled = false;
-    camConRef.current.dampingFactor = 0.08;
+    camConRef.current.dampingFactor = 0.05;
   }, []);
 
   useEffect(() => {

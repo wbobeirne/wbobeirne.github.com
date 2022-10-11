@@ -1,19 +1,19 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import clsx from "clsx";
-import { motion } from "framer-motion";
-import styles from "./style.module.scss";
 import { ProjectInfo, ProjectKey, PROJECTS } from "../../../util/projects";
 import Image from "next/image";
+import { Window } from "./Window";
+import styles from "./style.module.scss";
 
 import VscodeCodeIcon from "../../../public/icons/vscode-code.svg";
 import VscodeSearchIcon from "../../../public/icons/vscode-search.svg";
 import VscodeSourceControlIcon from "../../../public/icons/vscode-source-control.svg";
 import VscodeDebugIcon from "../../../public/icons/vscode-debug.svg";
 import VscodeExtensionsIcon from "../../../public/icons/vscode-extensions.svg";
-import { Window } from "./Window";
 
-const OS_WIDTH = 1460;
-const OS_HEIGHT = 768;
+export const OS_WIDTH = 1460;
+export const OS_HEIGHT = 768;
+export const OS_TOPBAR_HEIGHT = 28;
 
 const windowVariants = {
   open: {
@@ -35,13 +35,12 @@ interface FakeOSProps {
 export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
   const [project, setProject] = useState<ProjectInfo>();
   const [imgLoadMap, setImgLoadMap] = useState<Record<string, boolean>>({});
-  const [isBrowserClosed, setIsBrowserClosed] = useState(false);
-  const [isCodeClosed, setIsCodeClosed] = useState(false);
+  const [windowZ, setWindowZ] = useState({ code: 0, browser: 1 });
 
   useEffect(() => {
     if (!activeProject) return;
     setProject(PROJECTS[activeProject]);
-    setIsBrowserClosed(false);
+    setWindowZ((z) => ({ code: z.code, browser: z.code + 1 }));
   }, [activeProject]);
 
   const screenshotUrl =
@@ -49,8 +48,7 @@ export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
   const isScreenshotLoaded = screenshotUrl
     ? !!imgLoadMap[screenshotUrl]
     : false;
-  const isBrowserOpen =
-    !isBrowserClosed && !!activeProject && !!project && isScreenshotLoaded;
+  const isBrowserOpen = !!activeProject && !!project && isScreenshotLoaded;
 
   const handleLoad: React.ReactEventHandler<HTMLImageElement> = useCallback(
     (ev) => {
@@ -64,6 +62,13 @@ export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
     },
     [screenshotUrl]
   );
+
+  const bumpZ = useCallback((key: keyof typeof windowZ) => {
+    setWindowZ((z) => {
+      const highestZ = Object.values(z).reduce((prev, z) => Math.max(prev, z));
+      return { ...z, [key]: highestZ + 1 };
+    });
+  }, []);
 
   return (
     <div className={styles.scaleWrapper}>
@@ -133,62 +138,66 @@ export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
             </div>
           </div>
         </div>
-        <div className={clsx(styles.window, styles.ide)}>
-          <div className={styles.titleBar}>
-            <div className={styles.buttons}>
-              <button className={styles.close} />
-              <button className={styles.minimize} />
-              <button className={styles.maximize} />
+
+        <Window
+          box={{
+            top: OS_HEIGHT * 0.12,
+            left: OS_WIDTH * 0.05,
+            width: OS_WIDTH * 0.65,
+            height: OS_HEIGHT * 0.85,
+          }}
+          zIndex={windowZ.code}
+          isOpen={true}
+          title="index.tsx - project"
+          classNames={{
+            window: styles.ide,
+            titleBar: styles.titleBar,
+            content: styles.content,
+          }}
+          onMouseDown={() => bumpZ("code")}
+        >
+          <div className={styles.sidebar}>
+            <div className={styles.icon}>
+              <VscodeCodeIcon />
             </div>
-            <div className={styles.title}>index.tsx - project</div>
+            <div className={styles.icon}>
+              <VscodeSearchIcon />
+            </div>
+            <div className={styles.icon}>
+              <VscodeSourceControlIcon />
+            </div>
+            <div className={styles.icon}>
+              <VscodeDebugIcon />
+            </div>
+            <div className={styles.icon}>
+              <VscodeExtensionsIcon />
+            </div>
           </div>
-          <div className={styles.content}>
-            <div className={styles.sidebar}>
-              <div className={styles.icon}>
-                <VscodeCodeIcon />
-              </div>
-              <div className={styles.icon}>
-                <VscodeSearchIcon />
-              </div>
-              <div className={styles.icon}>
-                <VscodeSourceControlIcon />
-              </div>
-              <div className={styles.icon}>
-                <VscodeDebugIcon />
-              </div>
-              <div className={styles.icon}>
-                <VscodeExtensionsIcon />
-              </div>
+          <div className={styles.files}>
+            <div className={clsx(styles.filename, styles.projectTitle)}>
+              › project
             </div>
-            <div className={styles.files}>
-              <div className={clsx(styles.filename, styles.projectTitle)}>
-                › project
-              </div>
-              <div className={clsx(styles.filename, styles.faded)}>› .git</div>
-              <div className={clsx(styles.filename, styles.faded)}>› dist</div>
-              <div className={styles.filename}>› src</div>
-              <div
-                className={clsx(
-                  styles.filename,
-                  styles.indent,
-                  styles.selected
-                )}
-              >
-                index.tsx
-              </div>
-              <div className={clsx(styles.filename, styles.indent)}>
-                style.module.scss
-              </div>
-              <div className={styles.filename}>.eslintrc</div>
-              <div className={styles.filename}>.gitignore</div>
-              <div className={styles.filename}>package.json</div>
-              <div className={styles.filename}>README.md</div>
-              <div className={styles.filename}>tsconfig.json</div>
-              <div className={styles.filename}>yarn.lock</div>
+            <div className={clsx(styles.filename, styles.faded)}>› .git</div>
+            <div className={clsx(styles.filename, styles.faded)}>› dist</div>
+            <div className={styles.filename}>› src</div>
+            <div
+              className={clsx(styles.filename, styles.indent, styles.selected)}
+            >
+              index.tsx
             </div>
-            <div className={styles.code}></div>
+            <div className={clsx(styles.filename, styles.indent)}>
+              style.module.scss
+            </div>
+            <div className={styles.filename}>.eslintrc</div>
+            <div className={styles.filename}>.gitignore</div>
+            <div className={styles.filename}>package.json</div>
+            <div className={styles.filename}>README.md</div>
+            <div className={styles.filename}>tsconfig.json</div>
+            <div className={styles.filename}>yarn.lock</div>
           </div>
-        </div>
+          <div className={styles.code}></div>
+        </Window>
+
         {project && (
           <Window
             box={{
@@ -197,7 +206,9 @@ export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
               width: OS_WIDTH * 0.72,
               height: OS_WIDTH * 0.4,
             }}
+            zIndex={windowZ.browser}
             isOpen={isBrowserOpen}
+            onMouseDown={() => bumpZ("browser")}
             title={
               <div className={styles.browserControls}>
                 <div className={styles.navigation}>
@@ -222,75 +233,19 @@ export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
                 <div />
               </div>
             }
+            classNames={{
+              window: styles.browser,
+              titleBar: styles.titleBar,
+            }}
           >
             <Image
               src={project.screenshots.desktop}
               placeholder="blur"
               alt={`Screenshot of ${project.name}`}
               onLoad={handleLoad}
+              layout="responsive"
             />
           </Window>
-        )}
-        {false && project && (
-          <motion.div
-            className={clsx(styles.window, styles.browser)}
-            variants={windowVariants}
-            animate={isBrowserOpen ? "open" : "closed"}
-            transition={{ type: "spring", bounce: 0, duration: 0.3 }}
-            drag
-            dragElastic={0}
-            dragMomentum={false}
-            dragConstraints={{
-              top: -20,
-              bottom: OS_HEIGHT - 60,
-              left: -(OS_WIDTH * 0.5),
-              right: OS_WIDTH * 0.5,
-            }}
-          >
-            <div className={styles.titleBar}>
-              <div className={styles.buttons}>
-                <button
-                  className={styles.close}
-                  onClick={() => setIsBrowserClosed(true)}
-                />
-                <button
-                  className={styles.minimize}
-                  onClick={() => setIsBrowserClosed(true)}
-                />
-                <button className={styles.maximize} />
-              </div>
-              <div className={styles.browserControls}>
-                <div className={styles.navigation}>
-                  <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 384 512"
-                    >
-                      <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 278.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 384 512"
-                    >
-                      <path d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256 105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
-                    </svg>
-                  </div>
-                </div>
-                {/* <div className={styles.urlBar}>{project.website}</div> */}
-                <div />
-              </div>
-            </div>
-            <div className={styles.content}>
-              {/* <Image
-                src={project.screenshots.desktop}
-                placeholder="blur"
-                alt={`Screenshot of ${project.name}`}
-                onLoad={handleLoad}
-              /> */}
-            </div>
-          </motion.div>
         )}
       </div>
     </div>

@@ -5,6 +5,7 @@
   align-items: center;
   padding: 20px 24px;
   z-index: 100;
+  pointer-events: none;
   
 
   a {
@@ -12,6 +13,7 @@
     font-size: 2.4rem;
     text-transform: uppercase;
     transition: transform 200ms ease, opacity 200ms ease;
+    pointer-events: auto;
 
     &.isActive {
       color: var(--palette-primary);
@@ -26,6 +28,10 @@
     display: flex;
     align-items: center;
     z-index: 101;
+
+    button {
+      pointer-events: auto;
+    }
   }
 
   &.uiHidden a {

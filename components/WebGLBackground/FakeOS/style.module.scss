@@ -129,99 +129,84 @@
 }
 
 .ide {
-  position: absolute;
-  top: 12%;
-  left: 5%;
-  width: 65%;
-  height: 85%;
-  background: #3c3c3c;
-
-  .titleBar .title {
-    color: #FFF;
-  }
+  background: #3c3c3c !important;
 
   .content {
     display: flex;
-    .sidebar {
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 48px;
+    background: #333;
+
+    .icon {
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      width: 6%;
-      background: #333;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      color: #fff;
+      opacity: 0.5;
 
-      .icon {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        color: #fff;
-        opacity: 0.5;
+      &:first-child {
+        opacity: 1;
+        border-left: 2px solid #FFF;
+      }
 
-        &:first-child {
-          opacity: 1;
-          border-left: 2px solid #FFF;
-        }
-
-        svg {
-          height: 50%;
-          width: 50%;
-        }
+      svg {
+        height: 50%;
+        width: 50%;
       }
     }
-    .files {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 20%;
-      background: #252526;
+  }
 
-      .filename {
+  .files {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+    background: #252526;
+
+    .filename {
+      font-size: 11px;
+      padding: 1px 20px;
+      width: 100%;
+      color: #FFF;
+      opacity: 0.8;
+
+      &.projectTitle {
+        padding-left: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
         font-size: 11px;
-        padding: 1px 20px;
-        width: 100%;
-        color: #FFF;
-        opacity: 0.8;
+      }
 
-        &.projectTitle {
-          padding-left: 10px;
-          font-weight: bold;
-          text-transform: uppercase;
-          font-size: 11px;
-        }
+      &.indent {
+        padding-left: 40px;
+      }
 
-        &.indent {
-          padding-left: 40px;
-        }
+      &.faded {
+        opacity: 0.4;
+      }
 
-        &.faded {
-          opacity: 0.4;
-        }
-
-        &.selected {
-          background: rgba(#fff, 0.1);
-        }
+      &.selected {
+        background: rgba(#fff, 0.1);
       }
     }
-    .code {
-      flex: 1;
-      background: #1E1E1E;
-    }
+  }
+
+  .code {
+    flex: 1;
+    background: #1E1E1E;
   }
 }
 
 .browser {
-  position: absolute;
-  top: 6%;
-  left: 20%;
-  width: 72%;
-  aspect-ratio: 1.5 / 1; // 1.275 / 1;
-  background: var(--palette-background);
-  animation: window-open 300ms ease 1;
-
   .titleBar {
-    height: 50px;
-    z-index: 2;
+    height: 50px !important;
   }
 
   .browserControls {
