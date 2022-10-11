@@ -14,14 +14,16 @@
 
   --color: #FFF;
   --shadow: #BBB;
-  --hoverColor: #;
+  --hoverColor: #FFF;
+  --hoverShadow: #888;
   --activeColor: #FFF;
   --activeShadow: #444;
 
   @include dark-mode {
     --color: #666;
-    --hoverColor: #888;
     --shadow: #000;
+    --hoverColor: #888;
+    --hoverShadow: #000;
     --activeColor: #FFF;
     --activeShadow: #000;
   }
@@ -40,6 +42,7 @@
     &:hover,
     &:focus {
       color: var(--hoverColor);
+      @include text-3d(var(--hoverShadow));
     }
   
     &:active {

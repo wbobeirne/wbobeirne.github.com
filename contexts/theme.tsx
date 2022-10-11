@@ -18,7 +18,7 @@ const PALETTE = {
     shadowDark: "#CCCCCC",
 
     letterBorder: "#FFFFFF",
-    letterBack: "#999999",
+    letterBack: "#EEEEEE",
   },
   dark: {
     colorScheme: "dark",
