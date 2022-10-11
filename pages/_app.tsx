@@ -8,6 +8,10 @@ import { WebGLBackground } from "../components/WebGLBackground";
 import { ThemeProvider } from "../contexts/theme";
 import { AppProvider } from "../contexts/app";
 import { NoScriptBackground } from "../components/NoScriptBackground";
+import { fixTimeoutTransition } from "../util/animation";
+
+const transitionTime = 300;
+fixTimeoutTransition(transitionTime);
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps, router }) => {
   const url = `https://wbobeirne.com/${router.route}`;
@@ -20,7 +24,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps, router }) => {
             <CSSTransition
               key={router.pathname}
               classNames="page"
-              timeout={300}
+              timeout={transitionTime}
             >
               <Component {...pageProps} canonical={url} key={url} />
             </CSSTransition>
