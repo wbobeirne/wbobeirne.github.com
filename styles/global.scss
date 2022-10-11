@@ -59,6 +59,10 @@ a {
 .page-enter {
   opacity: 0;
   transform: translate(-20px, -20px);
+
+  @include mq-slim {
+    transform: translate(0, 10vh);
+  }
 }
 
 .page-enter-active {
@@ -74,4 +78,8 @@ a {
 .page-exit-active {
   opacity: 0;
   transform: translate(20px, 20px);
+
+  @include mq-slim {
+    transform: translate(0, 10vh);
+  }
 }

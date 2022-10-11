@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { ScrollSpacer } from "../../components/ScrollSpacer";
 import { Template } from "../../components/Template";
 import styles from "./style.module.scss";
 
@@ -11,6 +12,7 @@ const Bio: NextPage = () => {
         <meta name="description" content="Don’t forget to fill me out dummy" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <ScrollSpacer percentage={80} />
       <div className={styles.container}>
         <p>
           Hey, I’m <strong>Will O’Beirne</strong>. Thanks for dropping by my
@@ -38,7 +40,6 @@ const Bio: NextPage = () => {
           <div className={styles.stuff}>Live music</div>
         </div>
       </div>
-      <div className={styles.scrollSpacer} />
     </Template>
   );
 };

@@ -1,7 +1,9 @@
+@import '~/styles/mixins.scss';
+
 .container {
   position: relative;
   z-index: 1;
-  padding: 16px 24px 24px;
+  padding: 1rem 1.5rem 1.5rem;
   min-height: 100vh;
   min-height: -webkit-fill-available;
   pointer-events: none;
@@ -11,6 +13,18 @@
     transform: translateX(-100%);
     opacity: 0;
     transition-duration: 300ms;
+  }
+
+  @include mq-slim {
+    main > *:nth-child(0n+2) {
+      min-height: calc(100vh - 4.625rem - 3rem);
+    }
+  }
+
+  @include mq-tiny {
+    main > *:nth-child(0n+2) {
+      min-height: calc(100vh - 4.25rem - 3rem);
+    }
   }
 }
 

@@ -7,7 +7,7 @@ import SunIcon from "../../public/icons/sun.svg";
 import MoonIcon from "../../public/icons/moon.svg";
 import CameraIcon from "../../public/icons/camera.svg";
 import styles from "./style.module.scss";
-import { useHasRendered } from "../../util/hooks";
+import { useHasRendered, useWindowScroll } from "../../util/hooks";
 
 const links = [
   {
@@ -33,19 +33,32 @@ export const Nav: React.FC = () => {
   const theme = useTheme();
   const app = useAppContext();
   const hasRendered = useHasRendered();
+  const { scrollY } = useWindowScroll();
+
+  const translateY = app.stickyNavTop
+    ? Math.max(scrollY - app.stickyNavTop, 0)
+    : 0;
 
   return (
-    <nav className={clsx(styles.nav, app.isUiHidden && styles.uiHidden)}>
-      {links.map((link) => (
-        <ActiveLink
-          key={link.href}
-          href={link.href}
-          activeOnExact={link.activeOnExact}
-          activeClassName={styles.isActive}
-        >
-          <a>{link.text}</a>
-        </ActiveLink>
-      ))}
+    <nav
+      className={clsx(styles.nav, app.isUiHidden && styles.uiHidden)}
+      style={{ top: app.stickyNavTop ? 0 : undefined }}
+    >
+      <div
+        className={styles.links}
+        style={{ transform: `translateY(${-translateY}px)` }}
+      >
+        {links.map((link) => (
+          <ActiveLink
+            key={link.href}
+            href={link.href}
+            activeOnExact={link.activeOnExact}
+            activeClassName={styles.isActive}
+          >
+            <a>{link.text}</a>
+          </ActiveLink>
+        ))}
+      </div>
       {hasRendered && (
         <div className={styles.buttons}>
           <button onClick={() => app.toggleUi()}>

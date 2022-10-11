@@ -22,7 +22,7 @@
 
 .scrollSpacer {
   display: none;
-  height: 40vh;
+  height: calc(100vh - 120px);
 
   @include mq-slim {
     display: block;

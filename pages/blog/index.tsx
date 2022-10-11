@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { ScrollSpacer } from "../../components/ScrollSpacer";
 import { Template } from "../../components/Template";
 import { POSTS } from "../../util/posts";
 import styles from "./style.module.scss";
@@ -14,6 +15,7 @@ const Blog: NextPage = () => {
         <meta name="description" content="Don’t forget to fill me out dummy" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <ScrollSpacer percentage={72} />
       <div>
         {POSTS.map((post) => (
           <Link key={post.url} href={post.url}>
@@ -30,7 +32,6 @@ const Blog: NextPage = () => {
           </Link>
         ))}
       </div>
-      <div className={styles.scrollSpacer} />
     </Template>
   );
 };

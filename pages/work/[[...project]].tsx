@@ -2,6 +2,7 @@ import type { NextPage, GetStaticPathsResult } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { ScrollSpacer } from "../../components/ScrollSpacer";
 import { Template } from "../../components/Template";
 import { WorkProject } from "../../components/WorkProject";
 import { useAppContext } from "../../contexts/app";
@@ -91,6 +92,7 @@ const Work: NextPage = () => {
         <meta name="description" content="Don’t forget to fill me out dummy" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <ScrollSpacer percentage={80} />
       <div
         className={styles.projects}
         ref={(ref) => {
@@ -113,7 +115,6 @@ const Work: NextPage = () => {
           />
         ))}
       </div>
-      <div className={styles.scrollSpacer} />
     </Template>
   );
 };

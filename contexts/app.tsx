@@ -9,6 +9,8 @@ const initialState = {
   setActiveProject: (project: ProjectKey | null) => null,
   isUiHidden: false,
   toggleUi: () => null,
+  stickyNavTop: 0,
+  setStickyNavTop: (top: number) => null,
 };
 
 export const AppContext = React.createContext(initialState);
@@ -20,6 +22,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isViewingProjects, _setIsViewingProjects] = useState(false);
   const [activeProject, _setActiveProject] = useState<ProjectKey | null>(null);
   const [isUiHidden, setIsUiHidden] = useState(false);
+  const [stickyNavTop, _setStickyNavTop] = useState(0);
 
   const setActiveProject = useCallback((project: ProjectKey | null) => {
     _setActiveProject(project);
@@ -33,6 +36,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const toggleUi = useCallback(() => {
     setIsUiHidden((is) => !is);
+    return null;
+  }, []);
+
+  const setStickyNavTop = useCallback((top: number) => {
+    _setStickyNavTop(top);
     return null;
   }, []);
 
@@ -56,6 +64,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       setActiveProject,
       isUiHidden,
       toggleUi,
+      stickyNavTop,
+      setStickyNavTop,
     }),
     [
       debug,
@@ -65,6 +75,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       setActiveProject,
       isUiHidden,
       toggleUi,
+      stickyNavTop,
+      setStickyNavTop,
     ]
   );
 

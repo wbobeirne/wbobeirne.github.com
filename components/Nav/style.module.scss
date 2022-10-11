@@ -3,7 +3,7 @@
 
 
 .nav {
-  position: relative;
+  position: sticky;
   width: 100%;
   display: flex;
   align-items: center;
@@ -26,7 +26,11 @@
     --activeShadow: #000;
   }
 
-  a,
+  @include mq-slim {
+    padding: 1rem 1.5rem;
+  }
+
+  .links a,
   .buttons button {
     cursor: pointer;
     color: var(--color);
@@ -53,13 +57,27 @@
   }
   
 
-  a {
-    position: relative;
-    font-size: 2rem;
-    font-weight: 400;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    pointer-events: auto;
+  .links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    a {
+      position: relative;
+      font-size: 2rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      pointer-events: auto;
+
+      @include mq-slim {
+        font-size: 1.75rem;
+      }
+
+      @include mq-tiny {
+        font-size: 1.5rem;
+      }
+    }
   }
 
   .buttons {
@@ -72,15 +90,23 @@
     align-items: center;
     z-index: 101;
 
+    @include mq-work-2col {
+      display: none;
+    }
+
     button {
       display: flex;
       align-items: center;
       justify-content: center;
       background: none;
       border: none;
-      padding: 2rem 1rem;
+      padding: 1.75rem 1rem;
       pointer-events: auto;
       opacity: 0.5;
+
+      @include dark-mode {
+        opacity: 1;
+      }
 
       &:hover,
       &:focus {

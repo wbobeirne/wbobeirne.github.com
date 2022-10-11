@@ -36,14 +36,14 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
       {
         route: "/bio",
         position: isMobile
-          ? new Vector3(0.8, 4.2, 10)
+          ? new Vector3(0.85, 3.9, 10)
           : new Vector3(
               0 + widthOffset * 1.0,
               2.5 + clamp(aspect * 5, 0, 2),
               10
             ),
         target: isMobile
-          ? new Vector3(0.8, 4, 0)
+          ? new Vector3(0.85, 3.5, 0)
           : new Vector3(
               -0.6 + widthOffset * 1.0,
               2 + clamp(aspect * 5, 0, 2),
@@ -60,12 +60,12 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
       {
         route: "/work",
         position: isMobile
-          ? new Vector3(0.5, 4.4 - aspect * 2.8, -5)
+          ? new Vector3(0.5, 3.4 - aspect * 2.8, -5)
           : isZoomedOnMonitor
           ? new Vector3(2.3 - clamp(widthOffset * 1.8, 0, 100), 1.9, -5)
           : new Vector3(3.4 - clamp(widthOffset * 2.1, 0, 100), 1.8, -10),
         target: isMobile
-          ? new Vector3(0, 3.9 - aspect * 2.8, -1)
+          ? new Vector3(0, 2.9 - aspect * 2.8, -1)
           : isZoomedOnMonitor
           ? new Vector3(1.3 - clamp(widthOffset * 1.8, 0, 100), 1.4, -1)
           : new Vector3(1.8 - clamp(widthOffset * 2.1, 0, 100), 1.1, -1),
