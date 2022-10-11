@@ -24,13 +24,37 @@
     position: fixed;
     top: 0;
     right: 0;
+    gap: 1rem;
     padding: 20px 24px;
     display: flex;
     align-items: center;
     z-index: 101;
 
     button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      padding: 12px;
+      color: var(--palette-text);
       pointer-events: auto;
+      opacity: 0.2;
+      cursor: pointer;
+
+      &:hover,
+      &:focus {
+        opacity: 0.8;
+      }
+
+      &:active {
+        transform: translate(1px, 1px);
+      }
+
+      svg {
+        height: 2.4rem;
+        width: 2.4rem;
+      }
     }
   }
 

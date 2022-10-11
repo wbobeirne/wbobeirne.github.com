@@ -24,6 +24,7 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
   const height = useThree((s) => s.size.height);
   const [mouseX, setMouseX] = useState(0); // -1 to 1
   const [mouseY, setMouseY] = useState(0); // -1 to 1
+  const isAnimatedRef = useRef(true);
 
   const pageConfigs = useMemo(() => {
     const aspect = width / height;
@@ -77,11 +78,11 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
       },
       {
         route: "/blog",
-        position: new Vector3(10 - widthOffset * 9, 4.35, -10),
-        target: new Vector3(10 - widthOffset * 9, 4.15, 1),
+        position: new Vector3(9 - widthOffset * 9, 4.35, -10),
+        target: new Vector3(9 - widthOffset * 9, 4.15, 1),
         positionWiggle: 0,
         targetWiggle: 0.04,
-        zoom: makeZoom(0 + clamp(aspect * 1, 2, 10), width, height),
+        zoom: makeZoom(0.2 + clamp(aspect * 1, 2, 10), width, height),
       },
       {
         route: "/",
@@ -114,9 +115,9 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
       pageConfig.target.x + mouseX * pageConfig.targetWiggle,
       pageConfig.target.y + mouseY * pageConfig.targetWiggle,
       pageConfig.target.z,
-      true
+      isAnimatedRef.current
     );
-    camConRef.current.zoomTo(pageConfig.zoom, true);
+    camConRef.current.zoomTo(pageConfig.zoom, isAnimatedRef.current);
   }, [pageConfig, mouseX, mouseY]);
 
   useEffect(() => {
@@ -127,6 +128,17 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
     };
     window.addEventListener("mousemove", handle);
     return () => window.removeEventListener("mousemove", handle);
+  }, []);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    window.addEventListener("resize", () => {
+      if (timeout) clearTimeout(timeout);
+      isAnimatedRef.current = false;
+      timeout = setTimeout(() => {
+        isAnimatedRef.current = true;
+      });
+    });
   }, []);
 
   if (debug) {

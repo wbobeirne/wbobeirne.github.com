@@ -3,6 +3,9 @@ import React from "react";
 import { useAppContext } from "../../contexts/app";
 import { useTheme } from "../../contexts/theme";
 import ActiveLink from "../ActiveLink";
+import SunIcon from "../../public/icons/sun.svg";
+import MoonIcon from "../../public/icons/moon.svg";
+import CameraIcon from "../../public/icons/camera.svg";
 import styles from "./style.module.scss";
 
 export const Nav: React.FC = () => {
@@ -24,13 +27,17 @@ export const Nav: React.FC = () => {
         <a>Blog</a>
       </ActiveLink>
       <div className={styles.buttons}>
-        <button onClick={() => app.toggleUi()}>Toggle UI</button>
-        <button
-          className={styles.themeToggle}
-          onClick={() => theme.toggleMode()}
-        >
-          Toggle theme
+        <button onClick={() => app.toggleUi()}>
+          <CameraIcon />
         </button>
+        {theme.palette && (
+          <button
+            className={styles.themeToggle}
+            onClick={() => theme.toggleMode()}
+          >
+            {theme.mode === "light" ? <SunIcon /> : <MoonIcon />}
+          </button>
+        )}
       </div>
     </nav>
   );
