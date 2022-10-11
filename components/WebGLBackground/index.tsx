@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
-import React from "react";
-import { Canvas } from "@react-three/fiber";
-import styles from "./style.module.scss";
-import { ContactShadows } from "@react-three/drei";
+import React, { useCallback, useEffect, useState } from "react";
+import clsx from "clsx";
+import { Canvas, useThree } from "@react-three/fiber";
+import { ContactShadows, useProgress } from "@react-three/drei";
 import { Howdy } from "./Howdy";
 import { Camera } from "./Camera";
 import { Lights } from "./Lights";
@@ -12,12 +12,18 @@ import { ThemeContext } from "../../contexts/theme";
 import { AppContext } from "../../contexts/app";
 import { StarrySky } from "./StarrySky";
 import { Balloons } from "./Balloons";
+import styles from "./style.module.scss";
 
 export const WebGLBackground: React.FC = () => {
   const { pathname } = useRouter();
+  const [loaded, setLoaded] = useState(false);
+
+  const handleLoaded = useCallback(() => {
+    setLoaded(true);
+  }, []);
 
   return (
-    <div className={styles.container}>
+    <div className={clsx(styles.container, loaded && styles.isLoaded)}>
       <ThemeContext.Consumer>
         {(theme) => (
           <AppContext.Consumer>
@@ -52,6 +58,7 @@ export const WebGLBackground: React.FC = () => {
                     <Camera pathname={pathname} />
                   </AppContext.Provider>
                 </ThemeContext.Provider>
+                <LoadedCallback onLoaded={handleLoaded} />
               </Canvas>
             )}
           </AppContext.Consumer>
@@ -59,4 +66,12 @@ export const WebGLBackground: React.FC = () => {
       </ThemeContext.Consumer>
     </div>
   );
+};
+
+const LoadedCallback: React.FC<{ onLoaded: () => void }> = ({ onLoaded }) => {
+  const { progress } = useProgress();
+  useEffect(() => {
+    if (progress >= 100) onLoaded();
+  }, [onLoaded, progress]);
+  return null;
 };

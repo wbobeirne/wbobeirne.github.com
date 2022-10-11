@@ -66,9 +66,15 @@ export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
     action.clampWhenFinished = true;
     action.enabled = true;
     action.play();
-    setTimeout(() => {
+    action.paused = true;
+    const to1 = setTimeout(() => (action.paused = false), 500);
+    const to2 = setTimeout(() => {
       setHasEntered(true);
-    }, 2500);
+    }, 3000);
+    return () => {
+      clearTimeout(to1);
+      clearTimeout(to2);
+    };
   }, [scene, vaultAnim, mixer]);
 
   // Wave when we ought to

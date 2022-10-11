@@ -3,20 +3,31 @@
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 20px 24px;
+  padding: 1.25rem 1.5rem;
+  gap: 2rem;
   z-index: 100;
   pointer-events: none;
   
 
   a {
-    padding-right: 32px;
-    font-size: 2.4rem;
+    font-size: 2rem;
+    font-weight: 400;
     text-transform: uppercase;
-    transition: transform 200ms ease, opacity 200ms ease;
+    transition: transform 100ms ease, opacity 100ms ease;
     pointer-events: auto;
 
+    &:hover,
+    &:focus {
+      opacity: 0.6;
+    }
+
+    &:active {
+      transform: translate(2px, 2px);
+    }
+    
     &.isActive {
       color: var(--palette-primary);
+      opacity: 1;
     }
   }
 
@@ -24,8 +35,8 @@
     position: fixed;
     top: 0;
     right: 0;
-    gap: 1rem;
-    padding: 20px 24px;
+    gap: 0.5rem;
+    padding-right: 1rem;
     display: flex;
     align-items: center;
     z-index: 101;
@@ -36,7 +47,7 @@
       justify-content: center;
       background: none;
       border: none;
-      padding: 12px;
+      padding: 2rem 1rem;
       color: var(--palette-text);
       pointer-events: auto;
       opacity: 0.2;
@@ -52,8 +63,8 @@
       }
 
       svg {
-        height: 2.4rem;
-        width: 2.4rem;
+        height: 1.8rem;
+        width: 1.8rem;
       }
     }
   }

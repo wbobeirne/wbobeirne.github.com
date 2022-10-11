@@ -1,12 +1,28 @@
 @import './mixins.scss';
 
+@font-face {
+  font-family: 'Urbanist';
+  font-stretch: 100%;
+  font-style: normal;
+  font-weight: 100%;
+  src: url('/fonts/urbanist.ttf') format('ttf') tech('variations');
+}
+
+@font-face {
+  font-family: 'Figtree';
+  font-stretch: 100%;
+  font-style: normal;
+  font-weight: 100%;
+  src: url('/fonts/figtree.ttf') format('ttf') tech('variations');
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   line-height: 1.5;
   font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: Urbanist, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 

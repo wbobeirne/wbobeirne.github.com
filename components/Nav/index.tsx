@@ -7,10 +7,12 @@ import SunIcon from "../../public/icons/sun.svg";
 import MoonIcon from "../../public/icons/moon.svg";
 import CameraIcon from "../../public/icons/camera.svg";
 import styles from "./style.module.scss";
+import { useHasRendered } from "../../util/hooks";
 
 export const Nav: React.FC = () => {
   const theme = useTheme();
   const app = useAppContext();
+  const hasRendered = useHasRendered();
 
   return (
     <nav className={clsx(styles.nav, app.isUiHidden && styles.uiHidden)}>
@@ -26,19 +28,19 @@ export const Nav: React.FC = () => {
       <ActiveLink href="/blog" activeClassName={styles.isActive}>
         <a>Blog</a>
       </ActiveLink>
-      <div className={styles.buttons}>
-        <button onClick={() => app.toggleUi()}>
-          <CameraIcon />
-        </button>
-        {theme.palette && (
+      {hasRendered && (
+        <div className={styles.buttons}>
+          <button onClick={() => app.toggleUi()}>
+            <CameraIcon />
+          </button>
           <button
             className={styles.themeToggle}
             onClick={() => theme.toggleMode()}
           >
             {theme.mode === "light" ? <SunIcon /> : <MoonIcon />}
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </nav>
   );
 };

@@ -104,51 +104,13 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
       </>
     ),
   },
-  joule: {
-    name: "Joule",
-    title: "Creator",
-    website: "https://lightningjoule.com",
-    dates: "August 2018",
-    logo: "/logos/joule.svg",
-    color: { primary: "#7642FF", secondary: "#E9E1FF" },
-    screenshots: {
-      desktop: jouleDesktopScreenshot,
-      mobile: jouleMobileScreenshot,
-    },
-    description: (
-      <>
-        <p>
-          The Joule browser extension is a way for Bitcoin Lightning users to
-          quickly make payments and authenticate using their Lightning node. By
-          injecting a small script into every page, websites can leverage the
-          WebLN standard to initiate interactions, a standard I developed
-          alongside Joule based on the Ethereum community’s Web3 standard.
-        </p>
-        <p>
-          At its peak, Joule had over 1,500 active users, and was featured in
-          many publications and at many conferences. It has also inspired many
-          similar open source projects such as Alby and Jolt. The WebLN standard
-          has been adopted and extended by many applications, such as Sphinx.
-        </p>
-        <p>
-          The project ceased development in 2021 due to Google’s significant
-          changes to the web extensions API.
-        </p>
-        <h3>Technologies used</h3>
-        <ul>
-          <li>TypeScript w/ React.js &amp; Redux</li>
-          <li>Web Extension API</li>
-        </ul>
-      </>
-    ),
-  },
   coder: {
     name: "Coder",
     title: "Engineering Manager / Staff Software Engineer",
     website: "https://coder.com",
     dates: "Sep 2019 - Dec 2020",
     logo: "/logos/coder.svg",
-    color: { primary: "#FFFFFF", secondary: "#2773df" },
+    color: { primary: "#FFFFFF", secondary: "#2B3854" },
     screenshots: {
       desktop: coderDesktopScreenshot,
       mobile: coderMobileScreenshot,
@@ -197,7 +159,7 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
     website: "https://okcupid.com",
     dates: "Aug 2013 - Deb 2017",
     logo: "/logos/okcupid.svg",
-    color: { primary: "#ffffff", secondary: "#5da3ff" },
+    color: { primary: "#ffffff", secondary: "#0F4DA2" },
     screenshots: {
       desktop: okcDesktopScreenshot,
       mobile: okcMobileScreenshot,
@@ -238,6 +200,44 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
             <small>(Custom web server and templating language)</small>
           </li>
           <li>MySQL</li>
+        </ul>
+      </>
+    ),
+  },
+  joule: {
+    name: "Joule",
+    title: "Creator",
+    website: "https://lightningjoule.com",
+    dates: "August 2018",
+    logo: "/logos/joule.svg",
+    color: { primary: "#7642FF", secondary: "#E9E1FF" },
+    screenshots: {
+      desktop: jouleDesktopScreenshot,
+      mobile: jouleMobileScreenshot,
+    },
+    description: (
+      <>
+        <p>
+          The Joule browser extension is a way for Bitcoin Lightning users to
+          quickly make payments and authenticate using their Lightning node. By
+          injecting a small script into every page, websites can leverage the
+          WebLN standard to initiate interactions, a standard I developed
+          alongside Joule based on the Ethereum community’s Web3 standard.
+        </p>
+        <p>
+          At its peak, Joule had over 1,500 active users, and was featured in
+          many publications and at many conferences. It has also inspired many
+          similar open source projects such as Alby and Jolt. The WebLN standard
+          has been adopted and extended by many applications, such as Sphinx.
+        </p>
+        <p>
+          The project ceased development in 2021 due to Google’s significant
+          changes to the web extensions API.
+        </p>
+        <h3>Technologies used</h3>
+        <ul>
+          <li>TypeScript w/ React.js &amp; Redux</li>
+          <li>Web Extension API</li>
         </ul>
       </>
     ),

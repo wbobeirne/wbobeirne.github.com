@@ -15,19 +15,6 @@ export const OS_WIDTH = 1460;
 export const OS_HEIGHT = 768;
 export const OS_TOPBAR_HEIGHT = 28;
 
-const windowVariants = {
-  open: {
-    scale: 1,
-    translateY: "0%",
-    transformOrigin: "top center",
-  },
-  closed: {
-    scale: 0,
-    translateY: "100%",
-    transformOrigin: "top center",
-  },
-};
-
 interface FakeOSProps {
   activeProject: ProjectKey | null;
 }

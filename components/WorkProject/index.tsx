@@ -85,10 +85,10 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
             "--color-secondary": color.secondary,
             "--color-secondary-dark": isLight
               ? tinycolor(color.secondary).desaturate(10).darken(5)
-              : tinycolor(color.secondary).desaturate(10).lighten(5),
+              : tinycolor(color.secondary).desaturate(10).lighten(10),
             "--color-secondary-darker": isLight
               ? tinycolor(color.secondary).desaturate(10).darken(10)
-              : tinycolor(color.secondary).desaturate(10).lighten(10),
+              : tinycolor(color.secondary).desaturate(10).lighten(5),
             "--color-text": isLight ? "#000000" : "#FFFFFF",
           } as any
         }

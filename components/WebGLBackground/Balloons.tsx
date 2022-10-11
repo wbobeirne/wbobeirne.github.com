@@ -49,9 +49,13 @@ export const Balloons: React.FC<BalloonsProps> = ({ show }) => {
 
   useEffect(() => {
     if (!show) {
-      // Instantly reset visibility after a delay. Not a part of the official API.
+      // Reset visibility after a delay with no transition. Not a part of the official API.
       const timeout = setTimeout(
-        () => visibilitySprings.forEach((s) => ((s as any).current = 0.0)),
+        () =>
+          visibilitySprings.forEach((s) => {
+            (s as any).current = 0.0;
+            requestAnimationFrame(() => ((s as any).current = 0.0));
+          }),
         600
       );
       return () => clearTimeout(timeout);
@@ -92,7 +96,7 @@ export const Balloons: React.FC<BalloonsProps> = ({ show }) => {
     meshRefs.current?.forEach((mesh, i) => {
       const vis = visibilitySprings[i].get();
       const balloon = balloons[i];
-      const risingYOffset = (1 - vis) * 0.7;
+      const risingYOffset = Math.sin(((1 - vis) * 0.7 * Math.PI) / 2);
       const floatingYOffset = Math.sin((t + i * 0.2) * balloon.speed) * 0.1;
       mesh.position.y = balloon.position.y - risingYOffset - floatingYOffset;
 
@@ -121,5 +125,3 @@ export const Balloons: React.FC<BalloonsProps> = ({ show }) => {
     </group>
   );
 };
-
-useGLTF.preload("/balloon.glb");

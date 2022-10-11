@@ -88,8 +88,8 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
         route: "/",
         position: new Vector3(8, 5, 10),
         target: new Vector3(0, 1.8, 0),
-        positionWiggle: 1,
-        targetWiggle: 0.1,
+        positionWiggle: 0.3,
+        targetWiggle: 0.05,
         zoom: makeZoom(clamp(aspect * 0.9, 1.2, 4), width, height),
       },
     ];
