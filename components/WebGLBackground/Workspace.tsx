@@ -3,13 +3,25 @@ import {
   useGLTF,
   useTexture,
   Html as DreiHtml,
+  Image as DreiImage,
 } from "@react-three/drei";
-import React, { useEffect, useRef, useState } from "react";
-import { MeshToonMaterial, Object3D } from "three";
+import React, { useEffect, useRef } from "react";
+import {
+  BufferGeometry,
+  Material,
+  Mesh,
+  MeshToonMaterial,
+  Object3D,
+} from "three";
 import { useAppContext } from "../../contexts/app";
 import { useTheme } from "../../contexts/theme";
 import { applyNearestFilterToTextures } from "../../util/3d";
+import { shouldRenderFakeOS } from "../../util/animation";
 import { FakeOS } from "./FakeOS";
+
+import FakeOSLight from "../../public/threejs/textures/fakeos-light.jpg";
+import FakeOSDark from "../../public/threejs/textures/fakeos-dark.jpg";
+import { useFrame } from "@react-three/fiber";
 
 export const Workspace: React.FC = () => {
   const theme = useTheme();
@@ -25,8 +37,7 @@ export const Workspace: React.FC = () => {
     "/threejs/textures/gradient-dark.png",
     applyNearestFilterToTextures
   );
-
-  // Don't render OS if we're not showing work
+  const fakeOsImageRef = useRef<Mesh<BufferGeometry, Material>>();
 
   // Apply MeshToonMaterial to workspace
   const gradientTex =
@@ -46,6 +57,11 @@ export const Workspace: React.FC = () => {
     });
   }, [gltf, gradientTex]);
 
+  useFrame(() => {
+    if (!fakeOsImageRef.current) return;
+    fakeOsImageRef.current.material.depthTest = false;
+  });
+
   return (
     <>
       <primitive
@@ -60,10 +76,16 @@ export const Workspace: React.FC = () => {
         rotation={[Math.PI * 0.085, Math.PI, 0]}
       >
         <meshBasicMaterial color={0x3c3c3c} />
-        {isViewingProjects && (
+        {isViewingProjects && shouldRenderFakeOS() ? (
           <DreiHtml transform occlude={[sceneRef]}>
             <FakeOS activeProject={activeProject} />
           </DreiHtml>
+        ) : (
+          <DreiImage
+            ref={(ref) => (fakeOsImageRef.current = ref as any)}
+            url={theme.mode === "light" ? FakeOSLight.src : FakeOSDark.src}
+            scale={[0.88, 0.46, 0.46] as any}
+          />
         )}
       </Plane>
     </>

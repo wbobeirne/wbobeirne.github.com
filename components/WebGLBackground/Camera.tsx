@@ -4,6 +4,7 @@ import { Vector3 } from "three";
 import { OrbitControls } from "@react-three/drei";
 import { useAppContext } from "../../contexts/app";
 import { CameraControls } from "./CameraControls";
+import { shouldRenderFakeOS } from "../../util/animation";
 
 const ZOOM_MULTIPLIER = 50;
 
@@ -26,11 +27,11 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
   const [mouseY, setMouseY] = useState(0); // -1 to 1
   const isAnimatedRef = useRef(true);
 
+  const isZoomedOnMonitor = activeProject && shouldRenderFakeOS();
   const pageConfigs = useMemo(() => {
     const aspect = width / height;
     const isMobile = width < 880;
     const widthOffset = isMobile || isUiHidden ? 1 : (width - 820) / width;
-    console.log({ widthOffset });
     return [
       {
         route: "/bio",
@@ -60,18 +61,22 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
         route: "/work",
         position: isMobile
           ? new Vector3(0.5, 4.4 - aspect * 2.8, -5)
-          : activeProject
+          : isZoomedOnMonitor
           ? new Vector3(2.3 - clamp(widthOffset * 1.8, 0, 100), 1.9, -5)
           : new Vector3(3.4 - clamp(widthOffset * 2.1, 0, 100), 1.8, -10),
         target: isMobile
           ? new Vector3(0, 3.9 - aspect * 2.8, -1)
-          : activeProject
+          : isZoomedOnMonitor
           ? new Vector3(1.3 - clamp(widthOffset * 1.8, 0, 100), 1.4, -1)
           : new Vector3(1.8 - clamp(widthOffset * 2.1, 0, 100), 1.1, -1),
-        positionWiggle: activeProject ? 0.05 : 0.1,
-        targetWiggle: activeProject ? 0.025 : 0.05,
+        positionWiggle: isZoomedOnMonitor ? 0.05 : 0.1,
+        targetWiggle: isZoomedOnMonitor ? 0.025 : 0.05,
         zoom: makeZoom(
-          isMobile ? 6 : activeProject ? aspect * 10 : clamp(aspect * 4, 4, 8),
+          isMobile
+            ? 6
+            : isZoomedOnMonitor
+            ? aspect * 10
+            : clamp(aspect * 4, 4, 8),
           width,
           height
         ),
@@ -93,7 +98,7 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
         zoom: makeZoom(clamp(aspect * 0.9, 1.2, 4), width, height),
       },
     ];
-  }, [width, height, activeProject, isUiHidden]);
+  }, [width, height, isZoomedOnMonitor, isUiHidden]);
 
   const pageConfig = useMemo(() => {
     const conf = pageConfigs.find(({ route }) => pathname.startsWith(route));

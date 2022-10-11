@@ -22,12 +22,20 @@
   }
 }
 
+@mixin mq-work-2col {
+  @media screen and (max-width: 580px) {
+    @content;
+  }
+}
+
+$content-width: 720px;
+$content-width-mid: 600px;
 @mixin content-container {
   width: calc(100% - 12px);
-  max-width: 720px;
+  max-width: $content-width;
 
   @include mq-mid {
-    max-width: 600px;
+    max-width: $content-width-mid;
   }
 
   @include mq-slim {

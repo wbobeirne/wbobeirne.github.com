@@ -2,9 +2,22 @@
 
 .projects {
   position: relative;
-  min-height: 480px;
-  height: calc(100vh - 160px);
+  height: $content-width;
   @include content-container;
+
+  @include mq-mid {
+    height: $content-width-mid;
+  }
+
+  @include mq-slim {
+    height: auto;
+    padding-top: 100%;
+  }
+
+  @media screen and (max-width: 580px) {
+    height: auto;
+    padding-top: calc(200% - 12px);
+  }
 }
 
 .scrollSpacer {

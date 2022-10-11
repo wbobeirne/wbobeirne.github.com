@@ -2,7 +2,7 @@ import "../styles/global.scss";
 import React from "react";
 import type { AppProps } from "next/app";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { AnimatePresence } from "framer-motion";
+import { SwitchTransition, CSSTransition } from "react-transition-group";
 import { Nav } from "../components/Nav";
 import { WebGLBackground } from "../components/WebGLBackground";
 import { ThemeProvider } from "../contexts/theme";
@@ -16,13 +16,15 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps, router }) => {
       <ThemeProvider>
         <AppProvider>
           <Nav />
-          <AnimatePresence
-            mode="wait"
-            initial={false}
-            onExitComplete={() => window.scrollTo(0, 0)}
-          >
-            <Component {...pageProps} canonical={url} key={url} />
-          </AnimatePresence>
+          <SwitchTransition>
+            <CSSTransition
+              key={router.pathname}
+              classNames="page"
+              timeout={300}
+            >
+              <Component {...pageProps} canonical={url} key={url} />
+            </CSSTransition>
+          </SwitchTransition>
           <WebGLBackground />
           <NoScriptBackground />
         </AppProvider>

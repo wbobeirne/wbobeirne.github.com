@@ -1,24 +1,8 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
-import { motion, useMotionValue } from "framer-motion";
 import styles from "./style.module.scss";
 import { useUpdatingRef } from "../../../../util/hooks";
 import clsx from "clsx";
 import { OS_HEIGHT, OS_TOPBAR_HEIGHT, OS_WIDTH } from "..";
-
-interface Box {}
-
-const variants = {
-  open: {
-    scale: 1,
-    translateY: "0%",
-    transformOrigin: "top center",
-  },
-  closed: {
-    scale: 0,
-    translateY: "100%",
-    transformOrigin: "top center",
-  },
-};
 
 interface WindowProps {
   children: React.ReactNode;
@@ -121,15 +105,13 @@ export const Window: React.FC<WindowProps> = ({
   );
 
   return (
-    <motion.div
+    <div
       className={clsx(
         styles.window,
         classNames.window,
-        isMaximized && styles.isMaximized
+        isMaximized && styles.isMaximized,
+        !isOpen && styles.isClosed
       )}
-      variants={variants}
-      animate={isOpen ? "open" : "closed"}
-      transition={{ type: "spring", bounce: 0, duration: 0.3 }}
       style={{ ...box, zIndex }}
       onMouseDown={onMouseDown}
     >
@@ -145,6 +127,6 @@ export const Window: React.FC<WindowProps> = ({
         <div className={styles.title}>{title}</div>
       </div>
       <div className={clsx(styles.content, classNames.content)}>{children}</div>
-    </motion.div>
+    </div>
   );
 };

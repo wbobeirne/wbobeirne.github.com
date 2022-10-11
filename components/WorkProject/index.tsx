@@ -1,84 +1,41 @@
-import { motion, AnimatePresence, Target } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
+import { SwitchTransition, CSSTransition } from "react-transition-group";
 import clsx from "clsx";
 import tinycolor from "tinycolor2";
-import { dur } from "../../util/animation";
-import styles from "./style.module.scss";
 import { ProjectKey, PROJECTS } from "../../util/projects";
-import { useTheme } from "../../contexts/theme";
+import styles from "./style.module.scss";
+import { makeTransitionStyleClasses } from "../../util/animation";
+
+const transitionClasses = makeTransitionStyleClasses(styles);
 
 interface WorkProjectProps {
   id: ProjectKey;
   index: number;
-  description: React.ReactNode;
   isActive: boolean;
   isInactive: boolean;
-  containerWidth: number;
 }
 
 export const WorkProject: React.FC<WorkProjectProps> = ({
   id,
-  index,
   isActive,
   isInactive,
-  containerWidth,
 }) => {
-  const theme = useTheme();
   const { name, shortName, title, logo, dates, color, description } =
     PROJECTS[id];
   const isLight = tinycolor(color.secondary).isLight();
 
-  const containerStyle = useMemo(() => {
-    let width: string | number = "100%";
-    let height: string | number = "100%";
-    let top = 0;
-    let left = 0;
-    let opacity = 1;
-    let scale = 1;
-    let zIndex: undefined | number = 2;
-    let transitionEnd: Target = {};
-    const columns = containerWidth > 580 ? 3 : 2;
-    if (!isActive) {
-      const paddingPct = columns === 2 ? 0.08 : 0.125;
-      const padding =
-        containerWidth *
-        (1 / columns) *
-        (paddingPct * (columns / (columns - 1)));
-      width = containerWidth * (1 / columns) * (1 - paddingPct);
-      height = width;
-      top = (height + padding) * Math.floor(index / columns);
-      left = (width + padding) * (index % columns);
-      zIndex = undefined;
-      transitionEnd.zIndex = 1;
-    }
-    if (isInactive) {
-      opacity = 0;
-      scale = 0.8;
-    }
-    return { width, height, top, left, opacity, scale, zIndex, transitionEnd };
-  }, [index, isActive, isInactive, containerWidth]);
-
-  useEffect(() => {}, []);
-
   return (
-    <motion.div
-      className={styles.container}
-      animate={containerStyle}
-      transition={{
-        type: "spring",
-        bounce: 0.2,
-        duration: dur(0.5),
-        delay: isActive ? 0 : dur(0.2),
-      }}
-      initial={false}
+    <div
+      className={clsx(
+        styles.container,
+        isActive && styles.isActive,
+        isInactive && styles.isInactive
+      )}
     >
-      <motion.div
+      <div
         className={clsx(styles.content, isActive && styles.isActive)}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        initial={false}
         style={
           {
             "--color-primary": color.primary,
@@ -93,60 +50,55 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
           } as any
         }
       >
-        <AnimatePresence mode="wait">
+        <SwitchTransition>
           {isActive ? (
-            <motion.div
+            <CSSTransition
               key="full"
-              animate={{
-                opacity: 1,
-                translateY: 0,
-                transitionEnd: { overflow: "auto" },
-              }}
-              exit={{ opacity: 0, translateY: -20, overflow: "hidden" }}
-              initial={{ opacity: 0, translateY: -20, overflow: "hidden" }}
-              transition={{ duration: dur(0.2) }}
-              className={styles.full}
+              classNames={transitionClasses}
+              timeout={300}
             >
-              <Link href="/work" shallow>
-                <a className={styles.back}>← Back to other projects</a>
-              </Link>
-              <div className={styles.top}>
-                <div className={styles.logo}>
-                  <Image
-                    src={logo}
-                    alt=""
-                    width={80}
-                    height={80}
-                    layout="intrinsic"
-                  />
-                </div>
-                <h3 className={styles.name}>{name}</h3>
-              </div>
-              <div className={styles.title}>{title}</div>
-              <div className={styles.dates}>{dates}</div>
-              <div className={styles.description}>{description}</div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="list"
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: dur(0.2), delay: isActive ? 0 : 0.3 }}
-              className={styles.list}
-            >
-              <Link href={`/work/${id}`} shallow>
-                <a>
+              <div className={styles.full}>
+                <Link href="/work" shallow>
+                  <a className={styles.back}>← Back to other projects</a>
+                </Link>
+                <div className={styles.top}>
                   <div className={styles.logo}>
-                    <Image src={logo} alt="" layout="fill" />
+                    <Image
+                      src={logo}
+                      alt=""
+                      width={80}
+                      height={80}
+                      layout="intrinsic"
+                    />
                   </div>
-                  <h3 className={styles.name}>{shortName || name}</h3>
-                </a>
-              </Link>
-            </motion.div>
+                  <h3 className={styles.name}>{name}</h3>
+                </div>
+                <div className={styles.title}>{title}</div>
+                <div className={styles.dates}>{dates}</div>
+                <div className={styles.description}>{description}</div>
+              </div>
+            </CSSTransition>
+          ) : (
+            <CSSTransition
+              key="list"
+              classNames={transitionClasses}
+              timeout={300}
+            >
+              <div className={styles.list}>
+                <Link href={`/work/${id}`} shallow>
+                  <a>
+                    <div className={styles.logo}>
+                      <Image src={logo} alt="" layout="fill" />
+                    </div>
+                    <h3 className={styles.name}>{shortName || name}</h3>
+                  </a>
+                </Link>
+              </div>
+            </CSSTransition>
           )}
-        </AnimatePresence>
-      </motion.div>
-    </motion.div>
+        </SwitchTransition>
+      </div>
+    </div>
   );
 };
 WorkProject.displayName = "WorkProject";

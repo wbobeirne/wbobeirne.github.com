@@ -22,7 +22,7 @@ const Blog: NextPage = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Image src={post.image} alt="" placeholder="blur" />
+              <Image src={post.image} layout="responsive" alt="" />
               <h3 className={styles.title}>{post.title}</h3>
               <p className={styles.preview}>{post.preview}</p>
               <div className={styles.readMore}>Read more →</div>

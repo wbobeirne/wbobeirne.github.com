@@ -1,14 +1,14 @@
 import type { StaticImageData } from "next/image";
 
 // Images -- Static import provides all sorts of info around heights, widths etc.
-import watchtowerImage from "../public/blog/watchtower.png";
-import jouleBalancesImage from "../public/blog/joule-balances.png";
-import lapp4Image from "../public/blog/lapp-4.png";
-import lapp3Image from "../public/blog/lapp-3.png";
-import lapp2Image from "../public/blog/lapp-2.png";
-import lapp1Image from "../public/blog/lapp-1.png";
-import ethBalancesImage from "../public/blog/eth-balances.png";
-import propTypesImage from "../public/blog/proptypes.jpeg";
+import watchtowerImage from "../public/blog/watchtower.jpg";
+import jouleAllowancesImage from "../public/blog/joule-allowances.jpg";
+import lapp4Image from "../public/blog/lapp-4.jpg";
+import lapp3Image from "../public/blog/lapp-3.jpg";
+import lapp2Image from "../public/blog/lapp-2.jpg";
+import lapp1Image from "../public/blog/lapp-1.jpg";
+import ethBalancesImage from "../public/blog/eth-balances.jpg";
+import propTypesImage from "../public/blog/proptypes.jpg";
 
 interface BlogPost {
   title: string;
@@ -29,7 +29,7 @@ export const POSTS: BlogPost[] = [
     title: "Introducing: Joule Allowances",
     preview:
       "Configurable automatic payments for a seamless experience —  Since I first started working on Joule, I’ve always had the goal of enabling seamless micropayments to happen in the background so that you can enjoy content on the web without content creators having to resort to back channel methods to get paid.",
-    image: jouleBalancesImage,
+    image: jouleAllowancesImage,
     url: "https://medium.com/@wbobeirne/introducing-joule-allowances-2b08bec75e3a",
   },
   {

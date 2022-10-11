@@ -1,8 +1,7 @@
-import { useIsPresent } from "framer-motion";
 import type { NextPage, GetStaticPathsResult } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Template } from "../../components/Template";
 import { WorkProject } from "../../components/WorkProject";
 import { useAppContext } from "../../contexts/app";
@@ -37,23 +36,18 @@ function getProjectQuery(q: string | string[] | undefined): ProjectKey | null {
 
 const Work: NextPage = () => {
   const router = useRouter();
-  const isPresent = useIsPresent();
   const { setActiveProject: setContextActiveProject, setIsViewingProjects } =
     useAppContext();
   const [activeProject, setActiveProject] = useState(
     getProjectQuery(router.query.project)
   );
   const projectsRef = useRef<HTMLDivElement | null>(null);
-  const [projectsWidth, setProjectsWidth] = useState(
-    typeof window === "undefined" ? 600 : Math.min(window.innerWidth - 76, 720)
-  );
+  const [projectsWidth, setProjectsWidth] = useState(720);
 
   // Update activeProject, but only if we're not animating out.
   useEffect(() => {
-    if (isPresent) {
-      setActiveProject(getProjectQuery(router.query.project));
-    }
-  }, [isPresent, router.query.project]);
+    setActiveProject(getProjectQuery(router.query.project));
+  }, [router.query.project]);
 
   // Reset scroll when changing to activeProject
   useEffect(() => {
@@ -69,8 +63,11 @@ const Work: NextPage = () => {
 
   // Update context when projects is in view
   useEffect(() => {
-    setIsViewingProjects(isPresent);
-  }, [isPresent, setIsViewingProjects]);
+    setIsViewingProjects(true);
+    return () => {
+      setIsViewingProjects(false);
+    };
+  }, [setIsViewingProjects]);
 
   const updateProjectsWidth = useCallback(() => {
     const el = projectsRef.current;
@@ -79,7 +76,7 @@ const Work: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    updateProjectsWidth();
+    requestAnimationFrame(updateProjectsWidth);
     window.addEventListener("resize", updateProjectsWidth);
     return () => window.removeEventListener("resize", updateProjectsWidth);
   }, [updateProjectsWidth]);
@@ -100,6 +97,11 @@ const Work: NextPage = () => {
           projectsRef.current = ref;
           updateProjectsWidth();
         }}
+        style={
+          {
+            "--var-projectSize": projectsWidth * 0.333 - 32,
+          } as React.CSSProperties
+        }
       >
         {PROJECT_ORDER.map((project, index) => (
           <WorkProject
@@ -108,8 +110,6 @@ const Work: NextPage = () => {
             isActive={project === activeProject}
             isInactive={activeProject ? project !== activeProject : false}
             index={index}
-            containerWidth={projectsWidth}
-            {...PROJECTS[project as keyof typeof PROJECTS]}
           />
         ))}
       </div>

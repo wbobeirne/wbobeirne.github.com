@@ -5,6 +5,15 @@
   height: 768px;
   transform: scale(0.024);
   transform-origin: center;
+
+  img {
+    image-rendering: crisp-edges;
+  }
+
+  svg {
+
+    transform: scale(1);
+  }
 }
 
 .container {
@@ -130,6 +139,7 @@
 
 .ide {
   background: #3c3c3c !important;
+  color: rgba(#FFF, 0.9) !important;
 
   .content {
     display: flex;
@@ -234,6 +244,7 @@
     }
 
     .urlBar {
+      position: relative;
       background: rgba(#000, 0.1);
       color: rgba(#000, 0.8);
       width: 100%;
@@ -246,6 +257,53 @@
         background: rgba(#FFF, 0.1);
         color: rgba(#FFF, 0.8);
       }
+
+      .loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        right: 16px;
+        height: 100%;
+        margin-left: 10px;
+        // margin-right: -35px;
+
+        svg {
+          width: 16px;
+          height: 16px;
+          display: block;
+          animation: loader-rotate 2s linear infinite;
+
+          circle {
+            stroke: rgba(#00F, 1.0);
+            animation: loader-dash 1.5s ease-in-out infinite;
+          }
+        }
+      }
     }
+  }
+}
+
+@keyframes loader-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
   }
 }

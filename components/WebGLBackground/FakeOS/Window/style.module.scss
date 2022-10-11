@@ -9,6 +9,9 @@
   background: #FFF;
   color: #323232;
   box-shadow: 0 25px 50px rgba(#000, 0.4);
+  transform: translateY(0px) scale(1);
+  transition: transform 300ms ease;
+  transform-origin: bottom center;
 
   @include dark-mode {
     background: #323232;
@@ -17,6 +20,10 @@
 
   &.isMaximized {
     border-radius: 0;
+  }
+
+  &.isClosed {
+    transform: translateY(200px) scale(0);
   }
 
   .titleBar {
