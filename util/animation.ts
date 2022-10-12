@@ -14,6 +14,9 @@ export function makeTransitionStyleClasses(styles: Record<string, string>) {
 }
 
 export function shouldRenderFakeOS() {
+  // For now, no fake OS
+  return false;
+
   // Server side rendering
   if (typeof navigator === "undefined") return false;
 

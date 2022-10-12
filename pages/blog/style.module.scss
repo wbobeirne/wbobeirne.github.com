@@ -10,8 +10,16 @@ $post-depth: 12px;
   margin: 0 0 40px;
   @include border-3d(12px, var(--palette-shadowLight), var(--palette-shadowDark));
 
-  img {
-    max-width: 100%;
+  .image {
+    margin: 0 auto 1rem;
+  }
+
+  .title {
+    margin: 0 auto 1rem;
+    font-weight: bold;
+    font-size: 1.6rem;
+    color: var(--palette-textInvert);
+    @include text-3d(var(--palette-text), 1rem / 32);
   }
 
   &::before,

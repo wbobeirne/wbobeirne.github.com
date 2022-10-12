@@ -7,7 +7,7 @@ const PALETTE = {
 
     primary: "#D65A31",
     primaryFaded: "#CFA191",
-    text: "#000000",
+    text: "#1E1E1E",
     textInvert: "#FFFFFF",
 
     background: "#FFFFFF",
@@ -26,7 +26,7 @@ const PALETTE = {
     primary: "#D65A31",
     primaryFaded: "#CFA191",
     text: "#FFFFFF",
-    textInvert: "#000000",
+    textInvert: "#1E1E1E",
     textShadow: "#444444",
 
     background: "#414141",

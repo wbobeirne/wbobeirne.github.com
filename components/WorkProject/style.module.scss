@@ -197,7 +197,8 @@ $btn-sink: 6px;
 
   .back {
     display: block;
-    padding: 10px 0;
+    padding: 0.75rem 0;
+    margin: 0 0 0.25rem;
     color: var(--color-primary);
     text-transform: uppercase;
     font-size: 0.8rem;
@@ -220,6 +221,7 @@ $btn-sink: 6px;
   }
 
   .logo {
+    display: none;
     width: 5rem;
     height: 5rem;
     margin-right: 1rem;
@@ -228,7 +230,9 @@ $btn-sink: 6px;
   .name {
     font-size: 3rem;
     line-height: 1;
-    margin: 0;
+    margin: 0 0 0.5rem;
+    color: #FFF;
+    @include text-3d(#000);
   }
 
   .title {
@@ -244,6 +248,11 @@ $btn-sink: 6px;
 
   .description {
     font-size: 1.2rem;
+
+    strong {
+      font-weight: 600;
+      color: var(--color-textStrong);
+    }
   }
 
   @include mq-tiny {

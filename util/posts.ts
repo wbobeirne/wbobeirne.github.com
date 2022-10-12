@@ -61,8 +61,7 @@ export const POSTS: BlogPost[] = [
     url: "https://medium.com/@wbobeirne/making-a-lightning-web-app-part-1-4a13c82f3f78",
   },
   {
-    title:
-      "Get ETH & ERC20 token balances for multiple addresses in a single call",
+    title: "ETH & Token Balances In a Single Call",
     preview:
       "TL;DR a slick contract and NPM package for efficient and fast balance checks. Scroll to the bottom to try it out and find the package.",
     image: ethBalancesImage,

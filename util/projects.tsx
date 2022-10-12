@@ -88,9 +88,10 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
         </p>
         <p>
           While I focus primarily on the engineering above, I was also heavily
-          involved in a lot of product and design decision making. Whether I
-          built it or not, most product features received a polishing pass from
-          me to ensure it was up to snuff for our customers.
+          involved in a lot of{" "}
+          <strong>product and design decision making</strong>. Whether I built
+          it or not, most product features received a polishing pass from me to
+          ensure it was up to snuff for our customers.
         </p>
         <h3>Technologies used</h3>
         <ul>

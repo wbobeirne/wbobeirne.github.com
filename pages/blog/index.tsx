@@ -1,3 +1,4 @@
+import src from "gsap/src";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -24,7 +25,9 @@ const Blog: NextPage = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Image src={post.image} layout="responsive" alt="" />
+              <div className={styles.image}>
+                <Image src={post.image} layout="responsive" alt="" />
+              </div>
               <h3 className={styles.title}>{post.title}</h3>
               <p className={styles.preview}>{post.preview}</p>
               <div className={styles.readMore}>Read more →</div>

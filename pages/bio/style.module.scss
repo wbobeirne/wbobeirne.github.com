@@ -8,10 +8,73 @@
   @include content-container;
   @include border-3d(12px, var(--palette-shadowLight), var(--palette-shadowDark));
 
-  p:first-child {
-    margin-top: 0;
+  p {
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    strong,
+    a {
+      display: inline-block;
+      color: var(--palette-textInvert);
+      @include text-3d(var(--palette-text), 1rem / 32);
+    }
+
+    a {
+      font-weight: bold;
+      transition: opacity 100ms ease;
+
+      &:hover,
+      &:focus {
+        opacity: 0.5;
+      }
+
+      &:active {
+        opacity: 0.8;
+      }
+    }
   }
-  p:last-child {
-    margin-bottom: 0;
+}
+
+
+.stuffs {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2rem;
+
+  .stuff {
+    width: calc(25% - 2rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .image {
+      width: 100%;
+      max-width: 8rem;
+      margin-bottom: 1rem;
+      aspect-ratio: 1 / 1;
+      color: var(--palette-textInvert);
+      @include text-3d(var(--color));
+
+      @include dark-mode {
+        @include text-3d(var(--darkColor, var(--color)));
+      }
+    }
+
+    .name {
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 0.75rem;
+      opacity: 0.5;
+    }
   }
 }
