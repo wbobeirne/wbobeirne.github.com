@@ -46,7 +46,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const handler = (ev: KeyboardEvent) => {
-      console.log({ ev });
+      if (ev.metaKey || ev.ctrlKey || ev.altKey || ev.shiftKey) return;
       if (ev.code === "Backquote") {
         setDebug((d) => !d);
       }

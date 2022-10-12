@@ -6,6 +6,7 @@ import { ScrollSpacer } from "../../components/ScrollSpacer";
 import { Template } from "../../components/Template";
 import { WorkProject } from "../../components/WorkProject";
 import { useAppContext } from "../../contexts/app";
+import { useHasRendered, useUpdatingRef } from "../../util/hooks";
 import { ProjectKey, PROJECTS, PROJECT_ORDER } from "../../util/projects";
 import styles from "./style.module.scss";
 
@@ -43,7 +44,7 @@ const Work: NextPage = () => {
     getProjectQuery(router.query.project)
   );
   const projectsRef = useRef<HTMLDivElement | null>(null);
-  const [projectsWidth, setProjectsWidth] = useState(720);
+  const hasRenderedRef = useUpdatingRef(useHasRendered());
 
   // Update activeProject, but only if we're not animating out.
   useEffect(() => {
@@ -52,10 +53,18 @@ const Work: NextPage = () => {
 
   // Reset scroll when changing to activeProject
   useEffect(() => {
-    if (activeProject) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    if (!activeProject && !hasRenderedRef.current) return;
+    if (projectsRef.current) {
+      const desiredTop = projectsRef.current.offsetTop;
+      const delta = Math.abs(desiredTop - window.scrollY);
+      if (delta > 60) {
+        window.scrollTo({
+          top: desiredTop,
+          behavior: hasRenderedRef.current ? "smooth" : undefined,
+        });
+      }
     }
-  }, [activeProject]);
+  }, [activeProject, hasRenderedRef]);
 
   // Update context when activeProject changes
   useEffect(() => {
@@ -70,18 +79,6 @@ const Work: NextPage = () => {
     };
   }, [setIsViewingProjects]);
 
-  const updateProjectsWidth = useCallback(() => {
-    const el = projectsRef.current;
-    if (!el) return;
-    setProjectsWidth(el.clientWidth);
-  }, []);
-
-  useEffect(() => {
-    requestAnimationFrame(updateProjectsWidth);
-    window.addEventListener("resize", updateProjectsWidth);
-    return () => window.removeEventListener("resize", updateProjectsWidth);
-  }, [updateProjectsWidth]);
-
   return (
     <Template>
       <Head>
@@ -93,27 +90,19 @@ const Work: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ScrollSpacer percentage={80} />
-      <div
-        className={styles.projects}
-        ref={(ref) => {
-          projectsRef.current = ref;
-          updateProjectsWidth();
-        }}
-        style={
-          {
-            "--var-projectSize": projectsWidth * 0.333 - 32,
-          } as React.CSSProperties
-        }
-      >
-        {PROJECT_ORDER.map((project, index) => (
-          <WorkProject
-            key={project}
-            id={project}
-            isActive={project === activeProject}
-            isInactive={activeProject ? project !== activeProject : false}
-            index={index}
-          />
-        ))}
+      {/* Wrapper div to receive template min-height */}
+      <div>
+        <div className={styles.projects} ref={projectsRef}>
+          {PROJECT_ORDER.map((project, index) => (
+            <WorkProject
+              key={project}
+              id={project}
+              isActive={project === activeProject}
+              isInactive={activeProject ? project !== activeProject : false}
+              index={index}
+            />
+          ))}
+        </div>
       </div>
     </Template>
   );

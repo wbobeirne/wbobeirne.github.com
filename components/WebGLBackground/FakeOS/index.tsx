@@ -42,8 +42,6 @@ export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
     : false;
   const isBrowserOpen = !!activeProject && !!project;
 
-  console.log({ activeProject, project, shouldShowScreenshot });
-
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
     if (!screenshotUrl || !isBrowserOpen) {

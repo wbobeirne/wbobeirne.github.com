@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useMemo } from "react";
+import React from "react";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
 import clsx from "clsx";
 import tinycolor from "tinycolor2";
@@ -8,6 +8,7 @@ import { ProjectKey, PROJECTS } from "../../util/projects";
 import styles from "./style.module.scss";
 import { makeTransitionStyleClasses } from "../../util/animation";
 
+const transitionDuration = 400;
 const transitionClasses = makeTransitionStyleClasses(styles);
 
 interface WorkProjectProps {
@@ -55,10 +56,10 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
             <CSSTransition
               key="full"
               classNames={transitionClasses}
-              timeout={300}
+              timeout={transitionDuration}
             >
               <div className={styles.full}>
-                <Link href="/work" shallow>
+                <Link href="/work" shallow scroll={false}>
                   <a className={styles.back}>← Back to other projects</a>
                 </Link>
                 <div className={styles.top}>
@@ -82,10 +83,10 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
             <CSSTransition
               key="list"
               classNames={transitionClasses}
-              timeout={300}
+              timeout={transitionDuration}
             >
               <div className={styles.list}>
-                <Link href={`/work/${id}`} shallow>
+                <Link href={`/work/${id}`} shallow scroll={false}>
                   <a>
                     <div className={styles.logo}>
                       <Image src={logo} alt="" layout="fill" />

@@ -16,7 +16,7 @@ interface AvatarProps {
 
 export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
   const theme = useTheme();
-  const gltf = useGLTF("/threejs/models/will-rigify2.glb");
+  const gltf = useGLTF("/threejs/models/will-rigify3-compressed.glb");
   const gradientTexLight = useTexture(
     "/threejs/textures/gradient-light.png",
     applyNearestFilterToTextures
@@ -61,7 +61,6 @@ export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
   useEffect(() => {
     if (!vaultAnim || !mixer) return;
     const action = mixer.clipAction(vaultAnim);
-    console.log({ vaultAnim, action });
     action.setLoop(LoopOnce, 1);
     action.clampWhenFinished = true;
     action.enabled = true;

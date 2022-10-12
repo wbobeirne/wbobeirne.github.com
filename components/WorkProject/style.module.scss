@@ -1,5 +1,5 @@
 @import '~/styles/mixins.scss';
-$duration: 300ms;
+$duration: 400ms;
 $padding: 16px;
 $btn-depth: 12px;
 $btn-sink: 6px;
@@ -9,10 +9,11 @@ $btn-sink: 6px;
   position: absolute;
   width: calc(33% - #{$padding * 2});
   height: calc(33% - #{$padding * 2});
-  transition-property: top left width height opacity transform;
+  transition-property: top, left, width, height, opacity, transform, z-index;
   transition-duration: $duration;
-  transition-delay: $duration;
+  transition-delay: $duration, $duration, $duration, $duration, $duration, $duration, $duration * 2;
   transition-timing-function: ease;
+  z-index: 1;
 
   // Left column
   &:nth-child(3n + 1) {
