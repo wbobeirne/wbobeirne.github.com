@@ -3,6 +3,7 @@
 .projects {
   position: relative;
   height: $content-width;
+  margin-bottom: 3rem;
   @include content-container;
 
   @include mq-mid {
