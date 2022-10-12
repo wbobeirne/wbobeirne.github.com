@@ -28,6 +28,13 @@
   }
 }
 
+@mixin main-background {
+  background: var(--palette-background);
+  background: linear-gradient(0deg, var(--palette-backgroundShaded), var(--palette-background));
+  background-position: 0% 50%;
+  background-attachment: fixed;
+}
+
 $content-width: 720px;
 $content-width-mid: 600px;
 @mixin content-container {

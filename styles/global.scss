@@ -37,13 +37,11 @@ html {
 }
 
 body {
-  background: var(--palette-background);
-  background: linear-gradient(0deg, var(--palette-backgroundShaded), var(--palette-background));
   height: 100vh;
   height: -webkit-fill-available;
-  background-position: 0% 50%;
-  background-attachment: fixed;
   color: var(--palette-text);
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  @include main-background;
 }
 
 a {
