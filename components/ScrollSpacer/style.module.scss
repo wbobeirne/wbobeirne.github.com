@@ -3,6 +3,7 @@
 .scrollSpacer {
   display: none;
   height: calc(100vh - 200px);
+  transition: height 200ms ease;
 
   @include mq-slim {
     display: block;

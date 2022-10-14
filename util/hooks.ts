@@ -24,8 +24,12 @@ export function useWindowSize() {
       setWindowSize({ width: window.innerWidth, height: window.innerHeight });
     };
     window.addEventListener("resize", handler);
+    window.addEventListener("scroll", handler, { passive: true });
     handler();
-    return () => window.removeEventListener("resize", handler);
+    return () => {
+      window.removeEventListener("resize", handler);
+      window.removeEventListener("scroll", handler);
+    };
   }, []);
 
   return windowSize;

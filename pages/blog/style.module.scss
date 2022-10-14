@@ -18,8 +18,7 @@ $post-depth: 12px;
     margin: 0 auto 1rem;
     font-weight: bold;
     font-size: 1.6rem;
-    color: var(--palette-textInvert);
-    @include text-3d(var(--palette-text), 1rem / 32);
+    opacity: 0.8
   }
 
   &::before,

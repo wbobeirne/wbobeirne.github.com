@@ -76,7 +76,7 @@ export const Workspace: React.FC = () => {
         rotation={[Math.PI * 0.085, Math.PI, 0]}
       >
         <meshBasicMaterial color={0x3c3c3c} />
-        {isViewingProjects && shouldRenderFakeOS() && false ? (
+        {isViewingProjects && shouldRenderFakeOS() ? (
           <DreiHtml transform occlude={[sceneRef]}>
             <FakeOS activeProject={activeProject} />
           </DreiHtml>

@@ -16,16 +16,17 @@
       margin-bottom: 0;
     }
 
-    strong,
-    a {
+    strong {
       display: inline-block;
       color: var(--palette-textInvert);
-      @include text-3d(var(--palette-text), 1rem / 32);
+      @include text-3d(var(--color, var(--palette-text)), 1rem / 32);
     }
 
     a {
-      font-weight: bold;
+      font-weight: 600;
       transition: opacity 100ms ease;
+      color: var(--palette-primary);
+      text-decoration: underline;
 
       &:hover,
       &:focus {

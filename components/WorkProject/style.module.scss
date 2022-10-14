@@ -246,6 +246,30 @@ $btn-sink: 6px;
     opacity: 0.8;
   }
 
+  .screenshots {
+    position: relative;
+    
+    .desktop,
+    .mobile {
+      position: absolute;
+    }
+
+    .desktop {
+      top: 14%;
+      left: 13%;
+      width: 59%;
+      height: auto;
+      clip-path: polygon(0 0, 100% 0, 100% 90%, 0 90%);
+    }
+
+    .mobile {
+      top: 10%;
+      left: 72%;
+      width: 23%;
+      height: auto;
+    }
+  }
+
   .description {
     font-size: 1.2rem;
 

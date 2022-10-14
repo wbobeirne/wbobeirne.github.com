@@ -5,8 +5,10 @@ import { SwitchTransition, CSSTransition } from "react-transition-group";
 import clsx from "clsx";
 import tinycolor from "tinycolor2";
 import { ProjectKey, PROJECTS } from "../../util/projects";
-import styles from "./style.module.scss";
 import { makeTransitionStyleClasses } from "../../util/animation";
+import styles from "./style.module.scss";
+
+import MockupImage from "../../public/screenshots/mockup.png";
 
 const transitionDuration = 400;
 const transitionClasses = makeTransitionStyleClasses(styles);
@@ -23,8 +25,16 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
   isActive,
   isInactive,
 }) => {
-  const { name, shortName, title, logo, dates, color, description } =
-    PROJECTS[id];
+  const {
+    name,
+    shortName,
+    title,
+    logo,
+    dates,
+    color,
+    description,
+    screenshots,
+  } = PROJECTS[id];
   const isLight = tinycolor(color.secondary).isLight();
 
   return (
@@ -78,6 +88,23 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
                 </div>
                 <div className={styles.title}>{title}</div>
                 <div className={styles.dates}>{dates}</div>
+                <div className={styles.screenshots}>
+                  <div className={styles.desktop}>
+                    <Image
+                      src={screenshots.desktop}
+                      alt={`Desktop screenshot of ${name}`}
+                    />
+                  </div>
+                  <div className={styles.mobile}>
+                    <Image
+                      src={screenshots.mobile}
+                      alt={`Mobile screenshot of ${name}`}
+                    />
+                  </div>
+                  <div className={styles.mockup}>
+                    <Image src={MockupImage} alt="" />
+                  </div>
+                </div>
                 <div className={styles.description}>{description}</div>
               </div>
             </CSSTransition>

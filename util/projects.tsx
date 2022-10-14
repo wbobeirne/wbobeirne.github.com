@@ -13,11 +13,11 @@ import coderMobileScreenshot from "../public/screenshots/coder-mobile.jpg";
 import okcDesktopScreenshot from "../public/screenshots/okc-desktop.jpg";
 import okcMobileScreenshot from "../public/screenshots/okc-mobile.jpg";
 import grantioDesktopScreenshot from "../public/screenshots/grantio-desktop.jpg";
-import grantioMobileScreenshot from "../public/screenshots/grantio-mobile.jpg";
+import grantioMobileScreenshot from "../public/screenshots/grantio-mobile-zcash.jpg";
 import mycryptoDesktopScreenshot from "../public/screenshots/mycrypto-desktop.jpg";
 import mycryptoMobileScreenshot from "../public/screenshots/mycrypto-mobile.jpg";
-import projectsDesktopScreenshot from "../public/screenshots/okc-desktop.jpg";
-import projectsMobileScreenshot from "../public/screenshots/okc-mobile.jpg";
+import projectsDesktopScreenshot from "../public/screenshots/personal-projects-desktop.jpg";
+import projectsMobileScreenshot from "../public/screenshots/personal-projects-mobile.jpg";
 
 export interface ProjectInfo {
   name: string;
@@ -297,16 +297,17 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
     description: (
       <>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi rutrum
-          massa in arcu luctus, vel commodo dolor ullamcorper. Curabitur cursus
-          facilisis felis. Duis bibendum, quam et elementum dignissim, justo
-          mauris accumsan nisi, et mattis diam erat ut odio.
+          From open source contributor to member of the team, I helped
+          transition the most popular open source Ethereum wallet MyEtherWallet
+          to its new identity as MyCrypto.
         </p>
         <p>
-          Aliquam tincidunt tincidunt eros id dignissim. Duis in turpis libero.
-          Nunc eleifend lacus non semper tincidunt. Sed feugiat lorem nec dui
-          fringilla auctor. Sed viverra vulputate orci ac lobortis. Curabitur
-          ultrices velit in facilisis facilisis.
+          Balancing usability, power user features, and security is a fine line
+          to walk. But in the world of crypto, there’s no room for compromise. I
+          was both a designer and implementor of some of the largest features on
+          the wallet, such as the hardware wallet integrations, the payment
+          interface, the new wallet creation flow, and the standalone desktop
+          Electron application.
         </p>
         <h3>Technologies used</h3>
         <ul>
@@ -367,15 +368,6 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
           for me. I’m at my best when I’m working across multiple disciplines,
           mixing design, engineering, and user experience.
         </p>
-        <h3>My favorite tech &amp; tooling</h3>
-        <ul>
-          <li>All things TypeScript and React</li>
-          <li>Jamstack</li>
-          <li>Blender</li>
-          <li>Figma</li>
-          <li>Docker</li>
-          <li>Bitcoin &amp; Lightning</li>
-        </ul>
       </>
     ),
   },
