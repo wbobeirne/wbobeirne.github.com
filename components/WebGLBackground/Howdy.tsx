@@ -51,12 +51,12 @@ const letters = [
 ];
 
 const patterns = [
-  { path: "/threejs/textures/pattern1.jpg", size: 0.18, offset: 0 },
+  { path: "/threejs/textures/pattern1.jpg", size: 0.3, offset: 0 },
   { path: "/threejs/textures/pattern2.jpg", size: 0.25, offset: 0 },
-  { path: "/threejs/textures/pattern3.jpg", size: 0.15, offset: 0 },
-  { path: "/threejs/textures/pattern4.jpg", size: 0.3, offset: 0 },
-  { path: "/threejs/textures/pattern5.jpg", size: 0.3, offset: 0 },
-  { path: "/threejs/textures/pattern6.jpg", size: 0.75, offset: 0 },
+  { path: "/threejs/textures/pattern3.jpg", size: 0.27, offset: 0 },
+  { path: "/threejs/textures/pattern4.jpg", size: 0.3, offset: 0.05 },
+  { path: "/threejs/textures/pattern5.jpg", size: 0.28, offset: 0 },
+  { path: "/threejs/textures/pattern6.jpg", size: 0.3, offset: 0 },
 ];
 
 export const Howdy: React.FC = () => {
