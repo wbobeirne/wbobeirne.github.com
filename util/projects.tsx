@@ -19,6 +19,59 @@ import mycryptoMobileScreenshot from "../public/screenshots/mycrypto-mobile.jpg"
 import projectsDesktopScreenshot from "../public/screenshots/personal-projects-desktop.jpg";
 import projectsMobileScreenshot from "../public/screenshots/personal-projects-mobile.jpg";
 
+const personalProjects = [
+  {
+    name: "BakeBoy Lightning Wallet",
+    href: "https://github.com/wbobeirne/bakeboy",
+    year: 2021,
+  },
+  {
+    name: "My own wedding website",
+    href: "https://willanddale.com/",
+    year: 2020,
+  },
+  {
+    name: "RUN LND Lightning Store",
+    href: "https://github.com/wbobeirne/run-lnd-store",
+    year: 2018,
+  },
+  {
+    name: "WebLN",
+    href: "https://webln.dev/",
+    year: 2018,
+  },
+  {
+    name: "eth-balance-checker npm package",
+    href: "https://github.com/wbobeirne/eth-balance-checker",
+    year: 2017,
+  },
+  {
+    name: "Stranger Things Intro in CSS",
+    href: "https://codepen.io/wbobeirne/pen/pEjqGR",
+    year: 2016,
+  },
+  {
+    name: "Association to Benefit Children's website",
+    href: "https://web.archive.org/web/20161212175110/https://www.a-b-c.org/",
+    year: 2016,
+  },
+  {
+    name: "Ludum Dare 22 - Nothing But Stars",
+    href: "https://web.archive.org/web/20120105172220/http://ludumdare.com/compo/ludum-dare-22/?action=preview&uid=5193",
+    year: 2011,
+  },
+  {
+    name: "Ludum Dare 21 - Jameson Livingston Penguin",
+    href: "https://web.archive.org/web/20120107002350/http://ludumdare.com/compo/2011/09/11/jameson-livingston-penguin-a-post-mortem/",
+    year: 2011,
+  },
+  {
+    name: "Text Clock Wallpaper for Android",
+    href: "https://www.androidpolice.com/2011/05/20/new-in-the-market-text-clock-pro-indulges-our-literacy-with-a-dynamic-readable-timepiece/",
+    year: 2011,
+  },
+];
+
 export interface ProjectInfo {
   name: string;
   shortName?: string;
@@ -366,8 +419,19 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
           Outside of work I like to kick back, relax, and work some more. I love
           multimedia experiences, and technology is like the missing 6th sense
           for me. I’m at my best when I’m working across multiple disciplines,
-          mixing design, engineering, and user experience.
+          mixing design, engineering, and user experience. Here are a few of my
+          projects:
         </p>
+        <ul>
+          {personalProjects.map((pp) => (
+            <li key={pp.href}>
+              <a href={pp.href} target="_blank" rel="noreferrer noopener">
+                {pp.name}
+              </a>{" "}
+              <small>({pp.year})</small>
+            </li>
+          ))}
+        </ul>
       </>
     ),
   },
