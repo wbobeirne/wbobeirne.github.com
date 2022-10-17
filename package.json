@@ -15,7 +15,6 @@
     "@reduxjs/toolkit": "^1.8.5",
     "camera-controls": "^1.36.2",
     "clsx": "^1.2.1",
-    "framer-motion": "^7.3.5",
     "gsap": "^3.11.1",
     "lil-gui": "^0.17.0",
     "next": "12.3.1",

@@ -6,9 +6,16 @@ import * as THREE from "three";
 import React, { useEffect, useRef } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
-import { NearestFilter, Vector3, Mesh, MeshToonMaterial, Texture } from "three";
-import { useSpring } from "framer-motion";
+import {
+  NearestFilter,
+  Vector3,
+  Mesh,
+  MeshToonMaterial,
+  Texture,
+  Color,
+} from "three";
 import { useFrame } from "@react-three/fiber";
+import { useTheme } from "../../contexts/theme";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -20,20 +27,19 @@ type GLTFResult = GLTF & {
 };
 
 const balloonScale = new Vector3(0.026, 0.02, 0.026);
-const makeBalloon = (x: number, y: number, scale: number) => ({
+const makeBalloon = (x: number, y: number, scale: number, opacity: number) => ({
   position: new Vector3(x, y, 30 - scale * 10),
   scale: new Vector3().copy(balloonScale).multiplyScalar(scale),
-  opacity: Math.min(1, scale),
   speed: Math.random(),
+  opacity,
 });
 const balloons = [
-  makeBalloon(4, 7.58, 0.3),
-  makeBalloon(3.5, 6.2, 0.5),
-  makeBalloon(2.8, 6.58, 0.4),
-  makeBalloon(2.5, 5.58, 0.7),
-  makeBalloon(1.5, 5.8, 0.9),
-  makeBalloon(0, 4.58, 1.2),
-  makeBalloon(-2, 5.68, 1.5),
+  makeBalloon(4, 7.58, 0.3, 0.5),
+  makeBalloon(3.5, 6.2, 0.5, 0.6),
+  makeBalloon(2.5, 5.58, 0.7, 0.8),
+  makeBalloon(1.5, 5.8, 0.9, 0.9),
+  makeBalloon(0, 4.58, 1.2, 0.95),
+  makeBalloon(-2, 5.68, 1.5, 1),
 ];
 
 interface BalloonsProps {
@@ -41,39 +47,23 @@ interface BalloonsProps {
 }
 
 export const Balloons: React.FC<BalloonsProps> = ({ show }) => {
+  const theme = useTheme();
   const meshRefs = useRef<Mesh[]>([]);
-  const visibilitySprings = balloons.map((_, i) =>
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useSpring(0.0, { duration: 3000 - 300 * i })
-  );
+  const visibilityRef = useRef({ visible: false, time: Date.now() });
 
   useEffect(() => {
-    if (!show) {
-      // Reset visibility after a delay with no transition. Not a part of the official API.
-      const timeout = setTimeout(
-        () =>
-          visibilitySprings.forEach((s) => {
-            (s as any).current = 0.0;
-            requestAnimationFrame(() => ((s as any).current = 0.0));
-          }),
-        600
-      );
-      return () => clearTimeout(timeout);
-    } else {
-      const timeouts = visibilitySprings.map((s, i) =>
-        setTimeout(
-          () => s.set(1.0),
-          visibilitySprings.length * 100 - i * 100 + 600
-        )
-      );
-      return () => timeouts.forEach(clearTimeout);
-    }
-  }, [show, visibilitySprings]);
+    const timeout = setTimeout(
+      () => {
+        visibilityRef.current = { visible: show, time: Date.now() };
+      },
+      show ? 800 : 600
+    );
+    return () => clearTimeout(timeout);
+  }, [show]);
 
   const { nodes } = useGLTF("/threejs/models/balloon2.glb") as GLTFResult;
   const textures = useTexture(
     [
-      "/threejs/textures/balloon-hearts.png",
       "/threejs/textures/balloon-sunrise.png",
       "/threejs/textures/balloon-diamonds.png",
       "/threejs/textures/balloon-diagonal.png",
@@ -93,8 +83,13 @@ export const Balloons: React.FC<BalloonsProps> = ({ show }) => {
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
+    const now = Date.now();
+    const visState = visibilityRef.current;
+    const len = meshRefs.current?.length || 0;
     meshRefs.current?.forEach((mesh, i) => {
-      const vis = visibilitySprings[i].get();
+      const vis = visState.visible
+        ? calculateBalloonVisibility(visState.time, now, len - i - 1)
+        : 0;
       const balloon = balloons[i];
       const risingYOffset = Math.sin(((1 - vis) * 0.7 * Math.PI) / 2);
       const floatingYOffset = Math.sin((t + i * 0.2) * balloon.speed) * 0.1;
@@ -105,7 +100,7 @@ export const Balloons: React.FC<BalloonsProps> = ({ show }) => {
       mesh.rotation.y = floatingYRotate;
 
       const material = mesh.material as MeshToonMaterial;
-      material.opacity = balloon.opacity * vis;
+      material.opacity = Math.min(1, balloon.opacity * vis);
     });
   });
 
@@ -124,4 +119,18 @@ export const Balloons: React.FC<BalloonsProps> = ({ show }) => {
       ))}
     </group>
   );
+};
+
+const BALLOON_DURATION = 3000;
+const BALLOON_DECAY = 400;
+const BALLOON_OFFSET = 200;
+const calculateBalloonVisibility = (
+  visTime: number,
+  now: number,
+  i: number
+) => {
+  const elapsed = now - BALLOON_OFFSET * i - visTime;
+  const duration = BALLOON_DURATION + BALLOON_DECAY * i;
+  const progress = Math.min(1, elapsed / duration);
+  return 1 - Math.pow(1 - progress, 5);
 };

@@ -75,3 +75,5 @@ const LoadedCallback: React.FC<{ onLoaded: () => void }> = ({ onLoaded }) => {
   }, [onLoaded, progress]);
   return null;
 };
+
+export default WebGLBackground;
