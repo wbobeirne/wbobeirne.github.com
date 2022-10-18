@@ -2,6 +2,7 @@ import "../styles/global.scss";
 import type { AppProps } from "next/app";
 import React, { Suspense, useCallback, useState } from "react";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
 import { Nav } from "../components/Nav";
@@ -10,6 +11,7 @@ import { AppProvider } from "../contexts/app";
 import { NoScriptBackground } from "../components/NoScriptBackground";
 import { fixTimeoutTransition } from "../util/animation";
 import { LoaderBackground } from "../components/LoaderBackground";
+import OpengraphImage from "../public/og/image.jpg";
 
 const transitionTime = 300;
 fixTimeoutTransition(transitionTime);
@@ -30,6 +32,9 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps, router }) => {
     <NextThemesProvider>
       <ThemeProvider>
         <AppProvider>
+          <Head>
+            <meta property="og:image" content={OpengraphImage.src} />
+          </Head>
           <Nav />
           <SwitchTransition>
             <CSSTransition
