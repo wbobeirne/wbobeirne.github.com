@@ -28,7 +28,7 @@
     --activeShadow: #000;
   }
 
-  @include mq-slim {
+  @include mq-mobile {
     padding: 1rem 1.25rem;
   }
 
@@ -66,7 +66,7 @@
     gap: 2rem;
     transform: translateY(var(--sticky-offset));
 
-    @include mq-slim {
+    @include mq-mobile {
       gap: 1.5rem;
     }
 
@@ -78,7 +78,7 @@
       text-transform: uppercase;
       pointer-events: auto;
 
-      @include mq-slim {
+      @include mq-mobile {
         font-size: 1.75rem;
       }
 
@@ -98,7 +98,7 @@
     align-items: center;
     z-index: 101;
 
-    @include mq-slim {
+    @include mq-mobile {
       position: relative;
       padding: 0;
       transform: translateY(var(--sticky-offset));
@@ -118,7 +118,7 @@
         opacity: 1;
       }
 
-      @include mq-slim {
+      @include mq-mobile {
         padding: 0.75rem 0.5rem;
         opacity: 1;
         
@@ -137,7 +137,7 @@
         height: 1.8rem;
         width: 1.8rem;
 
-        @include mq-slim {
+        @include mq-mobile {
           width: 1.6rem;
           height: 1.6rem;
         }

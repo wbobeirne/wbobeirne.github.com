@@ -25,6 +25,11 @@
         color: var(--palette-text);
         filter: none;
       }
+
+      @include dark-mode {
+        color: var(--palette-text);
+        filter: none;
+      }
     }
 
     a {
@@ -62,7 +67,7 @@
       width: calc(33% - 2rem);
     }
 
-    @media screen and (max-width: 520px) {
+    @media mq-mobile {
       width: calc(50% - 2rem);
     }
 

@@ -7,7 +7,7 @@
   right: 0;
   bottom: 0;
   opacity: 0;
-  transition: opacity 1000ms ease;
+  transition: opacity 1s ease;
   @include main-background;
 
   &.isLoaded {

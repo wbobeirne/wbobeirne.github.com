@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
 import clsx from "clsx";
-import { Canvas, useThree } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { ContactShadows, useProgress } from "@react-three/drei";
 import { Howdy } from "./Howdy";
 import { Camera } from "./Camera";
@@ -14,13 +14,20 @@ import { StarrySky } from "./StarrySky";
 import { Balloons } from "./Balloons";
 import styles from "./style.module.scss";
 
-export const WebGLBackground: React.FC = () => {
+interface WebGLBackgroundProps {
+  onLoaded: () => void;
+}
+
+export const WebGLBackground: React.FC<WebGLBackgroundProps> = ({
+  onLoaded,
+}) => {
   const { pathname } = useRouter();
   const [loaded, setLoaded] = useState(false);
 
   const handleLoaded = useCallback(() => {
     setLoaded(true);
-  }, []);
+    onLoaded();
+  }, [onLoaded]);
 
   return (
     <div className={clsx(styles.container, loaded && styles.isLoaded)}>

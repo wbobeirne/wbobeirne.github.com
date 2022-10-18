@@ -15,7 +15,7 @@
     padding-top: 100%;
   }
 
-  @media screen and (max-width: 580px) {
+  @include mq-work-2col {
     height: auto;
     padding-top: calc(200% - 12px);
   }

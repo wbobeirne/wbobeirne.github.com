@@ -36,7 +36,7 @@ $btn-sink: 6px;
     }
   }
 
-  @media screen and (max-width: 580px) {
+  @include mq-work-2col {
     width: calc(50% - $padding);
     height: calc(25% - $padding);
 

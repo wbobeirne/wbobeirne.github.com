@@ -34,6 +34,8 @@ body {
 
 html {
   color-scheme: var(--palette-colorScheme);
+  overflow: auto;
+  overflow: overlay;
 }
 
 body {

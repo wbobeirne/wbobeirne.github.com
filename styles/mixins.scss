@@ -16,6 +16,12 @@
   }
 }
 
+@mixin mq-mobile {
+  @media screen and (max-width: 520px) {
+    @content;
+  }
+}
+
 @mixin mq-tiny {
   @media screen and (max-width: 380px) {
     @content;

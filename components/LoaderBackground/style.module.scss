@@ -1,0 +1,69 @@
+@import '~/styles/mixins.scss';
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 1;
+  animation: container-fade-in 1s ease;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+
+  @keyframes container-fade-in {
+    0%, 50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  &.hasLoaded {
+    opacity: 0;
+    animation: none;
+  }
+}
+
+.loader {
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  position: fixed;
+  right: 0;
+  top: 0;
+  opacity: 0.1;
+}
+
+.ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  border-top-color: #000;
+  animation: spin 1.5s cubic-bezier(0.680, -0.750, 0.265, 1.750) infinite forwards;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  $base: 35;
+  $inc: 35;
+  @for $i from 1 through 100 {
+    &:nth-child(#{ $i }) {
+      animation-delay: ($i ) * 50ms;
+      height: $base + ($i - 1px) * $inc;
+      width: $base + ($i - 1px) * $inc;
+    }
+  }
+}
