@@ -18,7 +18,11 @@ $post-depth: 12px;
     margin: 0 auto 1rem;
     font-weight: bold;
     font-size: 1.6rem;
-    opacity: 0.8
+    opacity: 0.8;
+
+    @include dark-mode {
+      opacity: 1;
+    }
   }
 
   &::before,
