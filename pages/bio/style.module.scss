@@ -19,7 +19,7 @@
     strong {
       display: inline-block;
       color: var(--palette-textInvert);
-      @include text-3d(var(--color, var(--palette-text)), 1rem / 32);
+      @include text-3d(var(--color, var(--palette-text)), 0.5px);
 
       @include webkit {
         color: var(--palette-text);
@@ -57,6 +57,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    @include mq-slim {
+      width: calc(33% - 2rem);
+    }
+
+    @media screen and (max-width: 520px) {
+      width: calc(50% - 2rem);
+    }
 
     .image {
       width: 100%;

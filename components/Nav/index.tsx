@@ -35,19 +35,21 @@ export const Nav: React.FC = () => {
   const hasRendered = useHasRendered();
   const { scrollY } = useWindowScroll();
 
-  const translateY = app.stickyNavTop
-    ? Math.max(scrollY - app.stickyNavTop, 0)
+  const stickyOffset = app.stickyNavTop
+    ? -Math.max(scrollY - app.stickyNavTop, 0)
     : 0;
 
   return (
     <nav
       className={clsx(styles.nav, app.isUiHidden && styles.uiHidden)}
-      style={{ top: app.stickyNavTop ? 0 : undefined }}
+      style={
+        {
+          top: app.stickyNavTop ? 0 : undefined,
+          "--sticky-offset": `${stickyOffset}px`,
+        } as React.CSSProperties
+      }
     >
-      <div
-        className={styles.links}
-        style={{ transform: `translateY(${-translateY}px)` }}
-      >
+      <div className={styles.links}>
         {links.map((link) => (
           <ActiveLink
             key={link.href}

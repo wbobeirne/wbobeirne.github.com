@@ -7,6 +7,7 @@
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 1.25rem 1.5rem;
   z-index: 100;
   pointer-events: none;
@@ -28,7 +29,7 @@
   }
 
   @include mq-slim {
-    padding: 1rem 1.5rem;
+    padding: 1rem 1.25rem;
   }
 
   .links a,
@@ -63,6 +64,7 @@
     display: flex;
     align-items: center;
     gap: 2rem;
+    transform: translateY(var(--sticky-offset));
 
     @include mq-slim {
       gap: 1.5rem;
@@ -97,11 +99,9 @@
     z-index: 101;
 
     @include mq-slim {
-      padding: 0.75rem 1rem;
-    }
-
-    @include mq-tiny {
-      padding: 0.6rem 1rem;
+      position: relative;
+      padding: 0;
+      transform: translateY(var(--sticky-offset));
     }
 
     button {
@@ -119,6 +119,7 @@
       }
 
       @include mq-slim {
+        padding: 0.75rem 0.5rem;
         opacity: 1;
         
         &:first-child {
@@ -135,6 +136,11 @@
       svg {
         height: 1.8rem;
         width: 1.8rem;
+
+        @include mq-slim {
+          width: 1.6rem;
+          height: 1.6rem;
+        }
 
         @include mq-tiny {
           width: 1.5rem;
