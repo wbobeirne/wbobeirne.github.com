@@ -22,8 +22,13 @@ import { FakeOS } from "./FakeOS";
 import FakeOSLight from "../../public/threejs/textures/fakeos-light.jpg";
 import FakeOSDark from "../../public/threejs/textures/fakeos-dark.jpg";
 import { useFrame } from "@react-three/fiber";
+import { optimizedTexturePath } from "../../util/image";
 
-export const Workspace: React.FC = () => {
+interface WorkspaceProps {
+  hasLoaded: boolean;
+}
+
+export const Workspace: React.FC<WorkspaceProps> = ({ hasLoaded }) => {
   const theme = useTheme();
   const { activeProject, isViewingProjects } = useAppContext();
 
@@ -80,13 +85,15 @@ export const Workspace: React.FC = () => {
           <DreiHtml transform occlude={[sceneRef]}>
             <FakeOS activeProject={activeProject} />
           </DreiHtml>
-        ) : (
+        ) : hasLoaded ? (
           <DreiImage
             ref={(ref) => (fakeOsImageRef.current = ref as any)}
-            url={theme.mode === "light" ? FakeOSLight.src : FakeOSDark.src}
+            url={optimizedTexturePath(
+              theme.mode === "light" ? FakeOSLight : FakeOSDark
+            )}
             scale={[0.88, 0.46, 0.46] as any}
           />
-        )}
+        ) : null}
       </Plane>
     </>
   );

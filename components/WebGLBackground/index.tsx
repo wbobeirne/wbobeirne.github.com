@@ -22,15 +22,15 @@ export const WebGLBackground: React.FC<WebGLBackgroundProps> = ({
   onLoaded,
 }) => {
   const { pathname } = useRouter();
-  const [loaded, setLoaded] = useState(false);
+  const [hasLoaded, setHasLoaded] = useState(false);
 
   const handleLoaded = useCallback(() => {
-    setLoaded(true);
+    setHasLoaded(true);
     onLoaded();
   }, [onLoaded]);
 
   return (
-    <div className={clsx(styles.container, loaded && styles.isLoaded)}>
+    <div className={clsx(styles.container, hasLoaded && styles.isLoaded)}>
       <ThemeContext.Consumer>
         {(theme) => (
           <AppContext.Consumer>
@@ -47,8 +47,8 @@ export const WebGLBackground: React.FC<WebGLBackgroundProps> = ({
                     <Lights />
                     <group>
                       <Howdy />
-                      <Avatar waving={pathname === "/bio"} />
-                      <Workspace />
+                      {hasLoaded && <Avatar waving={pathname === "/bio"} />}
+                      <Workspace hasLoaded={hasLoaded} />
                       <ContactShadows
                         key={theme.mode}
                         scale={25}

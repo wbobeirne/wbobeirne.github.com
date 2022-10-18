@@ -6,16 +6,17 @@ import * as THREE from "three";
 import React, { useEffect, useRef } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
-import {
-  NearestFilter,
-  Vector3,
-  Mesh,
-  MeshToonMaterial,
-  Texture,
-  Color,
-} from "three";
+import { NearestFilter, Vector3, Mesh, MeshToonMaterial, Texture } from "three";
 import { useFrame } from "@react-three/fiber";
 import { useTheme } from "../../contexts/theme";
+import { optimizedTexturePath } from "../../util/image";
+
+import BalloonSunrise from "../../public/threejs/textures/balloon-sunrise.png";
+import BalloonDiamonds from "../../public/threejs/textures/balloon-diamonds.png";
+import BalloonDiagonal from "../../public/threejs/textures/balloon-diagonal.png";
+import BalloonCheckers from "../../public/threejs/textures/balloon-checkers.png";
+import BalloonBands from "../../public/threejs/textures/balloon-bands.png";
+import BalloonStripe from "../../public/threejs/textures/balloon-stripe.png";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -64,12 +65,12 @@ export const Balloons: React.FC<BalloonsProps> = ({ show }) => {
   const { nodes } = useGLTF("/threejs/models/balloon2.glb") as GLTFResult;
   const textures = useTexture(
     [
-      "/threejs/textures/balloon-sunrise.png",
-      "/threejs/textures/balloon-diamonds.png",
-      "/threejs/textures/balloon-diagonal.png",
-      "/threejs/textures/balloon-checkers.png",
-      "/threejs/textures/balloon-bands.png",
-      "/threejs/textures/balloon-stripe.png",
+      optimizedTexturePath(BalloonSunrise),
+      optimizedTexturePath(BalloonDiamonds),
+      optimizedTexturePath(BalloonDiagonal),
+      optimizedTexturePath(BalloonCheckers),
+      optimizedTexturePath(BalloonBands),
+      optimizedTexturePath(BalloonStripe),
     ],
     (txs) => {
       (txs as Texture[]).forEach((tx) => {

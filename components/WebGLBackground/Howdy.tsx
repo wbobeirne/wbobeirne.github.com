@@ -6,6 +6,14 @@ import { FontLoader, TextGeometry } from "three-stdlib";
 import { useTheme } from "../../contexts/theme";
 import { hexInt } from "../../util/color";
 
+import pattern1 from "../../public/threejs/textures/pattern1.jpg";
+import pattern2 from "../../public/threejs/textures/pattern2.jpg";
+import pattern3 from "../../public/threejs/textures/pattern3.jpg";
+import pattern4 from "../../public/threejs/textures/pattern4.jpg";
+import pattern5 from "../../public/threejs/textures/pattern5.jpg";
+import pattern6 from "../../public/threejs/textures/pattern6.jpg";
+import { optimizedTexturePath } from "../../util/image";
+
 declare global {
   namespace JSX {
     interface IntrinsicElements {
@@ -51,12 +59,12 @@ const letters = [
 ];
 
 const patterns = [
-  { path: "/threejs/textures/pattern1.jpg", size: 0.3, offset: 0 },
-  { path: "/threejs/textures/pattern2.jpg", size: 0.25, offset: 0 },
-  { path: "/threejs/textures/pattern3.jpg", size: 0.27, offset: 0 },
-  { path: "/threejs/textures/pattern4.jpg", size: 0.3, offset: 0.05 },
-  { path: "/threejs/textures/pattern5.jpg", size: 0.28, offset: 0 },
-  { path: "/threejs/textures/pattern6.jpg", size: 0.3, offset: 0 },
+  { path: optimizedTexturePath(pattern1), size: 0.3, offset: 0 },
+  { path: optimizedTexturePath(pattern2), size: 0.25, offset: 0 },
+  { path: optimizedTexturePath(pattern3), size: 0.27, offset: 0 },
+  { path: optimizedTexturePath(pattern4), size: 0.3, offset: 0.05 },
+  { path: optimizedTexturePath(pattern5), size: 0.28, offset: 0 },
+  { path: optimizedTexturePath(pattern6), size: 0.3, offset: 0 },
 ];
 
 export const Howdy: React.FC = () => {

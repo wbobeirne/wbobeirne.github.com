@@ -242,6 +242,7 @@ $btn-sink: 6px;
   }
 
   .dates {
+    margin-bottom: 1rem;
     font-size: 1rem;
     opacity: 0.8;
   }
@@ -255,17 +256,17 @@ $btn-sink: 6px;
     }
 
     .desktop {
-      top: 14%;
-      left: 13%;
-      width: 59%;
+      top: 14.1%;
+      left: 27.4%;
+      width: 61.8%;
       height: auto;
       clip-path: polygon(0 0, 100% 0, 100% 90%, 0 90%);
     }
 
     .mobile {
-      top: 10%;
-      left: 72%;
-      width: 23%;
+      top: 10.25%;
+      left: 4.75%;
+      width: 21.8%;
       height: auto;
     }
   }
