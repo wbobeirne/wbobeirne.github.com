@@ -28,6 +28,12 @@
   }
 }
 
+@mixin webkit {
+  @supports (background: -webkit-named-image(i)) {
+    @content;
+  }
+}
+
 @mixin main-background {
   background: var(--palette-background);
   background: linear-gradient(0deg, var(--palette-backgroundShaded), var(--palette-background));
@@ -96,6 +102,8 @@ $content-width-mid: 600px;
 }
 
 @mixin text-3d($color, $unit: 1rem / 16) {
+  $edge-mult: 0.5;
+  $spread: 0;
   filter: drop-shadow(#{$unit * -0.5} 0 0 $color)
           drop-shadow($unit * -0.5 $unit * -0.5 0 $color)
           drop-shadow(0 $unit * -0.5 0 $color)
@@ -105,6 +113,19 @@ $content-width-mid: 600px;
           drop-shadow($unit * 1 $unit * 1 0 $color)
           drop-shadow($unit * 1 $unit * 2 0 $color)
           drop-shadow($unit * 2 $unit * 2 0 $color);
+  
+  // WebKit rendering sucks for half pixel values
+  @include webkit {
+      filter: drop-shadow(#{$unit * -1} 0 0 $color)
+          drop-shadow($unit * -1 $unit * -1 0 $color)
+          drop-shadow(0 $unit * -1 0 $color)
+          drop-shadow(0 $unit * 1 0 $color)
+          drop-shadow(0 $unit * 1 0 $color)
+          drop-shadow($unit * 1 0 0 $color)
+          drop-shadow($unit * 1 $unit * 1 0 $color)
+          drop-shadow($unit * 1 $unit * 2 0 $color)
+          drop-shadow($unit * 2 $unit * 2 0 $color);
+  }
 }
 
 @mixin text-3d-sunk($color, $unit: 1rem / 16) {
