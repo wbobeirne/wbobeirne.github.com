@@ -47,7 +47,7 @@ export const WebGLBackground: React.FC<WebGLBackgroundProps> = ({
                     <Lights />
                     <group>
                       <Howdy />
-                      {hasLoaded && <Avatar waving={pathname === "/bio"} />}
+                      <Avatar waving={pathname === "/bio"} />
                       <Workspace hasLoaded={hasLoaded} />
                       <ContactShadows
                         key={theme.mode}

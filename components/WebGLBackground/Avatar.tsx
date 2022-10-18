@@ -36,7 +36,8 @@ export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
   const gradientTex =
     theme.mode === "light" ? gradientTexLight : gradientTexDark;
   useEffect(() => {
-    gltf.scene.traverse((node: any) => {
+    if (!scene) return;
+    scene.traverse((node: any) => {
       node.frustumCulled = false;
       if ("receiveShadow" in node) {
         node.receiveShadow = true;
@@ -49,7 +50,7 @@ export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
         node.material = newMaterial;
       }
     });
-  }, [gltf, gradientTex]);
+  }, [scene, gradientTex]);
 
   // Setup animation mixer
   useEffect(() => {

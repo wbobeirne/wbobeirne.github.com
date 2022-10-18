@@ -1,6 +1,6 @@
 import "../styles/global.scss";
 import type { AppProps } from "next/app";
-import React, { Suspense, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
@@ -16,9 +16,7 @@ import OpengraphImage from "../public/og/image.jpg";
 const transitionTime = 300;
 fixTimeoutTransition(transitionTime);
 
-const WebGLBackground = dynamic(() => import("../components/WebGLBackground"), {
-  suspense: true,
-});
+const WebGLBackground = dynamic(() => import("../components/WebGLBackground"));
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps, router }) => {
   const url = `https://wbobeirne.com/${router.route}`;
@@ -45,9 +43,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps, router }) => {
               <Component {...pageProps} canonical={url} key={url} />
             </CSSTransition>
           </SwitchTransition>
-          <Suspense>
-            <WebGLBackground onLoaded={handleLoaded} />
-          </Suspense>
+          <WebGLBackground onLoaded={handleLoaded} />
           <LoaderBackground hasLoaded={router.route !== "/" || webglLoaded} />
           <NoScriptBackground />
         </AppProvider>
