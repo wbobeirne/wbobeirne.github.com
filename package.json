@@ -5,18 +5,16 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:analyze": "ANALYZE=true next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@react-spring/three": "^9.5.4",
     "@react-three/drei": "^9.29.1",
     "@react-three/fiber": "^8.7.3",
     "@reduxjs/toolkit": "^1.8.5",
     "camera-controls": "^1.36.2",
     "clsx": "^1.2.1",
-    "gsap": "^3.11.1",
-    "lil-gui": "^0.17.0",
     "next": "12.3.1",
     "next-redux-wrapper": "^8.0.0",
     "next-themes": "^0.2.1",
@@ -29,6 +27,7 @@
     "tinycolor2": "^1.4.2"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^12.3.1",
     "@svgr/webpack": "^6.4.0",
     "@types/node": "18.7.6",
     "@types/react": "18.0.17",
