@@ -48,6 +48,7 @@ export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
         newMaterial.map = oldMaterial.map;
         newMaterial.gradientMap = gradientTex;
         newMaterial.opacity = 0;
+        newMaterial.transparent = true;
         node.material = newMaterial;
       }
     });
@@ -72,6 +73,7 @@ export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
       action.paused = false;
       scene.traverse((node: any) => {
         if (node.isMesh) {
+          node.material.transparent = false;
           node.material.opacity = 1;
         }
       });
