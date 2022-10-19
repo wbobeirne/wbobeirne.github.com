@@ -2,20 +2,28 @@ import React from "react";
 import type { StaticImageData } from "next/image";
 
 // Images -- Static import provides all sorts of info around heights, widths etc.
+import servicebellLogo from "../public/logos/servicebell.svg";
 import servicebellDesktopScreenshot from "../public/screenshots/servicebell-desktop.jpg";
 import servicebellMobileScreenshot from "../public/screenshots/servicebell-mobile.jpg";
+import jouleLogo from "../public/logos/joule.svg";
 import jouleDesktopScreenshot from "../public/screenshots/joule-desktop.jpg";
 import jouleMobileScreenshot from "../public/screenshots/joule-mobile.jpg";
+import phase2Logo from "../public/logos/phase2.svg";
 import phase2DesktopScreenshot from "../public/screenshots/phase2-desktop.jpg";
 import phase2MobileScreenshot from "../public/screenshots/phase2-mobile.jpg";
+import coderLogo from "../public/logos/coder.svg";
 import coderDesktopScreenshot from "../public/screenshots/coder-desktop.jpg";
 import coderMobileScreenshot from "../public/screenshots/coder-mobile.jpg";
+import okcLogo from "../public/logos/okcupid.svg";
 import okcDesktopScreenshot from "../public/screenshots/okc-desktop.jpg";
 import okcMobileScreenshot from "../public/screenshots/okc-mobile.jpg";
+import grantioLogo from "../public/logos/grantio.svg";
 import grantioDesktopScreenshot from "../public/screenshots/grantio-desktop.jpg";
 import grantioMobileScreenshot from "../public/screenshots/grantio-mobile-zcash.jpg";
+import mycryptoLogo from "../public/logos/mycrypto.svg";
 import mycryptoDesktopScreenshot from "../public/screenshots/mycrypto-desktop.jpg";
 import mycryptoMobileScreenshot from "../public/screenshots/mycrypto-mobile.jpg";
+import projectsLogo from "../public/logos/projects.svg";
 import projectsDesktopScreenshot from "../public/screenshots/personal-projects-desktop.jpg";
 import projectsMobileScreenshot from "../public/screenshots/personal-projects-mobile.jpg";
 
@@ -78,7 +86,7 @@ export interface ProjectInfo {
   title: string;
   website: string;
   dates: string;
-  logo: string;
+  logo: any;
   color: { primary: string; secondary: string };
   screenshots: { desktop: StaticImageData; mobile: StaticImageData };
   description: React.ReactNode;
@@ -100,7 +108,7 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
     title: "Director of Engineering",
     website: "https://servicebell.com",
     dates: "Feb 2021 - Sep 2022",
-    logo: "/logos/servicebell.svg",
+    logo: servicebellLogo,
     color: { primary: "#e77709", secondary: "#f9f5ec" },
     screenshots: {
       desktop: servicebellDesktopScreenshot,
@@ -163,7 +171,7 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
     title: "Engineering Manager / Staff Software Engineer",
     website: "https://coder.com",
     dates: "Sep 2019 - Dec 2020",
-    logo: "/logos/coder.svg",
+    logo: coderLogo,
     color: { primary: "#FFFFFF", secondary: "#2B3854" },
     screenshots: {
       desktop: coderDesktopScreenshot,
@@ -212,7 +220,7 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
     title: "Senior Software Engineer",
     website: "https://okcupid.com",
     dates: "Aug 2013 - Deb 2017",
-    logo: "/logos/okcupid.svg",
+    logo: okcLogo,
     color: { primary: "#ffffff", secondary: "#0F4DA2" },
     screenshots: {
       desktop: okcDesktopScreenshot,
@@ -263,7 +271,7 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
     title: "Creator",
     website: "https://lightningjoule.com",
     dates: "August 2018",
-    logo: "/logos/joule.svg",
+    logo: jouleLogo,
     color: { primary: "#7642FF", secondary: "#E9E1FF" },
     screenshots: {
       desktop: jouleDesktopScreenshot,
@@ -301,7 +309,7 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
     title: "Co-founder",
     website: "https://grant.io",
     dates: "Sep 2018 - Jul 2019",
-    logo: "/logos/grantio.svg",
+    logo: grantioLogo,
     color: { primary: "#ffffff", secondary: "#530EEC" },
     screenshots: {
       desktop: grantioDesktopScreenshot,
@@ -341,7 +349,7 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
     title: "Software Engineer",
     website: "https://mycrypto.com",
     dates: "Sep 2017 - Jun 2018",
-    logo: "/logos/mycrypto.svg",
+    logo: mycryptoLogo,
     color: { primary: "#FFFFFF", secondary: "#163150" },
     screenshots: {
       desktop: mycryptoDesktopScreenshot,
@@ -376,7 +384,7 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
     website: "https://phase2technology.com",
     title: "Software Engineer",
     dates: "Jan 2012 - Jul 2013",
-    logo: "/logos/phase2.svg",
+    logo: phase2Logo,
     color: { primary: "#FF7901", secondary: "#FFF4EB" },
     screenshots: {
       desktop: phase2DesktopScreenshot,
@@ -407,7 +415,7 @@ export const PROJECTS: Record<ProjectKey, ProjectInfo> = {
     shortName: "My Projects",
     title: "The One and Only",
     dates: "Nov 1993 - ∞",
-    logo: "/logos/projects.svg",
+    logo: projectsLogo,
     color: { primary: "#FFFFFF", secondary: "#EF233C" },
     screenshots: {
       desktop: projectsDesktopScreenshot,

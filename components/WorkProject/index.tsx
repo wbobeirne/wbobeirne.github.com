@@ -29,7 +29,7 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
     name,
     shortName,
     title,
-    logo,
+    logo: Logo,
     dates,
     color,
     description,
@@ -76,13 +76,7 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
                 </Link>
                 <div className={styles.top}>
                   <div className={styles.logo}>
-                    <Image
-                      src={logo}
-                      alt=""
-                      width={80}
-                      height={80}
-                      layout="intrinsic"
-                    />
+                    <Logo />
                   </div>
                   <h3 className={styles.name}>{name}</h3>
                 </div>
@@ -118,7 +112,7 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
                 <Link href={`/work/${id}`} shallow scroll={false}>
                   <a>
                     <div className={styles.logo}>
-                      <Image src={logo} alt="" layout="fill" />
+                      <Logo />
                     </div>
                     <h3 className={styles.name}>{shortName || name}</h3>
                   </a>

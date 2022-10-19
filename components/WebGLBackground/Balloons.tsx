@@ -8,7 +8,6 @@ import { useGLTF, useTexture } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { NearestFilter, Vector3, Mesh, MeshToonMaterial, Texture } from "three";
 import { useFrame } from "@react-three/fiber";
-import { useTheme } from "../../contexts/theme";
 import { optimizedTexturePath } from "../../util/image";
 
 import BalloonSunrise from "../../public/threejs/textures/balloon-sunrise.png";
@@ -48,7 +47,6 @@ interface BalloonsProps {
 }
 
 export const Balloons: React.FC<BalloonsProps> = ({ show }) => {
-  const theme = useTheme();
   const meshRefs = useRef<Mesh[]>([]);
   const visibilityRef = useRef({ visible: false, time: Date.now() });
 
