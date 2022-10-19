@@ -86,7 +86,14 @@ const Work: NextPage = () => {
           {activeProject ? PROJECTS[activeProject].name : "Work"} | William
           O’Beirne
         </title>
-        <meta name="description" content="Don’t forget to fill me out dummy" />
+        <meta
+          name="description"
+          content={
+            activeProject
+              ? `I worked on ${PROJECTS[activeProject].name}, it was pretty cool.`
+              : "I've worked on a lot of things, here are a few of them."
+          }
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ScrollSpacer percentage={80} />

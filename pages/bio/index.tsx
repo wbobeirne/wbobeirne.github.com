@@ -132,7 +132,7 @@ const Bio: NextPage = () => {
     <Template>
       <Head>
         <title>Bio | William O’Beirne</title>
-        <meta name="description" content="Don’t forget to fill me out dummy" />
+        <meta name="description" content="Learn all about me!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ScrollSpacer percentage={80} />

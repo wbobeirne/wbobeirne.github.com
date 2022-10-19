@@ -12,7 +12,10 @@ const Blog: NextPage = () => {
     <Template>
       <Head>
         <title>Blog | William O’Beirne</title>
-        <meta name="description" content="Don’t forget to fill me out dummy" />
+        <meta
+          name="description"
+          content="Sometimes I write things. Even less frequently I publish them."
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ScrollSpacer percentage={72} />

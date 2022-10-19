@@ -7,7 +7,10 @@ const Home: NextPage = () => {
     <Template>
       <Head>
         <title>Home | William O’Beirne</title>
-        <meta name="description" content="Don’t forget to fill me out dummy" />
+        <meta
+          name="description"
+          content="Software engineer and all around computer dude."
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
     </Template>
