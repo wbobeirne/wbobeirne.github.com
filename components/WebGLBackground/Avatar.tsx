@@ -27,6 +27,7 @@ export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
   );
   const [mixer, setMixer] = useState<AnimationMixer>();
   const [hasEntered, setHasEntered] = useState(false);
+  const [opacity, setOpacity] = useState(0.0);
 
   const scene = gltf.scene;
   const vaultAnim = gltf.animations.find((a) => a.name === "VaultAndSit");
@@ -71,12 +72,7 @@ export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
     action.paused = true;
     const to1 = setTimeout(() => {
       action.paused = false;
-      scene.traverse((node: any) => {
-        if (node.isMesh) {
-          node.material.transparent = false;
-          node.material.opacity = 1;
-        }
-      });
+      setOpacity(1);
     }, 500);
     const to2 = setTimeout(() => {
       setHasEntered(true);
@@ -112,7 +108,16 @@ export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
   }, [waving, waveAnim, mixer, hasEntered]);
 
   useFrame((_, delta) => {
+    // Update animation mixer
     if (mixer) mixer.update(delta);
+
+    // Update opacity
+    scene.traverse((node: any) => {
+      if (node.isMesh) {
+        node.material.transparent = opacity !== 1;
+        node.material.opacity = opacity;
+      }
+    });
   });
 
   return <primitive object={scene} position={[0.9, 3.46, 0.5]} />;
