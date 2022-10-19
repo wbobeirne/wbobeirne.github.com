@@ -1,7 +1,7 @@
 import { Center, useTexture } from "@react-three/drei";
 import { useLoader, extend, Node } from "@react-three/fiber";
 import React, { Suspense, useMemo } from "react";
-import { RepeatWrapping } from "three";
+import { RepeatWrapping, Texture } from "three";
 import { FontLoader, TextGeometry } from "three-stdlib";
 import { useTheme } from "../../contexts/theme";
 import { hexInt } from "../../util/color";
@@ -95,18 +95,19 @@ const patterns = [
 export const Howdy: React.FC = () => {
   useMemo(() => extend({ TextGeometry }), []);
   const font = useLoader(FontLoader, "/threejs/fonts/Tondu-Howdy.json");
-  const textures = useTexture(patterns.map((p) => p.path));
+  const textures = useTexture(
+    patterns.map((p) => p.path),
+    (txs) => {
+      (txs as Texture[]).forEach((t, idx) => {
+        const pattern = patterns[idx];
+        t.wrapS = RepeatWrapping;
+        t.wrapT = RepeatWrapping;
+        t.repeat.set(pattern.size, pattern.size);
+        t.offset.set(pattern.x, pattern.y);
+      });
+    }
+  );
   const theme = useTheme();
-
-  useMemo(() => {
-    textures.forEach((t, idx) => {
-      const pattern = patterns[idx];
-      t.wrapS = RepeatWrapping;
-      t.wrapT = RepeatWrapping;
-      t.repeat.set(pattern.size, pattern.size);
-      t.offset.set(pattern.x, pattern.y);
-    });
-  }, [textures]);
 
   const renderedLetters = useMemo(() => {
     if (!theme.palette) return null;

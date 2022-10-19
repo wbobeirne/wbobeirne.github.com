@@ -5,6 +5,7 @@ import {
   Html as DreiHtml,
   Image as DreiImage,
 } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import React, { useEffect, useRef } from "react";
 import {
   BufferGeometry,
@@ -17,12 +18,11 @@ import { useAppContext } from "../../contexts/app";
 import { useTheme } from "../../contexts/theme";
 import { applyNearestFilterToTextures } from "../../util/3d";
 import { shouldRenderFakeOS } from "../../util/animation";
+import { optimizedTexturePath } from "../../util/image";
 import { FakeOS } from "./FakeOS";
 
-import FakeOSLight from "../../public/threejs/textures/fakeos-light.jpg";
-import FakeOSDark from "../../public/threejs/textures/fakeos-dark.jpg";
-import { useFrame } from "@react-three/fiber";
-import { optimizedTexturePath } from "../../util/image";
+import FakeOSLight from "../../public/threejs/textures/fakeos-light.webp";
+import FakeOSDark from "../../public/threejs/textures/fakeos-dark.webp";
 
 interface WorkspaceProps {
   hasLoaded: boolean;

@@ -6,16 +6,15 @@ import * as THREE from "three";
 import React, { useEffect, useRef } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
-import { NearestFilter, Vector3, Mesh, MeshToonMaterial, Texture } from "three";
+import {
+  NearestFilter,
+  Vector3,
+  Mesh,
+  MeshToonMaterial,
+  Texture,
+  RepeatWrapping,
+} from "three";
 import { useFrame } from "@react-three/fiber";
-import { optimizedTexturePath } from "../../util/image";
-
-import BalloonSunrise from "../../public/threejs/textures/balloon-sunrise.png";
-import BalloonDiamonds from "../../public/threejs/textures/balloon-diamonds.png";
-import BalloonDiagonal from "../../public/threejs/textures/balloon-diagonal.png";
-import BalloonCheckers from "../../public/threejs/textures/balloon-checkers.png";
-import BalloonBands from "../../public/threejs/textures/balloon-bands.png";
-import BalloonStripe from "../../public/threejs/textures/balloon-stripe.png";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -27,19 +26,77 @@ type GLTFResult = GLTF & {
 };
 
 const balloonScale = new Vector3(0.026, 0.02, 0.026);
-const makeBalloon = (x: number, y: number, scale: number, opacity: number) => ({
-  position: new Vector3(x, y, 30 - scale * 10),
+const makeBalloon = ({
+  x,
+  y,
+  scale,
+  opacity,
+  textureX,
+  textureY,
+}: {
+  x: number;
+  y: number;
+  scale: number;
+  opacity: number;
+  textureX: number;
+  textureY: number;
+}) => ({
+  position: new Vector3(x - 1.5, y, 30 - scale * 10),
   scale: new Vector3().copy(balloonScale).multiplyScalar(scale),
   speed: Math.random(),
   opacity,
+  textureX,
+  textureY,
 });
 const balloons = [
-  makeBalloon(4, 7.58, 0.3, 0.5),
-  makeBalloon(3.5, 6.2, 0.5, 0.6),
-  makeBalloon(2.5, 5.58, 0.7, 0.8),
-  makeBalloon(1.5, 5.8, 0.9, 0.9),
-  makeBalloon(0, 4.58, 1.2, 0.95),
-  makeBalloon(-2, 5.68, 1.5, 1),
+  makeBalloon({
+    x: 4,
+    y: 7.58,
+    scale: 0.3,
+    opacity: 0.5,
+    textureX: 0.5,
+    textureY: 0.25,
+  }),
+  makeBalloon({
+    x: 3.5,
+    y: 6.2,
+    scale: 0.5,
+    opacity: 0.6,
+    textureX: 0,
+    textureY: 0.5,
+  }),
+  makeBalloon({
+    x: 2.5,
+    y: 5.58,
+    scale: 0.7,
+    opacity: 0.8,
+    textureX: 0.5,
+    textureY: 0,
+  }),
+  makeBalloon({
+    x: 1.5,
+    y: 5.8,
+    scale: 0.9,
+    opacity: 0.9,
+    textureX: 0.25,
+    textureY: 0,
+  }),
+  makeBalloon({
+    x: 0,
+    y: 4.58,
+    scale: 1.2,
+    opacity: 0.95,
+    textureX: 0,
+    textureY: 0,
+  }),
+  makeBalloon({
+    x: -2,
+    y: 5.68,
+    scale: 1.5,
+    opacity: 1,
+    textureX: 0.25,
+    textureY: 0.25,
+  }),
 ];
 
 interface BalloonsProps {
@@ -62,19 +119,17 @@ export const Balloons: React.FC<BalloonsProps> = ({ show }) => {
 
   const { nodes } = useGLTF("/threejs/models/balloon2.glb") as GLTFResult;
   const textures = useTexture(
-    [
-      optimizedTexturePath(BalloonSunrise),
-      optimizedTexturePath(BalloonDiamonds),
-      optimizedTexturePath(BalloonDiagonal),
-      optimizedTexturePath(BalloonCheckers),
-      optimizedTexturePath(BalloonBands),
-      optimizedTexturePath(BalloonStripe),
-    ],
+    balloons.map(() => "/threejs/textures/balloons.png"),
     (txs) => {
-      (txs as Texture[]).forEach((tx) => {
-        tx.minFilter = NearestFilter;
-        tx.magFilter = NearestFilter;
-        tx.flipY = false;
+      (txs as Texture[]).forEach((t, i) => {
+        const balloon = balloons[i];
+        t.offset.set(balloon.textureX, balloon.textureY);
+        t.repeat.set(0.25, 0.25);
+        t.wrapS = RepeatWrapping;
+        t.wrapT = RepeatWrapping;
+        t.minFilter = NearestFilter;
+        t.magFilter = NearestFilter;
+        t.flipY = false;
       });
     }
   );

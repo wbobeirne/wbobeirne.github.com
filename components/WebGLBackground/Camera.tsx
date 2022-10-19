@@ -83,7 +83,7 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
       },
       {
         route: "/blog",
-        position: new Vector3(9 - widthOffset * 9, 4.35, -10),
+        position: new Vector3(10 - widthOffset * 9, 4.35, -10),
         target: new Vector3(9 - widthOffset * 9, 4.15, 1),
         positionWiggle: 0,
         targetWiggle: 0.04,
