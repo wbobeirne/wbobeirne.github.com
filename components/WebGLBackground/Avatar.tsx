@@ -47,6 +47,7 @@ export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
         const newMaterial = new MeshToonMaterial();
         newMaterial.map = oldMaterial.map;
         newMaterial.gradientMap = gradientTex;
+        newMaterial.opacity = 0;
         node.material = newMaterial;
       }
     });
@@ -58,7 +59,7 @@ export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
     setMixer(mixer);
   }, [scene]);
 
-  // Start initial animation
+  // Start initial animation, unhide model
   useEffect(() => {
     if (!vaultAnim || !mixer) return;
     const action = mixer.clipAction(vaultAnim);
@@ -67,7 +68,14 @@ export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
     action.enabled = true;
     action.play();
     action.paused = true;
-    const to1 = setTimeout(() => (action.paused = false), 500);
+    const to1 = setTimeout(() => {
+      action.paused = false;
+      scene.traverse((node: any) => {
+        if (node.isMesh) {
+          node.material.opacity = 1;
+        }
+      });
+    }, 500);
     const to2 = setTimeout(() => {
       setHasEntered(true);
     }, 3000);
