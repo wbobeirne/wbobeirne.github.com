@@ -12,6 +12,10 @@ import ElectronLogo from "../../public/logos/electron-mono.svg";
 import PythonLogo from "../../public/logos/python-mono.svg";
 import PostgresLogo from "../../public/logos/postgres-mono.svg";
 import BlenderLogo from "../../public/logos/blender-mono.svg";
+import GolangLogo from "../../public/logos/golang-mono.svg";
+import DockerLogo from "../../public/logos/docker-mono.svg";
+import AwsLogo from "../../public/logos/aws-mono.svg";
+import CloudflareLogo from "../../public/logos/cloudflare-mono.svg";
 
 import BicycleIcon from "../../public/icons/bicycle.svg";
 import ClimbingIcon from "../../public/icons/climbing.svg";
@@ -72,6 +76,26 @@ const tooling: Stuff[] = [
     image: BlenderLogo,
     name: "Blender",
     color: "#EA7600",
+  },
+  {
+    image: GolangLogo,
+    name: "Go",
+    color: "#01ADD8",
+  },
+  {
+    image: AwsLogo,
+    name: "AWS",
+    color: "#FF9900",
+  },
+  {
+    image: DockerLogo,
+    name: "Docker",
+    color: "#0db7ed",
+  },
+  {
+    image: CloudflareLogo,
+    name: "Cloudflare",
+    color: "#F48120",
   },
 ];
 
@@ -166,7 +190,13 @@ const Bio: NextPage = () => {
           >
             Twitter
           </a>
-          .
+          . You can also find my open source work on <a
+            href="https://github.com/wbobeirne"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>.
         </p>
         <h3>My favorite tools</h3>
         <StuffList stuffList={tooling} />

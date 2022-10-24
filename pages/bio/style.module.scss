@@ -18,18 +18,6 @@
 
     strong {
       display: inline-block;
-      color: var(--palette-textInvert);
-      @include text-3d(var(--color, var(--palette-text)), 0.5px);
-
-      @include webkit {
-        color: var(--palette-text);
-        filter: none;
-      }
-
-      @include dark-mode {
-        color: var(--palette-text);
-        filter: none;
-      }
     }
 
     a {
