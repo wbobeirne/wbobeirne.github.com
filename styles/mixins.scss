@@ -1,0 +1,169 @@
+@mixin dark-mode() {
+  [data-theme='dark'] & {
+    @content;
+  }
+}
+
+@mixin mq-mid {
+  @media screen and (max-width: 1180px) {
+    @content;
+  }
+}
+
+@mixin mq-slim {
+  @media screen and (max-width: 880px) {
+    @content;
+  }
+}
+
+@mixin mq-mobile {
+  @media screen and (max-width: 520px) {
+    @content;
+  }
+}
+
+@mixin mq-tiny {
+  @media screen and (max-width: 380px) {
+    @content;
+  }
+}
+
+@mixin mq-work-2col {
+  @media screen and (max-width: 580px) {
+    @content;
+  }
+}
+
+@mixin webkit {
+  @supports (background: -webkit-named-image(i)) {
+    @content;
+  }
+}
+
+@mixin main-background {
+  background: var(--palette-background);
+  background: linear-gradient(0deg, var(--palette-backgroundShaded), var(--palette-background));
+  background-position: 0% 50%;
+  background-attachment: fixed;
+}
+
+$content-width: 720px;
+$content-width-mid: 600px;
+@mixin content-container {
+  width: calc(100% - 12px);
+  max-width: $content-width;
+
+  @include mq-mid {
+    max-width: $content-width-mid;
+  }
+
+  @include mq-slim {
+    max-width: none;
+  }
+}
+
+@mixin border-3d($depth, $shadowLight, $shadowDark) {
+  position: relative;
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: '';
+  }
+
+  &::before {
+    bottom: -$depth;
+    left: $depth / 2;
+    width: 100%;
+    height: $depth;
+    background: $shadowDark;
+    transform: skewX(45deg);
+  }
+
+  &::after {
+    right: -$depth;
+    bottom: -$depth / 2;
+    height: 100%;
+    width: $depth;
+    background: $shadowLight;
+    transform: skewY(45deg);
+  }
+}
+
+@mixin border-3d-sunk($depth, $sink) {
+  top: $sink;
+  left: $sink;
+
+  &::before {
+    bottom: -$depth + $sink;
+    height: $depth - $sink;
+    left: $depth / 2 - $sink / 2;
+  }
+
+  &::after {
+    right: -$depth +$sink;
+    width: $depth - $sink;
+    bottom: -($depth / 2 - $sink / 2);
+  }
+}
+
+@mixin text-3d($color, $unit: 1rem / 16) {
+  $edge-mult: 0.5;
+  $spread: 0;
+  filter: drop-shadow(#{$unit * -0.5} 0 0 $color)
+          drop-shadow($unit * -0.5 $unit * -0.5 0 $color)
+          drop-shadow(0 $unit * -0.5 0 $color)
+          drop-shadow(0 $unit * 0.5 0 $color)
+          drop-shadow(0 $unit * 1 0 $color)
+          drop-shadow($unit * 1 0 0 $color)
+          drop-shadow($unit * 1 $unit * 1 0 $color)
+          drop-shadow($unit * 1 $unit * 2 0 $color)
+          drop-shadow($unit * 2 $unit * 2 0 $color);
+  
+  // WebKit rendering sucks for half pixel values
+  @include webkit {
+      filter: drop-shadow(#{$unit * -1} 0 0 $color)
+          drop-shadow($unit * -1 $unit * -1 0 $color)
+          drop-shadow(0 $unit * -1 0 $color)
+          drop-shadow(0 $unit * 1 0 $color)
+          drop-shadow(0 $unit * 1 0 $color)
+          drop-shadow($unit * 1 0 0 $color)
+          drop-shadow($unit * 1 $unit * 1 0 $color)
+          drop-shadow($unit * 1 $unit * 2 0 $color)
+          drop-shadow($unit * 2 $unit * 2 0 $color);
+  }
+}
+
+@mixin text-3d-sunk($color, $unit: 1rem / 16) {
+  // Keep identical number of drop-shadows to text-3d.
+  transform: translate($unit * 3.5, $unit * 3.5);
+  filter: drop-shadow($unit * -0.5 0 0 $color)
+          drop-shadow($unit * -0.5 $unit * -0.5 0 $color)
+          drop-shadow(0 $unit * -0.5 0 $color)
+          drop-shadow(0 $unit * 0.5 0 $color)
+          drop-shadow(0 $unit * 1 0 $color)
+          drop-shadow($unit * 1 $unit * 1 0 $color)
+          drop-shadow(0 0 0 $color)
+          drop-shadow(0 0 0 $color)
+          drop-shadow(0 0 0 $color);
+}
+
+@mixin custom-scrollbar($track-color, $thumb-color) {
+  scrollbar-color: $track-color $thumb-color;
+  &::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+  }
+  &::-webkit-scrollbar-thumb {
+    border: 2px solid $track-color;
+    background: $thumb-color;
+    border-radius: 10px;
+  }
+    &::-webkit-scrollbar-thumb:horizontal:hover,
+    &::-webkit-scrollbar-thumb:vertical:hover {
+    filter: grayscale(1);
+  }
+}

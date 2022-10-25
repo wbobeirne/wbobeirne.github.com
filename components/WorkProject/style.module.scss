@@ -1,0 +1,310 @@
+@import '~/styles/mixins.scss';
+$duration: 400ms;
+$padding: 16px;
+$btn-depth: 12px;
+$btn-sink: 6px;
+
+
+.container {
+  position: absolute;
+  width: calc(33% - #{$padding * 2});
+  height: calc(33% - #{$padding * 2});
+  transition-property: top, left, width, height, opacity, transform, z-index;
+  transition-duration: $duration;
+  transition-delay: $duration, $duration, $duration, $duration, $duration, $duration, $duration * 2;
+  transition-timing-function: ease;
+  z-index: 1;
+
+  // Left column
+  &:nth-child(3n + 1) {
+    left: 0;
+  }
+
+  // Middle column
+  &:nth-child(3n + 2) {
+    left: calc(33% + $padding);
+  }
+  // Right column
+  &:nth-child(3n + 3) {
+    left: calc(66% + #{$padding * 2});
+  }
+  
+  // Rows
+  @for $i from 0 through 2 {
+    &:nth-child(n+#{($i) * 3 + 1}):nth-child(-n+#{($i + 1) * 3 + 1}) {
+      top: calc(#{$i * 33.333}% + #{$padding * $i});
+    }
+  }
+
+  @include mq-work-2col {
+    width: calc(50% - $padding);
+    height: calc(25% - $padding);
+
+    // Left column
+    &:nth-child(even) {
+      left: 0;
+    }
+    // Right column
+    &:nth-child(odd) {
+      left: calc(50% + $padding);
+    }
+
+    // Rows
+    @for $i from 0 through 4 {
+      &:nth-child(n+#{($i) * 2 + 1}):nth-child(-n+#{($i + 1) * 2 + 1}) {
+        top: calc(#{$i * 25}% + #{$padding * $i});
+      }
+    }
+  }
+
+  &.isActive {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100%;
+    height: calc(100vh - 160px);
+    z-index: 2;
+    transition-delay: 0ms;
+  }
+
+  &.isInactive {
+    opacity: 0;
+    transform: scale(0.9);
+    transition-delay: 0ms;
+  }
+}
+
+.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 20px;
+  list-style: none;
+  background: var(--color-secondary);
+  transform: translate(0);
+  box-shadow: 0 0 0 1px var(--color-secondary-dark) inset;
+  @include border-3d($btn-depth, var(--color-secondary-dark), var(--color-secondary-darker));
+
+  * {
+    color: var(--color-text);
+  }
+
+  &,
+  &::before,
+  &::after {
+    transition: all 150ms ease;
+  }
+
+  &:not(.isActive) {
+    &:active {
+      @include border-3d-sunk($btn-depth, $btn-sink);
+    }
+  }
+}
+
+.list {
+  width: 100%;
+  height: 100%;
+  transition: opacity $duration ease;
+
+  &.enter {
+    opacity: 0;
+
+    &.enterActive {
+      opacity: 1;
+    }
+  }
+
+  &.exit {
+    opacity: 1;
+
+    &.exitActive {
+      opacity: 0;
+    }
+  }
+
+  a {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    &:hover,
+    &:focus {
+      .logo {
+        transform: translate(-50%, -50%) scale(1.05);
+      }
+    }
+  }
+
+  .logo {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 50%;
+    height: 50%;
+    max-width: 200px;
+    max-height: 200px;
+    transform: translate(-50%, -50%);
+    transition: transform 120ms ease;
+  }
+
+  .name {
+    position: absolute;
+    top: 68%;
+    left: 50%;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-align: center;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    transform: translate(-50%, -50%);
+  }
+}
+
+.full {
+  padding: 1rem 2rem;
+  max-height: 100%;
+  overflow: auto;
+  scrollbar-gutter: stable;
+  transition: opacity $duration, transform $duration;
+  @include custom-scrollbar(var(--color-secondary-darker), var(--color-secondary-dark));
+  
+  &.enter {
+    opacity: 0;
+    transform: translateY(20px);
+    transition-timing-function: ease, ease-out;
+
+    &.enterActive {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+
+  &.exit {
+    opacity: 1;
+    transform: translateY(0px);
+    transition-timing-function: ease, ease-in;
+
+    &.exitActive {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+
+  .back {
+    display: block;
+    padding: 0.75rem 0;
+    margin: 0 0 0.25rem;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: bold;
+    transform: translateY(0);
+    transition: transform 100ms ease;
+
+    &:hover {
+      text-decoration: underline;
+    }
+    &:active {
+      transform: translateY(2px);
+    }
+  }
+
+  .top {
+    display: flex;
+    align-items: center;
+    margin: 0 0 1rem;
+  }
+
+  .logo {
+    display: none;
+    width: 5rem;
+    height: 5rem;
+    margin-right: 1rem;
+  }
+
+  .name {
+    font-size: 3rem;
+    line-height: 1;
+    margin: 0 0 0.5rem;
+    color: #FFF;
+    @include text-3d(#000);
+  }
+
+  .title {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  .dates {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    opacity: 0.8;
+  }
+
+  .screenshots {
+    position: relative;
+    
+    .desktop,
+    .mobile {
+      position: absolute;
+    }
+
+    .desktop {
+      top: 14.1%;
+      left: 27.4%;
+      width: 61.8%;
+      height: auto;
+      clip-path: polygon(0 0, 100% 0, 100% 90%, 0 90%);
+    }
+
+    .mobile {
+      top: 10.25%;
+      left: 4.75%;
+      width: 21.8%;
+      height: auto;
+    }
+  }
+
+  .description {
+    font-size: 1.2rem;
+
+    a {
+      text-decoration: underline;
+
+      &:hover,
+      &:focus {
+        opacity: 0.8;
+      }
+    }
+
+    strong {
+      font-weight: 600;
+      color: var(--color-textStrong);
+    }
+  }
+
+  @include mq-tiny {
+    .top {
+      display: block;
+    }
+
+    .logo {
+      display: block;
+      width: 60px;
+      height: auto;
+      margin: 0 auto 8px;
+    }
+    
+    .name,
+    .title,
+    .dates {
+      text-align: center;
+    }
+  }
+}

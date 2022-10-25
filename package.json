@@ -1,26 +1,45 @@
 {
   "name": "wbobeirne",
-  "version": "1.0.0",
-  "description": "Personal website",
-  "main": "js/index.js",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "watch": "webpack --progress --watch --config _js/webpack.config.js",
-    "build": "webpack --progress -p --config _js/webpack.config.js",
-    "jekyll": "jekyll serve --config _config.dev.yml",
-    "jekyll-prod": "jekyll serve"
-  },
-  "author": "Will O'Beirne",
-  "license": "ISC",
-  "devDependencies": {
-    "webpack": "^1.12.13"
+    "dev": "next dev",
+    "build": "next build",
+    "build:analyze": "ANALYZE=true next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "babel-core": "^6.21.0",
-    "babel-loader": "^6.2.10",
-    "coffee-loader": "^0.7.2",
-    "coffee-script": "^1.12.2",
-    "jquery": "3.3.1",
-    "lodash": "^4.5.0",
-    "yargs": "^4.1.0"
+    "@react-three/drei": "^9.29.1",
+    "@react-three/fiber": "^8.7.3",
+    "@reduxjs/toolkit": "^1.8.5",
+    "camera-controls": "^1.36.2",
+    "clsx": "^1.2.1",
+    "next": "12.3.1",
+    "next-redux-wrapper": "^8.0.0",
+    "next-themes": "^0.2.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-redux": "^8.0.4",
+    "react-transition-group": "^4.4.5",
+    "three": "^0.144.0",
+    "three-stdlib": "^2.15.0",
+    "tinycolor2": "^1.4.2"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^12.3.1",
+    "@svgr/webpack": "^6.4.0",
+    "@types/node": "18.7.6",
+    "@types/react": "18.0.17",
+    "@types/react-dom": "18.0.6",
+    "@types/react-transition-group": "^4.4.5",
+    "@types/three": "^0.144.0",
+    "@types/tinycolor2": "^1.4.3",
+    "eslint": "8.22.0",
+    "eslint-config-next": "12.2.5",
+    "eslint-config-prettier": "^8.5.0",
+    "lint-staged": "^13.0.3",
+    "sass": "^1.54.4",
+    "typescript": "4.7.4"
   }
 }

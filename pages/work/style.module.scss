@@ -1,0 +1,31 @@
+@import '~/styles/mixins.scss';
+
+.projects {
+  position: relative;
+  height: $content-width;
+  margin-bottom: 3rem;
+  @include content-container;
+
+  @include mq-mid {
+    height: $content-width-mid;
+  }
+
+  @include mq-slim {
+    height: auto;
+    padding-top: 100%;
+  }
+
+  @include mq-work-2col {
+    height: auto;
+    padding-top: calc(200% - 12px);
+  }
+}
+
+.scrollSpacer {
+  display: none;
+  height: calc(100vh - 120px);
+
+  @include mq-slim {
+    display: block;
+  }
+}

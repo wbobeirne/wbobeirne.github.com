@@ -1,0 +1,157 @@
+@import '~/styles/mixins.scss';
+
+
+
+.nav {
+  position: sticky;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  z-index: 100;
+  pointer-events: none;
+
+  --color: #FFF;
+  --shadow: #BBB;
+  --hoverColor: #FFF;
+  --hoverShadow: #888;
+  --activeColor: #FFF;
+  --activeShadow: #444;
+
+  @include dark-mode {
+    --color: #666;
+    --shadow: #000;
+    --hoverColor: #888;
+    --hoverShadow: #000;
+    --activeColor: #FFF;
+    --activeShadow: #000;
+  }
+
+  @include mq-mobile {
+    padding: 1rem 1.25rem;
+  }
+
+  .links a,
+  .buttons button {
+    cursor: pointer;
+    color: var(--color);
+    @include text-3d(var(--shadow));
+    transition: transform 60ms ease, opacity 60ms ease, filter 60ms ease;
+  
+    &:hover,
+    &:focus {
+      color: var(--hoverColor);
+      @include text-3d(var(--hoverShadow));
+    }
+  
+    &:active {
+      @include text-3d-sunk(var(--shadow));
+    }
+  
+    &.isActive {
+      color: var(--activeColor);
+      @include text-3d(var(--activeShadow));
+  
+      &:active {
+        @include text-3d-sunk(var(--activeShadow));
+      }
+    }
+  }
+  
+
+  .links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    transform: translateY(var(--sticky-offset));
+
+    @include mq-mobile {
+      gap: 1.5rem;
+    }
+
+    a {
+      position: relative;
+      font-size: 2rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      pointer-events: auto;
+
+      @include mq-mobile {
+        font-size: 1.75rem;
+      }
+
+      @include mq-tiny {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .buttons {
+    position: fixed;
+    top: 0;
+    right: 0;
+    gap: 0.5rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    z-index: 101;
+
+    @include mq-mobile {
+      position: relative;
+      padding: 0;
+      transform: translateY(var(--sticky-offset));
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      padding: 0.75rem 1rem;
+      pointer-events: auto;
+      opacity: 0.5;
+
+      @include dark-mode {
+        opacity: 1;
+      }
+
+      @include mq-mobile {
+        padding: 0.75rem 0.5rem;
+        opacity: 1;
+        
+        &:first-child {
+          display: none;
+        }
+      }
+
+      &:hover,
+      &:focus {
+        color: var(--activeColor);
+        opacity: 1;
+      }
+
+      svg {
+        height: 1.8rem;
+        width: 1.8rem;
+
+        @include mq-mobile {
+          width: 1.6rem;
+          height: 1.6rem;
+        }
+
+        @include mq-tiny {
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+      }
+    }
+  }
+
+  &.uiHidden a {
+    opacity: 0;
+    transform: translateY(-200%);
+  }
+}

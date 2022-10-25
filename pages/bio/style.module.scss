@@ -1,0 +1,86 @@
+@import '~/styles/mixins.scss';
+
+.container {
+  padding: 24px;
+  background: var(--palette-surface);
+  font-size: 1.5rem;
+  line-height: 1.5;
+  @include content-container;
+  @include border-3d(12px, var(--palette-shadowLight), var(--palette-shadowDark));
+
+  p {
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    strong {
+      display: inline-block;
+    }
+
+    a {
+      font-weight: 600;
+      transition: opacity 100ms ease;
+      color: var(--palette-primary);
+
+      &:hover,
+      &:focus {
+        opacity: 0.5;
+      }
+
+      &:active {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+
+.stuffs {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2rem;
+
+  .stuff {
+    width: calc(25% - 2rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    @include mq-slim {
+      width: calc(33% - 2rem);
+    }
+
+    @media mq-mobile {
+      width: calc(50% - 2rem);
+    }
+
+    .image {
+      width: 100%;
+      max-width: 8rem;
+      margin-bottom: 1rem;
+      aspect-ratio: 1 / 1;
+      color: var(--palette-textInvert);
+      @include text-3d(var(--color));
+
+      @include dark-mode {
+        @include text-3d(var(--darkColor, var(--color)));
+      }
+    }
+
+    .name {
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 0.75rem;
+      opacity: 0.5;
+    }
+  }
+}
