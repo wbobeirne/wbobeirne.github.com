@@ -40,21 +40,21 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
           : new Vector3(
               0 + widthOffset * 1.0,
               2.5 + clamp(aspect * 5, 0, 2),
-              10
+              10,
             ),
         target: isMobile
           ? new Vector3(0.85, 3.5, 0)
           : new Vector3(
               -0.6 + widthOffset * 1.0,
               2 + clamp(aspect * 5, 0, 2),
-              0
+              0,
             ),
         positionWiggle: 0.1,
         targetWiggle: 0.05,
         zoom: makeZoom(
           isMobile ? 12 : 0 + clamp(aspect * 5, 2, 10),
           width,
-          height
+          height,
         ),
       },
       {
@@ -62,23 +62,23 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
         position: isMobile
           ? new Vector3(0.5, 3.4 - aspect * 2.8, -5)
           : isZoomedOnMonitor
-          ? new Vector3(2.3 - clamp(widthOffset * 1.8, 0, 100), 1.9, -5)
-          : new Vector3(3.4 - clamp(widthOffset * 2.1, 0, 100), 1.8, -10),
+            ? new Vector3(2.3 - clamp(widthOffset * 1.8, 0, 100), 1.9, -5)
+            : new Vector3(3.4 - clamp(widthOffset * 2.1, 0, 100), 1.8, -10),
         target: isMobile
           ? new Vector3(0, 2.9 - aspect * 2.8, -1)
           : isZoomedOnMonitor
-          ? new Vector3(1.3 - clamp(widthOffset * 1.8, 0, 100), 1.4, -1)
-          : new Vector3(1.8 - clamp(widthOffset * 2.1, 0, 100), 1.1, -1),
+            ? new Vector3(1.3 - clamp(widthOffset * 1.8, 0, 100), 1.4, -1)
+            : new Vector3(1.8 - clamp(widthOffset * 2.1, 0, 100), 1.1, -1),
         positionWiggle: isZoomedOnMonitor ? 0.05 : 0.1,
         targetWiggle: isZoomedOnMonitor ? 0.025 : 0.05,
         zoom: makeZoom(
           isMobile
             ? 6
             : isZoomedOnMonitor
-            ? aspect * 10
-            : clamp(aspect * 4, 4, 8),
+              ? aspect * 10
+              : clamp(aspect * 4, 4, 8),
           width,
-          height
+          height,
         ),
       },
       {
@@ -120,7 +120,7 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
       pageConfig.target.x + mouseX * pageConfig.targetWiggle,
       pageConfig.target.y + mouseY * pageConfig.targetWiggle,
       pageConfig.target.z,
-      isAnimatedRef.current
+      isAnimatedRef.current,
     );
     camConRef.current.zoomTo(pageConfig.zoom, isAnimatedRef.current);
   }, [pageConfig, mouseX, mouseY]);

@@ -1,9 +1,8 @@
-@import '~/styles/mixins.scss';
+@import "~/styles/mixins.scss";
 $duration: 400ms;
 $padding: 16px;
 $btn-depth: 12px;
 $btn-sink: 6px;
-
 
 .container {
   position: absolute;
@@ -11,7 +10,14 @@ $btn-sink: 6px;
   height: calc(33% - #{$padding * 2});
   transition-property: top, left, width, height, opacity, transform, z-index;
   transition-duration: $duration;
-  transition-delay: $duration, $duration, $duration, $duration, $duration, $duration, $duration * 2;
+  transition-delay:
+    $duration,
+    $duration,
+    $duration,
+    $duration,
+    $duration,
+    $duration,
+    $duration * 2;
   transition-timing-function: ease;
   z-index: 1;
 
@@ -28,10 +34,10 @@ $btn-sink: 6px;
   &:nth-child(3n + 3) {
     left: calc(66% + #{$padding * 2});
   }
-  
+
   // Rows
   @for $i from 0 through 2 {
-    &:nth-child(n+#{($i) * 3 + 1}):nth-child(-n+#{($i + 1) * 3 + 1}) {
+    &:nth-child(n + #{($i) * 3 + 1}):nth-child(-n + #{($i + 1) * 3 + 1}) {
       top: calc(#{$i * 33.333}% + #{$padding * $i});
     }
   }
@@ -51,7 +57,7 @@ $btn-sink: 6px;
 
     // Rows
     @for $i from 0 through 4 {
-      &:nth-child(n+#{($i) * 2 + 1}):nth-child(-n+#{($i + 1) * 2 + 1}) {
+      &:nth-child(n + #{($i) * 2 + 1}):nth-child(-n + #{($i + 1) * 2 + 1}) {
         top: calc(#{$i * 25}% + #{$padding * $i});
       }
     }
@@ -84,7 +90,11 @@ $btn-sink: 6px;
   background: var(--color-secondary);
   transform: translate(0);
   box-shadow: 0 0 0 1px var(--color-secondary-dark) inset;
-  @include border-3d($btn-depth, var(--color-secondary-dark), var(--color-secondary-darker));
+  @include border-3d(
+    $btn-depth,
+    var(--color-secondary-dark),
+    var(--color-secondary-darker)
+  );
 
   * {
     color: var(--color-text);
@@ -170,9 +180,14 @@ $btn-sink: 6px;
   max-height: 100%;
   overflow: auto;
   scrollbar-gutter: stable;
-  transition: opacity $duration, transform $duration;
-  @include custom-scrollbar(var(--color-secondary-darker), var(--color-secondary-dark));
-  
+  transition:
+    opacity $duration,
+    transform $duration;
+  @include custom-scrollbar(
+    var(--color-secondary-darker),
+    var(--color-secondary-dark)
+  );
+
   &.enter {
     opacity: 0;
     transform: translateY(20px);
@@ -231,7 +246,7 @@ $btn-sink: 6px;
     font-size: 3rem;
     line-height: 1;
     margin: 0 0 0.5rem;
-    color: #FFF;
+    color: #fff;
     @include text-3d(#000);
   }
 
@@ -249,7 +264,7 @@ $btn-sink: 6px;
 
   .screenshots {
     position: relative;
-    
+
     .desktop,
     .mobile {
       position: absolute;
@@ -300,7 +315,7 @@ $btn-sink: 6px;
       height: auto;
       margin: 0 auto 8px;
     }
-    
+
     .name,
     .title,
     .dates {

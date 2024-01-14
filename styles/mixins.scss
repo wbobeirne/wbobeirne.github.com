@@ -1,5 +1,5 @@
 @mixin dark-mode() {
-  [data-theme='dark'] & {
+  [data-theme="dark"] & {
     @content;
   }
 }
@@ -42,7 +42,11 @@
 
 @mixin main-background {
   background: var(--palette-background);
-  background: linear-gradient(0deg, var(--palette-backgroundShaded), var(--palette-background));
+  background: linear-gradient(
+    0deg,
+    var(--palette-backgroundShaded),
+    var(--palette-background)
+  );
   background-position: 0% 50%;
   background-attachment: fixed;
 }
@@ -68,7 +72,7 @@ $content-width-mid: 600px;
   &::before,
   &::after {
     position: absolute;
-    content: '';
+    content: "";
   }
 
   &::before {
@@ -101,7 +105,7 @@ $content-width-mid: 600px;
   }
 
   &::after {
-    right: -$depth +$sink;
+    right: -$depth + $sink;
     width: $depth - $sink;
     bottom: -($depth / 2 - $sink / 2);
   }
@@ -111,26 +115,22 @@ $content-width-mid: 600px;
   $edge-mult: 0.5;
   $spread: 0;
   filter: drop-shadow(#{$unit * -0.5} 0 0 $color)
-          drop-shadow($unit * -0.5 $unit * -0.5 0 $color)
-          drop-shadow(0 $unit * -0.5 0 $color)
-          drop-shadow(0 $unit * 0.5 0 $color)
-          drop-shadow(0 $unit * 1 0 $color)
-          drop-shadow($unit * 1 0 0 $color)
-          drop-shadow($unit * 1 $unit * 1 0 $color)
-          drop-shadow($unit * 1 $unit * 2 0 $color)
-          drop-shadow($unit * 2 $unit * 2 0 $color);
-  
+    drop-shadow($unit * -0.5 $unit * -0.5 0 $color)
+    drop-shadow(0 $unit * -0.5 0 $color) drop-shadow(0 $unit * 0.5 0 $color)
+    drop-shadow(0 $unit * 1 0 $color) drop-shadow($unit * 1 0 0 $color)
+    drop-shadow($unit * 1 $unit * 1 0 $color)
+    drop-shadow($unit * 1 $unit * 2 0 $color)
+    drop-shadow($unit * 2 $unit * 2 0 $color);
+
   // WebKit rendering sucks for half pixel values
   @include webkit {
-      filter: drop-shadow(#{$unit * -1} 0 0 $color)
-          drop-shadow($unit * -1 $unit * -1 0 $color)
-          drop-shadow(0 $unit * -1 0 $color)
-          drop-shadow(0 $unit * 1 0 $color)
-          drop-shadow(0 $unit * 1 0 $color)
-          drop-shadow($unit * 1 0 0 $color)
-          drop-shadow($unit * 1 $unit * 1 0 $color)
-          drop-shadow($unit * 1 $unit * 2 0 $color)
-          drop-shadow($unit * 2 $unit * 2 0 $color);
+    filter: drop-shadow(#{$unit * -1} 0 0 $color)
+      drop-shadow($unit * -1 $unit * -1 0 $color)
+      drop-shadow(0 $unit * -1 0 $color) drop-shadow(0 $unit * 1 0 $color)
+      drop-shadow(0 $unit * 1 0 $color) drop-shadow($unit * 1 0 0 $color)
+      drop-shadow($unit * 1 $unit * 1 0 $color)
+      drop-shadow($unit * 1 $unit * 2 0 $color)
+      drop-shadow($unit * 2 $unit * 2 0 $color);
   }
 }
 
@@ -138,14 +138,11 @@ $content-width-mid: 600px;
   // Keep identical number of drop-shadows to text-3d.
   transform: translate($unit * 3.5, $unit * 3.5);
   filter: drop-shadow($unit * -0.5 0 0 $color)
-          drop-shadow($unit * -0.5 $unit * -0.5 0 $color)
-          drop-shadow(0 $unit * -0.5 0 $color)
-          drop-shadow(0 $unit * 0.5 0 $color)
-          drop-shadow(0 $unit * 1 0 $color)
-          drop-shadow($unit * 1 $unit * 1 0 $color)
-          drop-shadow(0 0 0 $color)
-          drop-shadow(0 0 0 $color)
-          drop-shadow(0 0 0 $color);
+    drop-shadow($unit * -0.5 $unit * -0.5 0 $color)
+    drop-shadow(0 $unit * -0.5 0 $color) drop-shadow(0 $unit * 0.5 0 $color)
+    drop-shadow(0 $unit * 1 0 $color) drop-shadow($unit * 1 $unit * 1 0 $color)
+    drop-shadow(0 0 0 $color) drop-shadow(0 0 0 $color)
+    drop-shadow(0 0 0 $color);
 }
 
 @mixin custom-scrollbar($track-color, $thumb-color) {
@@ -162,8 +159,8 @@ $content-width-mid: 600px;
     background: $thumb-color;
     border-radius: 10px;
   }
-    &::-webkit-scrollbar-thumb:horizontal:hover,
-    &::-webkit-scrollbar-thumb:vertical:hover {
+  &::-webkit-scrollbar-thumb:horizontal:hover,
+  &::-webkit-scrollbar-thumb:vertical:hover {
     filter: grayscale(1);
   }
 }

@@ -76,7 +76,7 @@ type ThemeMode = keyof typeof PALETTE;
 
 const initialState = {
   mode: undefined as ThemeMode | undefined,
-  palette: undefined as typeof PALETTE[ThemeMode] | undefined,
+  palette: undefined as (typeof PALETTE)[ThemeMode] | undefined,
   toggleMode: () => null,
 };
 
@@ -100,7 +100,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const value = useMemo(
     () => ({ mode: mode as ThemeMode | undefined, toggleMode, palette }),
-    [mode, toggleMode, palette]
+    [mode, toggleMode, palette],
   );
 
   return (

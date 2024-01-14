@@ -105,7 +105,7 @@ export const Howdy: React.FC = () => {
         t.repeat.set(pattern.size, pattern.size);
         t.offset.set(pattern.x, pattern.y);
       });
-    }
+    },
   );
   const theme = useTheme();
 

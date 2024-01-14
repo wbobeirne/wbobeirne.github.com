@@ -36,11 +36,11 @@ export const Workspace: React.FC<WorkspaceProps> = ({ hasLoaded }) => {
   const gltf = useGLTF("/threejs/models/workspace.glb");
   const gradientTexLight = useTexture(
     "/threejs/textures/gradient-light.png",
-    applyNearestFilterToTextures
+    applyNearestFilterToTextures,
   );
   const gradientTexDark = useTexture(
     "/threejs/textures/gradient-dark.png",
-    applyNearestFilterToTextures
+    applyNearestFilterToTextures,
   );
   const fakeOsImageRef = useRef<Mesh<BufferGeometry, Material>>();
 
@@ -89,7 +89,7 @@ export const Workspace: React.FC<WorkspaceProps> = ({ hasLoaded }) => {
           <DreiImage
             ref={(ref) => (fakeOsImageRef.current = ref as any)}
             url={optimizedTexturePath(
-              theme.mode === "light" ? FakeOSLight : FakeOSDark
+              theme.mode === "light" ? FakeOSLight : FakeOSDark,
             )}
             scale={[0.88, 0.46, 0.46] as any}
           />

@@ -190,13 +190,15 @@ const Bio: NextPage = () => {
           >
             Twitter
           </a>
-          . You can also find my open source work on <a
+          . You can also find my open source work on{" "}
+          <a
             href="https://github.com/wbobeirne"
             target="_blank"
             rel="noopener noreferrer"
           >
             GitHub
-          </a>.
+          </a>
+          .
         </p>
         <h3>My favorite tools</h3>
         <StuffList stuffList={tooling} />

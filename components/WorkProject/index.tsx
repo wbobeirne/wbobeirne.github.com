@@ -42,7 +42,7 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
       className={clsx(
         styles.container,
         isActive && styles.isActive,
-        isInactive && styles.isInactive
+        isInactive && styles.isInactive,
       )}
     >
       <div

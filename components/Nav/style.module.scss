@@ -1,6 +1,4 @@
-@import '~/styles/mixins.scss';
-
-
+@import "~/styles/mixins.scss";
 
 .nav {
   position: sticky;
@@ -12,11 +10,11 @@
   z-index: 100;
   pointer-events: none;
 
-  --color: #FFF;
-  --shadow: #BBB;
-  --hoverColor: #FFF;
+  --color: #fff;
+  --shadow: #bbb;
+  --hoverColor: #fff;
   --hoverShadow: #888;
-  --activeColor: #FFF;
+  --activeColor: #fff;
   --activeShadow: #444;
 
   @include dark-mode {
@@ -24,7 +22,7 @@
     --shadow: #000;
     --hoverColor: #888;
     --hoverShadow: #000;
-    --activeColor: #FFF;
+    --activeColor: #fff;
     --activeShadow: #000;
   }
 
@@ -37,28 +35,30 @@
     cursor: pointer;
     color: var(--color);
     @include text-3d(var(--shadow));
-    transition: transform 60ms ease, opacity 60ms ease, filter 60ms ease;
-  
+    transition:
+      transform 60ms ease,
+      opacity 60ms ease,
+      filter 60ms ease;
+
     &:hover,
     &:focus {
       color: var(--hoverColor);
       @include text-3d(var(--hoverShadow));
     }
-  
+
     &:active {
       @include text-3d-sunk(var(--shadow));
     }
-  
+
     &.isActive {
       color: var(--activeColor);
       @include text-3d(var(--activeShadow));
-  
+
       &:active {
         @include text-3d-sunk(var(--activeShadow));
       }
     }
   }
-  
 
   .links {
     display: flex;
@@ -121,7 +121,7 @@
       @include mq-mobile {
         padding: 0.75rem 0.5rem;
         opacity: 1;
-        
+
         &:first-child {
           display: none;
         }

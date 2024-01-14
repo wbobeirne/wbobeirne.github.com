@@ -1,4 +1,4 @@
-@import '~/styles/mixins.scss';
+@import "~/styles/mixins.scss";
 
 .scaleWrapper {
   width: 1460px;
@@ -11,7 +11,6 @@
   }
 
   svg {
-
     transform: scale(1);
   }
 }
@@ -24,8 +23,13 @@
   height: 100%;
   transform: translate(-50%, -50%);
   border-radius: 10px;
-  background-color: #4158D0;
-  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+  background-color: #4158d0;
+  background-image: linear-gradient(
+    43deg,
+    #4158d0 0%,
+    #c850c0 46%,
+    #ffcc70 100%
+  );
   overflow: hidden;
 }
 
@@ -40,14 +44,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(#FFF, 0.9);
+  background: rgba(#fff, 0.9);
   color: #222;
   backdrop-filter: blur(10px);
   z-index: 100;
 
   @include dark-mode {
     background: rgba(#222, 0.9);
-    color: #FFF;
+    color: #fff;
   }
 }
 .topBar > div {
@@ -139,7 +143,7 @@
 
 .ide {
   background: #3c3c3c !important;
-  color: rgba(#FFF, 0.9) !important;
+  color: rgba(#fff, 0.9) !important;
 
   .content {
     display: flex;
@@ -163,7 +167,7 @@
 
       &:first-child {
         opacity: 1;
-        border-left: 2px solid #FFF;
+        border-left: 2px solid #fff;
       }
 
       svg {
@@ -184,7 +188,7 @@
       font-size: 11px;
       padding: 1px 20px;
       width: 100%;
-      color: #FFF;
+      color: #fff;
       opacity: 0.8;
 
       &.projectTitle {
@@ -210,7 +214,7 @@
 
   .code {
     flex: 1;
-    background: #1E1E1E;
+    background: #1e1e1e;
   }
 }
 
@@ -226,7 +230,7 @@
     align-items: center;
     gap: 20px;
     padding: 0 40px;
-    
+
     .navigation {
       display: flex;
 
@@ -237,7 +241,7 @@
         path {
           fill: rgba(#000, 0.5);
           @include dark-mode {
-            fill: rgba(#FFF, 0.5);
+            fill: rgba(#fff, 0.5);
           }
         }
       }
@@ -254,8 +258,8 @@
       text-align: center;
 
       @include dark-mode {
-        background: rgba(#FFF, 0.1);
-        color: rgba(#FFF, 0.8);
+        background: rgba(#fff, 0.1);
+        color: rgba(#fff, 0.8);
       }
 
       .loading {
@@ -276,7 +280,7 @@
           animation: loader-rotate 2s linear infinite;
 
           circle {
-            stroke: rgba(#00F, 1.0);
+            stroke: rgba(#00f, 1);
             animation: loader-dash 1.5s ease-in-out infinite;
           }
         }

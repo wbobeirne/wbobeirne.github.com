@@ -76,7 +76,7 @@ export const CameraControls = forwardRef<CameraControlsDefault, unknown>(
         args={[camera, renderer.domElement]}
       />
     );
-  }
+  },
 );
 
 export type CameraControls = CameraControlsDefault;

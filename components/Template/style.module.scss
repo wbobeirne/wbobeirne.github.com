@@ -1,4 +1,4 @@
-@import '~/styles/mixins.scss';
+@import "~/styles/mixins.scss";
 
 .container {
   position: relative;
@@ -7,7 +7,9 @@
   min-height: 100vh;
   min-height: -webkit-fill-available;
   pointer-events: none;
-  transition: opacity 300ms ease, transform 300ms ease;
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
 
   &.isHidden {
     transform: translateX(-100%);
@@ -16,13 +18,13 @@
   }
 
   @include mq-slim {
-    main > *:nth-child(0n+2) {
+    main > *:nth-child(0n + 2) {
       min-height: calc(100vh - 4.625rem - 3rem);
     }
   }
 
   @include mq-tiny {
-    main > *:nth-child(0n+2) {
+    main > *:nth-child(0n + 2) {
       min-height: calc(100vh - 4.25rem - 3rem);
     }
   }

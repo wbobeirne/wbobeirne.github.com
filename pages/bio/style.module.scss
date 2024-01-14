@@ -1,4 +1,4 @@
-@import '~/styles/mixins.scss';
+@import "~/styles/mixins.scss";
 
 .container {
   padding: 24px;
@@ -6,7 +6,11 @@
   font-size: 1.5rem;
   line-height: 1.5;
   @include content-container;
-  @include border-3d(12px, var(--palette-shadowLight), var(--palette-shadowDark));
+  @include border-3d(
+    12px,
+    var(--palette-shadowLight),
+    var(--palette-shadowDark)
+  );
 
   p {
     &:first-child {
@@ -36,7 +40,6 @@
     }
   }
 }
-
 
 .stuffs {
   display: flex;

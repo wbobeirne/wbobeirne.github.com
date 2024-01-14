@@ -19,11 +19,11 @@ export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
   const gltf = useGLTF("/threejs/models/will-rigify3-compressed.glb");
   const gradientTexLight = useTexture(
     "/threejs/textures/gradient-light.png",
-    applyNearestFilterToTextures
+    applyNearestFilterToTextures,
   );
   const gradientTexDark = useTexture(
     "/threejs/textures/gradient-dark.png",
-    applyNearestFilterToTextures
+    applyNearestFilterToTextures,
   );
   const [mixer, setMixer] = useState<AnimationMixer>();
   const [hasEntered, setHasEntered] = useState(false);

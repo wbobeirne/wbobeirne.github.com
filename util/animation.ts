@@ -56,10 +56,10 @@ export const fixTimeoutTransition = (timeout: number): void => {
     // if Next.js is going to remove them or not since we are going to remove the copies ourselves
     // later on when the transition finishes.
     const nodes = document.querySelectorAll(
-      "link[rel=stylesheet], style:not([media=x])"
+      "link[rel=stylesheet], style:not([media=x])",
     );
     const copies = Array.from(nodes).map(
-      (el) => el.cloneNode(true) as HTMLElement
+      (el) => el.cloneNode(true) as HTMLElement,
     );
 
     for (let copy of copies) {

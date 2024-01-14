@@ -41,7 +41,7 @@ const Work: NextPage = () => {
   const { setActiveProject: setContextActiveProject, setIsViewingProjects } =
     useAppContext();
   const [activeProject, setActiveProject] = useState(
-    getProjectQuery(router.query.project)
+    getProjectQuery(router.query.project),
   );
   const projectsRef = useRef<HTMLDivElement | null>(null);
   const hasRenderedRef = useUpdatingRef(useHasRendered());

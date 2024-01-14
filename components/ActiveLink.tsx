@@ -24,7 +24,7 @@ const ActiveLink: React.FC<ActiveLinkProps> = ({
     if (isReady) {
       const linkPathname = new URL(
         (props.as || props.href) as string,
-        location.href
+        location.href,
       ).pathname;
 
       const activePathname = new URL(asPath, location.href).pathname;

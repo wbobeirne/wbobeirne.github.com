@@ -1,4 +1,4 @@
-@import '~/styles/mixins.scss';
+@import "~/styles/mixins.scss";
 
 .window {
   display: flex;
@@ -6,7 +6,7 @@
   position: absolute;
   overflow: hidden;
   border-radius: 16px;
-  background: #FFF;
+  background: #fff;
   color: #323232;
   box-shadow: 0 25px 50px rgba(#000, 0.4);
   transform: translateY(0px) scale(1);
@@ -15,7 +15,7 @@
 
   @include dark-mode {
     background: #323232;
-    color: #FFF;
+    color: #fff;
   }
 
   &.isMaximized {

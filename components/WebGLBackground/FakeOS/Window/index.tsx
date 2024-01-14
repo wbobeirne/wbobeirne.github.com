@@ -35,7 +35,7 @@ export const Window: React.FC<WindowProps> = ({
   const preMaximizeBox = useRef(propsBox);
   const [box, setBox] = useState(propsBox);
   const [isOpen, setIsOpen] = useState(
-    propsIsOpen === undefined ? true : propsIsOpen
+    propsIsOpen === undefined ? true : propsIsOpen,
   );
   const [isMaximized, setIsMaximized] = useState(false);
   const boxRef = useUpdatingRef(box);
@@ -91,7 +91,7 @@ export const Window: React.FC<WindowProps> = ({
           ...b,
           left: Math.min(
             OS_WIDTH - limit,
-            Math.max(left, -targetWidth + limit)
+            Math.max(left, -targetWidth + limit),
           ),
           top: Math.min(OS_HEIGHT - limit, Math.max(top, OS_TOPBAR_HEIGHT)),
         }));
@@ -101,7 +101,7 @@ export const Window: React.FC<WindowProps> = ({
         window.removeEventListener("mousemove", moveHandler);
       });
     },
-    [boxRef]
+    [boxRef],
   );
 
   return (
@@ -110,7 +110,7 @@ export const Window: React.FC<WindowProps> = ({
         styles.window,
         classNames.window,
         isMaximized && styles.isMaximized,
-        !isOpen && styles.isClosed
+        !isOpen && styles.isClosed,
       )}
       style={{ ...box, zIndex }}
       onMouseDown={onMouseDown}

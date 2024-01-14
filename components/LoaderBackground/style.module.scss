@@ -1,4 +1,4 @@
-@import '~/styles/mixins.scss';
+@import "~/styles/mixins.scss";
 
 .container {
   position: fixed;
@@ -12,7 +12,8 @@
   transition: opacity 300ms ease;
 
   @keyframes container-fade-in {
-    0%, 50% {
+    0%,
+    50% {
       opacity: 0;
     }
     100% {
@@ -46,7 +47,7 @@
   border: 2px solid transparent;
   border-radius: 50%;
   border-top-color: #000;
-  animation: spin 1.5s cubic-bezier(0.680, -0.750, 0.265, 1.750) infinite forwards;
+  animation: spin 1.5s cubic-bezier(0.68, -0.75, 0.265, 1.75) infinite forwards;
 
   @keyframes spin {
     0% {
@@ -61,7 +62,7 @@
   $inc: 35;
   @for $i from 1 through 100 {
     &:nth-child(#{ $i }) {
-      animation-delay: ($i ) * 50ms;
+      animation-delay: ($i) * 50ms;
       height: $base + ($i - 1px) * $inc;
       width: $base + ($i - 1px) * $inc;
     }
