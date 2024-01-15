@@ -1,4 +1,4 @@
-@import "~/styles/mixins.scss";
+@import "mixins.scss";
 
 .container {
   padding: 24px;
@@ -39,51 +39,50 @@
       }
     }
   }
+
+  h3 {
+    margin-bottom: 1.5rem;
+  }
 }
 
 .stuffs {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: 2rem;
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem;
 
   .stuff {
-    width: calc(25% - 2rem);
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    gap: 0.25rem;
 
-    @include mq-slim {
-      width: calc(33% - 2rem);
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: var(--color);
     }
 
-    @media mq-mobile {
-      width: calc(50% - 2rem);
-    }
-
-    .image {
-      width: 100%;
-      max-width: 8rem;
-      margin-bottom: 1rem;
-      aspect-ratio: 1 / 1;
-      color: var(--palette-textInvert);
-      @include text-3d(var(--color));
-
-      @include dark-mode {
-        @include text-3d(var(--darkColor, var(--color)));
+    @include dark-mode {
+      &::before {
+        background: var(--color-dark);
       }
     }
 
     .name {
       font-size: 1rem;
       font-weight: 500;
-      text-align: center;
     }
 
     .subtitle {
       font-size: 0.75rem;
       opacity: 0.5;
+      padding-bottom: 0.125rem;
     }
   }
 }

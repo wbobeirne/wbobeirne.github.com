@@ -21,19 +21,19 @@ const Blog: NextPage = () => {
       <ScrollSpacer percentage={72} />
       <div>
         {POSTS.map((post) => (
-          <Link key={post.url} href={post.url}>
-            <a
-              className={styles.post}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className={styles.image}>
-                <Image src={post.image} layout="responsive" alt="" />
-              </div>
-              <h3 className={styles.title}>{post.title}</h3>
-              <p className={styles.preview}>{post.preview}</p>
-              <div className={styles.readMore}>Read more →</div>
-            </a>
+          <Link
+            key={post.url}
+            href={post.url}
+            className={styles.post}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className={styles.image}>
+              <Image src={post.image} layout="responsive" alt="" />
+            </div>
+            <h3 className={styles.title}>{post.title}</h3>
+            <p className={styles.preview}>{post.preview}</p>
+            <div className={styles.readMore}>Read more →</div>
           </Link>
         ))}
       </div>

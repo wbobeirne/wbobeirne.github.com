@@ -7,6 +7,7 @@ import SunIcon from "../../public/icons/sun.svg";
 import MoonIcon from "../../public/icons/moon.svg";
 import CameraIcon from "../../public/icons/camera.svg";
 import styles from "./style.module.scss";
+// const styles = {} as any;
 import { useHasRendered, useWindowScroll } from "../../util/hooks";
 
 const links = [
@@ -57,7 +58,7 @@ export const Nav: React.FC = () => {
             activeOnExact={link.activeOnExact}
             activeClassName={styles.isActive}
           >
-            <a>{link.text}</a>
+            {link.text}
           </ActiveLink>
         ))}
       </div>

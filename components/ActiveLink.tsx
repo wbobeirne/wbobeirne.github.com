@@ -1,43 +1,45 @@
 import { useRouter } from "next/router";
 import Link, { LinkProps } from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { PropsWithChildren, useState, useEffect } from "react";
 
 type ActiveLinkProps = LinkProps & {
-  children: React.ReactElement;
+  className?: string;
   activeClassName: string;
   activeOnExact?: boolean;
 };
 
-const ActiveLink: React.FC<ActiveLinkProps> = ({
+const ActiveLink = ({
   children,
   activeClassName,
-  activeOnExact,
+  className,
+  activeOnExact = false,
   ...props
-}) => {
+}: PropsWithChildren<ActiveLinkProps>) => {
   const { asPath, isReady } = useRouter();
-
-  const child = React.Children.only(children);
-  const childClassName = child.props.className || "";
-  const [className, setClassName] = useState(childClassName);
+  const [computedClassName, setComputedClassName] = useState(className);
 
   useEffect(() => {
+    // Check if the router fields are updated client-side
     if (isReady) {
+      // Dynamic route will be matched via props.as
+      // Static route will be matched via props.href
       const linkPathname = new URL(
         (props.as || props.href) as string,
-        location.href,
+        location.href
       ).pathname;
 
+      // Using URL().pathname to get rid of query and hash
       const activePathname = new URL(asPath, location.href).pathname;
       const isActive = activeOnExact
         ? activePathname === linkPathname
         : activePathname.startsWith(linkPathname);
 
       const newClassName = isActive
-        ? `${childClassName} ${activeClassName}`.trim()
-        : childClassName;
+        ? `${className} ${activeClassName}`.trim()
+        : className;
 
-      if (newClassName !== className) {
-        setClassName(newClassName);
+      if (newClassName !== computedClassName) {
+        setComputedClassName(newClassName);
       }
     }
   }, [
@@ -45,18 +47,15 @@ const ActiveLink: React.FC<ActiveLinkProps> = ({
     isReady,
     props.as,
     props.href,
-    childClassName,
     activeClassName,
-    setClassName,
     className,
+    computedClassName,
     activeOnExact,
   ]);
 
   return (
-    <Link {...props}>
-      {React.cloneElement(child, {
-        className: className || null,
-      })}
+    <Link className={computedClassName} {...props}>
+      {children}
     </Link>
   );
 };

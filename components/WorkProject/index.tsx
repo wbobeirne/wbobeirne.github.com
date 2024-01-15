@@ -42,7 +42,7 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
       className={clsx(
         styles.container,
         isActive && styles.isActive,
-        isInactive && styles.isInactive,
+        isInactive && styles.isInactive
       )}
     >
       <div
@@ -71,8 +71,13 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
               timeout={transitionDuration}
             >
               <div className={styles.full}>
-                <Link href="/work" shallow scroll={false}>
-                  <a className={styles.back}>← Back to other projects</a>
+                <Link
+                  href="/work"
+                  shallow
+                  scroll={false}
+                  className={styles.back}
+                >
+                  ← Back to other projects
                 </Link>
                 <div className={styles.top}>
                   <div className={styles.logo}>
@@ -110,12 +115,10 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
             >
               <div className={styles.list}>
                 <Link href={`/work/${id}`} shallow scroll={false}>
-                  <a>
-                    <div className={styles.logo}>
-                      <Logo />
-                    </div>
-                    <h3 className={styles.name}>{shortName || name}</h3>
-                  </a>
+                  <div className={styles.logo}>
+                    <Logo />
+                  </div>
+                  <h3 className={styles.name}>{shortName || name}</h3>
                 </Link>
               </div>
             </CSSTransition>
