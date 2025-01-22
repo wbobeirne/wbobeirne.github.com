@@ -162,7 +162,7 @@ export const Balloons: React.FC<BalloonsProps> = ({ show }) => {
     <group>
       {balloons.map((balloon, i) => (
         <mesh
-          ref={(r) => (r ? (meshRefs.current[i] = r) : undefined)}
+          ref={(r) => void (r ? (meshRefs.current[i] = r) : undefined)}
           key={i}
           geometry={balloonNode.geometry}
           position={balloon.position}
