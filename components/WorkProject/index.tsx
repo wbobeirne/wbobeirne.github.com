@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useRef } from "react";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
 import clsx from "clsx";
 import tinycolor from "tinycolor2";
@@ -25,6 +25,9 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
   isActive,
   isInactive,
 }) => {
+  const fullDivRef = useRef<HTMLDivElement | null>(null);
+  const listDivRef = useRef<HTMLDivElement | null>(null);
+
   const {
     name,
     shortName,
@@ -69,8 +72,9 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
               key="full"
               classNames={transitionClasses}
               timeout={transitionDuration}
+              nodeRef={fullDivRef}
             >
-              <div className={styles.full}>
+              <div className={styles.full} ref={fullDivRef}>
                 <Link
                   href="/work"
                   shallow
@@ -112,8 +116,9 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
               key="list"
               classNames={transitionClasses}
               timeout={transitionDuration}
+              nodeRef={listDivRef}
             >
-              <div className={styles.list}>
+              <div className={styles.list} ref={listDivRef}>
                 <Link href={`/work/${id}`} shallow scroll={false}>
                   <div className={styles.logo}>
                     <Logo />

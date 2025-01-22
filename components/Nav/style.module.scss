@@ -1,4 +1,4 @@
-@import "mixins.scss";
+@use "../../styles/mixins.scss" as *;
 
 .nav {
   position: sticky;
@@ -34,11 +34,11 @@
   .buttons button {
     cursor: pointer;
     color: var(--color);
-    @include text-3d(var(--shadow));
     transition:
       transform 60ms ease,
       opacity 60ms ease,
       filter 60ms ease;
+    @include text-3d(var(--shadow));
 
     &:hover,
     &:focus {

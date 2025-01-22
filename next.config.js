@@ -7,9 +7,8 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 const nextConfig = withBundleAnalyzer({
   reactStrictMode: true,
-  swcMinify: true,
   sassOptions: {
-    includePaths: [path.join(__dirname, "styles")],
+    loadPaths: [path.join(__dirname, "styles")],
   },
   webpack(config) {
     // Grab the existing rule that handles SVG imports

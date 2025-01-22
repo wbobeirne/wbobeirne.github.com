@@ -1,4 +1,4 @@
-@import "mixins.scss";
+@use "../../styles/mixins.scss" as *;
 
 .container {
   padding: 24px;

@@ -1,6 +1,6 @@
 import "../styles/global.scss";
 import type { AppProps } from "next/app";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
@@ -21,6 +21,7 @@ const WebGLBackground = dynamic(() => import("../components/WebGLBackground"));
 const MyApp: React.FC<AppProps> = ({ Component, pageProps, router }) => {
   const url = `https://wbobeirne.com/${router.route}`;
   const [webglLoaded, setWebglLoaded] = useState(false);
+  const componentDivRef = useRef<HTMLDivElement | null>(null);
 
   const handleLoaded = useCallback(() => {
     setWebglLoaded(true);
@@ -39,8 +40,11 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps, router }) => {
               key={router.pathname}
               classNames="page"
               timeout={transitionTime}
+              nodeRef={componentDivRef}
             >
-              <Component {...pageProps} canonical={url} key={url} />
+              <div ref={componentDivRef}>
+                <Component {...pageProps} canonical={url} key={url} />
+              </div>
             </CSSTransition>
           </SwitchTransition>
           <WebGLBackground onLoaded={handleLoaded} />

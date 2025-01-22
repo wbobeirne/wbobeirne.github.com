@@ -1,4 +1,4 @@
-@import "mixins.scss";
+@use "../../styles/mixins.scss" as *;
 $post-depth: 12px;
 
 .post {

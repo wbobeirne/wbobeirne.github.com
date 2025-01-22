@@ -158,7 +158,7 @@ const StuffList: React.FC<{ stuffList: Stuff[] }> = ({ stuffList }) => {
           style={
             {
               "--color": stuff.color,
-              "--darkColor": stuff.darkColor,
+              "--color-dark": stuff.darkColor,
             } as React.CSSProperties
           }
         >

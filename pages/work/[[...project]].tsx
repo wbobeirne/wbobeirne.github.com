@@ -1,7 +1,7 @@
 import type { NextPage, GetStaticPathsResult } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ScrollSpacer } from "../../components/ScrollSpacer";
 import { Template } from "../../components/Template";
 import { WorkProject } from "../../components/WorkProject";

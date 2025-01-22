@@ -20,10 +20,10 @@ export const Lights: React.FC = () => {
   const dirLightRef2 = useRef<any>();
   const [hasMovedTarget, setHasMovedTarget] = useState(false);
 
-  const ambientIntensity = theme.mode === "light" ? 0.5 : 0.2;
-  const spotIntensity = theme.mode === "light" ? 0.1 : 2.0;
-  const frontDirIntensity = theme.mode === "light" ? 0.6 : 0.4;
-  const backDirIntensity = theme.mode === "light" ? 0.3 : 0.4;
+  const ambientIntensity = theme.mode === "light" ? 1.5 : 1.0;
+  const spotIntensity = theme.mode === "light" ? 0.5 : 20.0;
+  const frontDirIntensity = theme.mode === "light" ? 1.2 : 0.8;
+  const backDirIntensity = theme.mode === "light" ? 0.8 : 0.6;
 
   useHelper(debug ? pointLightRef : null, PointLightHelper, 1, "red");
   useHelper(debug ? spotLightRef : null, SpotLightHelper, "blue");

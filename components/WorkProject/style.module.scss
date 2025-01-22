@@ -1,4 +1,6 @@
-@import "mixins.scss";
+@use "../../styles/mixins.scss" as *;
+@use "sass:math";
+
 $duration: 400ms;
 $padding: 16px;
 $btn-depth: 12px;
@@ -38,7 +40,7 @@ $btn-sink: 6px;
   // Rows
   @for $i from 0 through 2 {
     &:nth-child(n + #{($i) * 3 + 1}):nth-child(-n + #{($i + 1) * 3 + 1}) {
-      top: calc(#{$i * 33.333}% + #{$padding * $i});
+      top: calc(#{$i * 33.333%} + #{$padding * $i});
     }
   }
 
@@ -58,7 +60,7 @@ $btn-sink: 6px;
     // Rows
     @for $i from 0 through 4 {
       &:nth-child(n + #{($i) * 2 + 1}):nth-child(-n + #{($i + 1) * 2 + 1}) {
-        top: calc(#{$i * 25}% + #{$padding * $i});
+        top: calc(#{$i * 25%} + #{$padding * $i});
       }
     }
   }
@@ -268,6 +270,12 @@ $btn-sink: 6px;
     .desktop,
     .mobile {
       position: absolute;
+
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
     }
 
     .desktop {
@@ -283,6 +291,16 @@ $btn-sink: 6px;
       left: 4.75%;
       width: 21.8%;
       height: auto;
+    }
+
+    .mockup {
+      position: relative;
+      z-index: 1;
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
     }
   }
 
