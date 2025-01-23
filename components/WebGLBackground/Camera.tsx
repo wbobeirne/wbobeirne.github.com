@@ -1,4 +1,4 @@
-import { useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Vector3 } from "three";
 import { OrbitControls } from "@react-three/drei";
@@ -23,8 +23,8 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
   const camConRef = useRef<CameraControls | null>(null);
   const width = useThree((s) => s.size.width);
   const height = useThree((s) => s.size.height);
-  const [mouseX, setMouseX] = useState(0); // -1 to 1
-  const [mouseY, setMouseY] = useState(0); // -1 to 1
+  const mouseXRef = useRef<number>(width / 2);
+  const mouseYRef = useRef<number>(height / 2);
   const isAnimatedRef = useRef(true);
 
   const isZoomedOnMonitor = activeProject && shouldRenderFakeOS();
@@ -113,6 +113,13 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
 
   useEffect(() => {
     if (!camConRef.current) return;
+    camConRef.current.zoomTo(pageConfig.zoom, isAnimatedRef.current);
+  }, [pageConfig.zoom]);
+
+  useFrame(() => {
+    if (!camConRef.current) return;
+    const mouseX = mouseXRef.current;
+    const mouseY = mouseYRef.current;
     camConRef.current.setLookAt(
       pageConfig.position.x + mouseX * pageConfig.positionWiggle,
       pageConfig.position.y + mouseY * pageConfig.positionWiggle,
@@ -122,14 +129,13 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
       pageConfig.target.z,
       isAnimatedRef.current,
     );
-    camConRef.current.zoomTo(pageConfig.zoom, isAnimatedRef.current);
-  }, [pageConfig, mouseX, mouseY]);
+  })
 
   useEffect(() => {
     if (!camConRef.current) return;
     const handle = (ev: MouseEvent) => {
-      setMouseX((ev.clientX / window.innerWidth) * 2 - 1);
-      setMouseY((ev.clientY / window.innerHeight) * 2 - 1);
+      mouseXRef.current = ((ev.clientX / window.innerWidth) * 2 - 1);
+      mouseYRef.current = ((ev.clientY / window.innerHeight) * 2 - 1);
     };
     window.addEventListener("mousemove", handle);
     return () => window.removeEventListener("mousemove", handle);

@@ -40,11 +40,8 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps, router }) => {
               key={router.pathname}
               classNames="page"
               timeout={transitionTime}
-              nodeRef={componentDivRef}
             >
-              <div ref={componentDivRef}>
-                <Component {...pageProps} canonical={url} key={url} />
-              </div>
+              <Component {...pageProps} canonical={url} key={url} ref={componentDivRef} />
             </CSSTransition>
           </SwitchTransition>
           <WebGLBackground onLoaded={handleLoaded} />
