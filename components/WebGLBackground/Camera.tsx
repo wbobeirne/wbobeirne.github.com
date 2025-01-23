@@ -23,8 +23,8 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
   const camConRef = useRef<CameraControls | null>(null);
   const width = useThree((s) => s.size.width);
   const height = useThree((s) => s.size.height);
-  const mouseXRef = useRef<number>(width / 2);
-  const mouseYRef = useRef<number>(height / 2);
+  const mouseXRef = useRef<number>(0.5);
+  const mouseYRef = useRef<number>(0.5);
   const isAnimatedRef = useRef(true);
 
   const isZoomedOnMonitor = activeProject && shouldRenderFakeOS();
