@@ -98,7 +98,7 @@ const Work: NextPage = () => {
       </Head>
       <ScrollSpacer percentage={80} />
       {/* Wrapper div to receive template min-height */}
-      <div>
+      <div style={{ pointerEvents: "none" }}>
         <div className={styles.projects} ref={projectsRef}>
           {PROJECT_ORDER.map((project, index) => (
             <WorkProject
