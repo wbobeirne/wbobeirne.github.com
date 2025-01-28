@@ -114,37 +114,20 @@ $content-width-mid: 600px;
 }
 
 @mixin text-3d($color, $unit: math.div(1rem, 16)) {
-  $edge-mult: 0.5;
-  $spread: 0;
-  filter: drop-shadow(#{$unit * -0.5} 0 0 $color)
-    drop-shadow($unit * -0.5 $unit * -0.5 0 $color)
-    drop-shadow(0 $unit * -0.5 0 $color) drop-shadow(0 $unit * 0.5 0 $color)
-    drop-shadow(0 $unit * 1 0 $color) drop-shadow($unit * 1 0 0 $color)
-    drop-shadow($unit * 1 $unit * 1 0 $color)
-    drop-shadow($unit * 1 $unit * 2 0 $color)
-    drop-shadow($unit * 2 $unit * 2 0 $color);
-
-  // WebKit rendering sucks for half pixel values
-  @include webkit {
-    filter: drop-shadow(#{$unit * -1} 0 0 $color)
-      drop-shadow($unit * -1 $unit * -1 0 $color)
-      drop-shadow(0 $unit * -1 0 $color) drop-shadow(0 $unit * 1 0 $color)
-      drop-shadow(0 $unit * 1 0 $color) drop-shadow($unit * 1 0 0 $color)
-      drop-shadow($unit * 1 $unit * 1 0 $color)
-      drop-shadow($unit * 1 $unit * 2 0 $color)
-      drop-shadow($unit * 2 $unit * 2 0 $color);
+  $shadows: ();
+  @for $i from -2 through 2 {
+    @for $j from -2 through 2 {
+      $shadows: append($shadows, #{$unit * $i} #{$unit * $j} $color, comma);
+    }
   }
-}
-
-@mixin text-3d-sunk($color, $unit: math.div(1rem, 16)) {
-  // Keep identical number of drop-shadows to text-3d.
-  transform: translate($unit * 3.5, $unit * 3.5);
-  filter: drop-shadow($unit * -0.5 0 0 $color)
-    drop-shadow($unit * -0.5 $unit * -0.5 0 $color)
-    drop-shadow(0 $unit * -0.5 0 $color) drop-shadow(0 $unit * 0.5 0 $color)
-    drop-shadow(0 $unit * 1 0 $color) drop-shadow($unit * 1 $unit * 1 0 $color)
-    drop-shadow(0 0 0 $color) drop-shadow(0 0 0 $color)
-    drop-shadow(0 0 0 $color);
+  @for $i from -1 through 4 {
+    @for $j from -1 through 4 {
+      @if $j >= $i {
+        $shadows: append($shadows, #{$unit * $i} #{$unit * $j} $color, comma);
+      }
+    }
+  }
+  text-shadow: $shadows;
 }
 
 @mixin custom-scrollbar($track-color, $thumb-color) {

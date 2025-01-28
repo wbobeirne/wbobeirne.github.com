@@ -64,9 +64,6 @@ export const Nav: React.FC = () => {
       </div>
       {hasRendered && (
         <div className={styles.buttons}>
-          <button onClick={() => app.toggleUi()}>
-            <CameraIcon />
-          </button>
           <button
             className={styles.themeToggle}
             onClick={() => theme.toggleMode()}

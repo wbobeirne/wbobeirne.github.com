@@ -21,7 +21,12 @@ export function useWindowSize() {
 
   useEffect(() => {
     const handler = () => {
-      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+      setWindowSize(prev => {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        if (prev.width === width && prev.height === height) return prev;
+        return { width, height };
+      });
     };
     window.addEventListener("resize", handler);
     window.addEventListener("scroll", handler, { passive: true });

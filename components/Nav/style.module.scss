@@ -10,15 +10,15 @@
   z-index: 100;
   pointer-events: none;
 
-  --color: #fff;
-  --shadow: #bbb;
+  --inert: #fff;
+  --shadow: #aaa;
   --hoverColor: #fff;
   --hoverShadow: #888;
   --activeColor: #fff;
   --activeShadow: #444;
 
   @include dark-mode {
-    --color: #666;
+    --inert: #666;
     --shadow: #000;
     --hoverColor: #888;
     --hoverShadow: #000;
@@ -32,31 +32,32 @@
 
   .links a,
   .buttons button {
+    --color: var(--inert);
+    --outline: var(--shadow);
+    --icon-primary: var(--color);
+    --icon-secondary: var(--outline);
+
     cursor: pointer;
     color: var(--color);
     transition:
       transform 60ms ease,
       opacity 60ms ease,
       filter 60ms ease;
-    @include text-3d(var(--shadow));
+    @include text-3d(var(--outline));
 
     &:hover,
     &:focus {
-      color: var(--hoverColor);
-      @include text-3d(var(--hoverShadow));
+      --color: var(--hoverColor);
+      --outline: var(--hoverShadow);
     }
 
     &:active {
-      @include text-3d-sunk(var(--shadow));
+      --color: var(--activeColor);
     }
 
     &.isActive {
-      color: var(--activeColor);
-      @include text-3d(var(--activeShadow));
-
-      &:active {
-        @include text-3d-sunk(var(--activeShadow));
-      }
+      --color: var(--activeColor);
+      --outline: var(--activeShadow);
     }
   }
 
@@ -134,12 +135,12 @@
       }
 
       svg {
-        height: 1.8rem;
-        width: 1.8rem;
+        height: 2.25rem;
+        width: 2.25rem;
 
         @include mq-mobile {
-          width: 1.6rem;
-          height: 1.6rem;
+          width: 1.75rem;
+          height: 1.75rem;
         }
 
         @include mq-tiny {

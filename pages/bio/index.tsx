@@ -39,10 +39,6 @@ const tooling: Stuff[] = [
     darkColor: "#9FEAF9",
   },
   {
-    name: "Python",
-    color: "#4483B4",
-  },
-  {
     name: "PostgreSQL",
     subtitle: "and other SQL DBs",
     color: "#336791",
@@ -54,6 +50,10 @@ const tooling: Stuff[] = [
   {
     name: "Go",
     color: "#01ADD8",
+  },
+  {
+    name: "Python",
+    color: "#4483B4",
   },
   {
     name: "AWS",
