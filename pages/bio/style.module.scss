@@ -1,4 +1,4 @@
-@import "mixins.scss";
+@use "mixins.scss" as *;
 
 .container {
   padding: 24px;
@@ -65,13 +65,8 @@
       width: 0.5rem;
       height: 0.5rem;
       border-radius: 50%;
-      background: var(--color);
-    }
-
-    @include dark-mode {
-      &::before {
-        background: var(--color-dark);
-      }
+      background: var(--text);
+      border: 0.25rem solid var(--color);
     }
 
     .name {

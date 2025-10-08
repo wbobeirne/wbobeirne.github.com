@@ -45,8 +45,8 @@ const genStar = (r: number) => {
     new Spherical(
       r,
       Math.acos(1 - Math.random() * 2),
-      Math.random() * 2 * Math.PI,
-    ),
+      Math.random() * 2 * Math.PI
+    )
   );
   vec.z = vec.z + 20;
   vec.y = Math.abs(vec.y) + 0.5;
@@ -62,13 +62,13 @@ export const StarrySky: React.FC = () => {
   const speed = 0.5;
   const fade = true;
 
-  const material = useRef<StarfieldMaterial>();
+  const material = useRef<StarfieldMaterial | null>(null);
   const [position, color, size] = useMemo(() => {
     const positions: any[] = [];
     const colors: any[] = [];
     const sizes = Array.from(
       { length: count },
-      () => (0.5 + 0.5 * Math.random()) * factor,
+      () => (0.5 + 0.5 * Math.random()) * factor
     );
     const color = new Color();
     let r = radius + depth;

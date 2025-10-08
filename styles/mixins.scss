@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @mixin dark-mode() {
   [data-theme="dark"] & {
     @content;
@@ -77,7 +79,7 @@ $content-width-mid: 600px;
 
   &::before {
     bottom: -$depth;
-    left: $depth / 2;
+    left: math.div($depth, 2);
     width: 100%;
     height: $depth;
     background: $shadowDark;
@@ -86,7 +88,7 @@ $content-width-mid: 600px;
 
   &::after {
     right: -$depth;
-    bottom: -$depth / 2;
+    bottom: math.div(-$depth, 2);
     height: 100%;
     width: $depth;
     background: $shadowLight;
@@ -101,17 +103,17 @@ $content-width-mid: 600px;
   &::before {
     bottom: -$depth + $sink;
     height: $depth - $sink;
-    left: $depth / 2 - $sink / 2;
+    left: math.div($depth, 2) - math.div($sink, 2);
   }
 
   &::after {
     right: -$depth + $sink;
     width: $depth - $sink;
-    bottom: -($depth / 2 - $sink / 2);
+    bottom: -(math.div($depth, 2) - math.div($sink, 2));
   }
 }
 
-@mixin text-3d($color, $unit: 1rem / 16) {
+@mixin text-3d($color, $unit: math.div(1rem, 16)) {
   $edge-mult: 0.5;
   $spread: 0;
   filter: drop-shadow(#{$unit * -0.5} 0 0 $color)
@@ -134,7 +136,7 @@ $content-width-mid: 600px;
   }
 }
 
-@mixin text-3d-sunk($color, $unit: 1rem / 16) {
+@mixin text-3d-sunk($color, $unit: math.div(1rem, 16)) {
   // Keep identical number of drop-shadows to text-3d.
   transform: translate($unit * 3.5, $unit * 3.5);
   filter: drop-shadow($unit * -0.5 0 0 $color)

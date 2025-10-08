@@ -7,8 +7,8 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 const nextConfig = withBundleAnalyzer({
   reactStrictMode: true,
-  swcMinify: true,
   sassOptions: {
+    implementation: "sass-embedded",
     includePaths: [path.join(__dirname, "styles")],
   },
   webpack(config) {

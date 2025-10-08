@@ -12,18 +12,18 @@ import { useAppContext } from "../../contexts/app";
 export const Lights: React.FC = () => {
   const theme = useTheme();
   const { debug } = useAppContext();
-  const ambientLightRef = useRef<any>();
-  const pointLightRef = useRef<any>();
-  const spotLightRef = useRef<any>();
-  const dirLightRef = useRef<any>();
-  const spotLightRef2 = useRef<any>();
-  const dirLightRef2 = useRef<any>();
+  const ambientLightRef = useRef<any>(null);
+  const pointLightRef = useRef<any>(null);
+  const spotLightRef = useRef<any>(null);
+  const dirLightRef = useRef<any>(null);
+  const spotLightRef2 = useRef<any>(null);
+  const dirLightRef2 = useRef<any>(null);
   const [hasMovedTarget, setHasMovedTarget] = useState(false);
 
-  const ambientIntensity = theme.mode === "light" ? 0.5 : 0.2;
-  const spotIntensity = theme.mode === "light" ? 0.1 : 2.0;
-  const frontDirIntensity = theme.mode === "light" ? 0.6 : 0.4;
-  const backDirIntensity = theme.mode === "light" ? 0.3 : 0.4;
+  const ambientIntensity = theme.mode === "light" ? 1.5 : 1.0;
+  const spotIntensity = theme.mode === "light" ? 0.1 : 100.0;
+  const frontDirIntensity = theme.mode === "light" ? 2.6 : 0.8;
+  const backDirIntensity = theme.mode === "light" ? 1.3 : 0.8;
 
   useHelper(debug ? pointLightRef : null, PointLightHelper, 1, "red");
   useHelper(debug ? spotLightRef : null, SpotLightHelper, "blue");

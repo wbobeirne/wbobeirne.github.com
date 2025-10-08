@@ -23,22 +23,12 @@ import {
   Raycaster,
   MathUtils,
 } from "three";
-import {
-  ReactThreeFiber,
-  extend,
-  useFrame,
-  useThree,
-} from "@react-three/fiber";
+import { ThreeElement, extend, useFrame, useThree } from "@react-three/fiber";
 import CameraControlsDefault from "camera-controls";
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      cameraControlsDefault: ReactThreeFiber.Node<
-        CameraControlsDefault,
-        typeof CameraControlsDefault
-      >;
-    }
+declare module "@react-three/fiber" {
+  interface ThreeElements {
+    cameraControlsDefault: ThreeElement<typeof CameraControlsDefault>;
   }
 }
 
@@ -53,10 +43,7 @@ const subsetOfTHREE = {
   Box3: Box3,
   Sphere: Sphere,
   Raycaster: Raycaster,
-  MathUtils: {
-    DEG2RAD: MathUtils.DEG2RAD,
-    clamp: MathUtils.clamp,
-  },
+  MathUtils: { DEG2RAD: MathUtils.DEG2RAD, clamp: MathUtils.clamp },
 };
 
 CameraControlsDefault.install({ THREE: subsetOfTHREE });
@@ -76,7 +63,7 @@ export const CameraControls = forwardRef<CameraControlsDefault, unknown>(
         args={[camera, renderer.domElement]}
       />
     );
-  },
+  }
 );
 
 export type CameraControls = CameraControlsDefault;

@@ -43,7 +43,7 @@ export const WebGLBackground: React.FC<WebGLBackgroundProps> = ({
               >
                 <ThemeContext.Provider value={theme}>
                   <AppContext.Provider value={app}>
-                    <fog near={1} far={1} color={0x000000} />
+                    <fog args={[0x000000, 1, 1]} />
                     <Lights />
                     <group>
                       <Howdy />

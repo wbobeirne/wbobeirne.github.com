@@ -17,12 +17,8 @@ import {
 import { useFrame } from "@react-three/fiber";
 
 type GLTFResult = GLTF & {
-  nodes: {
-    Hot_Air_Balloon: THREE.Mesh;
-  };
-  materials: {
-    ["Material.001"]: THREE.MeshStandardMaterial;
-  };
+  nodes: { Hot_Air_Balloon: THREE.Mesh };
+  materials: { ["Material.001"]: THREE.MeshStandardMaterial };
 };
 
 const balloonScale = new Vector3(0.026, 0.02, 0.026);
@@ -112,12 +108,12 @@ export const Balloons: React.FC<BalloonsProps> = ({ show }) => {
       () => {
         visibilityRef.current = { visible: show, time: Date.now() };
       },
-      show ? 800 : 600,
+      show ? 800 : 600
     );
     return () => clearTimeout(timeout);
   }, [show]);
 
-  const { nodes } = useGLTF("/threejs/models/balloon2.glb") as GLTFResult;
+  const { nodes } = useGLTF("/threejs/models/balloon2.glb");
   const textures = useTexture(
     balloons.map(() => "/threejs/textures/balloons.png"),
     (txs) => {
@@ -131,7 +127,7 @@ export const Balloons: React.FC<BalloonsProps> = ({ show }) => {
         t.magFilter = NearestFilter;
         t.flipY = false;
       });
-    },
+    }
   );
   const balloonNode = nodes.Hot_Air_Balloon;
 
@@ -164,7 +160,10 @@ export const Balloons: React.FC<BalloonsProps> = ({ show }) => {
         <mesh
           ref={(r) => (r ? (meshRefs.current[i] = r) : undefined)}
           key={i}
-          geometry={balloonNode.geometry}
+          geometry={
+            (balloonNode as unknown as { geometry: THREE.BufferGeometry })
+              .geometry
+          }
           position={balloon.position}
           scale={balloon.scale}
         >
@@ -181,7 +180,7 @@ const BALLOON_OFFSET = 200;
 const calculateBalloonVisibility = (
   visTime: number,
   now: number,
-  i: number,
+  i: number
 ) => {
   const elapsed = now - BALLOON_OFFSET * i - visTime;
   const duration = BALLOON_DURATION + BALLOON_DECAY * i;

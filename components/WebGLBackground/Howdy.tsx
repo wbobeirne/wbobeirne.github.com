@@ -1,5 +1,5 @@
 import { Center, useTexture } from "@react-three/drei";
-import { useLoader, extend, Node } from "@react-three/fiber";
+import { useLoader, extend, ThreeElement } from "@react-three/fiber";
 import React, { Suspense, useMemo } from "react";
 import { RepeatWrapping, Texture } from "three";
 import { FontLoader, TextGeometry } from "three-stdlib";
@@ -9,11 +9,9 @@ import { hexInt } from "../../util/color";
 import patternsImg from "../../public/threejs/textures/patterns.webp";
 import { optimizedTexturePath } from "../../util/image";
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      textGeometry: Node<any, any>;
-    }
+declare module "@react-three/fiber" {
+  interface ThreeElements {
+    textGeometry: ThreeElement<typeof TextGeometry>;
   }
 }
 
@@ -105,7 +103,7 @@ export const Howdy: React.FC = () => {
         t.repeat.set(pattern.size, pattern.size);
         t.offset.set(pattern.x, pattern.y);
       });
-    },
+    }
   );
   const theme = useTheme();
 
