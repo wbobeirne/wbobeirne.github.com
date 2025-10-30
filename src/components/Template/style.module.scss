@@ -1,0 +1,107 @@
+@use "~/styles/mixins" as *;
+
+.container {
+  position: relative;
+  z-index: 1;
+  padding: 1rem 1.5rem 1.5rem;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  pointer-events: none;
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
+
+  &.isHidden {
+    transform: translateX(-100%);
+    opacity: 0;
+    transition-duration: 300ms;
+  }
+
+  @include mq-slim {
+    main > *:nth-child(0n + 2) {
+      min-height: calc(100vh - 4.625rem - 3rem);
+    }
+  }
+
+  @include mq-tiny {
+    main > *:nth-child(0n + 2) {
+      min-height: calc(100vh - 4.25rem - 3rem);
+    }
+  }
+
+  main {
+    > * {
+      pointer-events: auto;
+      view-transition-name: main-content;
+    }
+  }
+}
+
+::view-transition-group(main-content) {
+  animation: none;
+}
+
+::view-transition-old(main-content),
+::view-transition-new(main-content) {
+  pointer-events: none;
+  mix-blend-mode: normal;
+  animation: 300ms ease both;
+}
+
+::view-transition-old(main-content) {
+  animation-name: main-content-old;
+  @include mq-slim {
+    animation-name: main-content-old-mobile;
+  }
+}
+
+::view-transition-new(main-content) {
+  animation-name: main-content-new;
+  @include mq-slim {
+    animation-name: main-content-new-mobile;
+  }
+}
+
+@keyframes main-content-old {
+  from {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+  to {
+    opacity: 0;
+    transform: translate(20px, 20px);
+  }
+}
+
+@keyframes main-content-old-mobile {
+  from {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+  to {
+    opacity: 0;
+    transform: translate(0, 10vh);
+  }
+}
+
+@keyframes main-content-new {
+  from {
+    opacity: 0;
+    transform: translate(-20px, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes main-content-new-mobile {
+  from {
+    opacity: 0;
+    transform: translate(0, -10vh);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "wbobeirne.github.com",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "rm -rf dist && vite build"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.6",
+    "@react-three/fiber": "^9.4.0",
+    "@tanstack/react-router": "^1.133.32",
+    "@tanstack/react-start": "^1.133.34",
+    "@vitejs/plugin-react": "^5.1.0",
+    "clsx": "^2.1.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-transition-group": "^4.4.5",
+    "sass-embedded": "^1.93.2",
+    "three": "^0.180.0",
+    "three-stdlib": "^2.36.0",
+    "tinycolor2": "^1.6.0",
+    "vite": "^7.1.12",
+    "vite-plugin-svgr": "^4.5.0",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.38.0",
+    "@types/node": "^24.9.2",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@types/react-transition-group": "^4.4.12",
+    "@types/tinycolor": "^1.1.27",
+    "eslint": "^9.38.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.2",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}

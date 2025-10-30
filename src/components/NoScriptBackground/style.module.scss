@@ -1,0 +1,19 @@
+.container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 2rem;
+  opacity: 0.4;
+  pointer-events: none;
+  text-align: right;
+
+  .frown {
+    font-size: 6rem;
+    margin-bottom: 2rem;
+  }
+
+  .message {
+    font-size: 2rem;
+    color: var(--palette-text);
+  }
+}

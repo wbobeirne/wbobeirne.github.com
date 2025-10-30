@@ -1,0 +1,83 @@
+@use "~/styles/mixins" as *;
+
+.container {
+  padding: 24px;
+  background: var(--palette-surface);
+  font-size: 1.5rem;
+  line-height: 1.5;
+  @include content-container;
+  @include border-3d(
+    12px,
+    var(--palette-shadowLight),
+    var(--palette-shadowDark)
+  );
+
+  p {
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    strong {
+      display: inline-block;
+    }
+
+    a {
+      font-weight: 600;
+      transition: opacity 100ms ease;
+      color: var(--palette-primary);
+
+      &:hover,
+      &:focus {
+        opacity: 0.5;
+      }
+
+      &:active {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  h3 {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.stuffs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem;
+
+  .stuff {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: var(--text);
+      border: 0.25rem solid var(--color);
+    }
+
+    .name {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .subtitle {
+      font-size: 0.75rem;
+      opacity: 0.5;
+      padding-bottom: 0.125rem;
+    }
+  }
+}
