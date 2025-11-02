@@ -1,16 +1,3 @@
-export function dur(duration: number) {
-  return duration * 1;
-}
-
-export function makeTransitionStyleClasses(styles: Record<string, string>) {
-  return {
-    enter: styles.enter,
-    enterActive: styles.enterActive,
-    exit: styles.exit,
-    exitActive: styles.exitActive,
-  };
-}
-
 export function shouldRenderFakeOS() {
   // For now, no fake OS
   if (typeof globalThis !== "undefined") {

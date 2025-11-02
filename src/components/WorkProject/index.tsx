@@ -1,15 +1,10 @@
-import React, { CSSProperties, useRef } from "react";
-import { SwitchTransition, CSSTransition } from "react-transition-group";
+import React, { CSSProperties, useEffect, useState } from "react";
 import clsx from "clsx";
 import tinycolor from "tinycolor2";
 import { PROJECT_LOGOS, ProjectKey, PROJECTS } from "~/util/projects";
-import { makeTransitionStyleClasses } from "~/util/animation";
 import styles from "./style.module.scss";
 import MockupImage from "~public/screenshots/mockup.png";
 import { Link } from "@tanstack/react-router";
-
-const transitionDuration = 400;
-const transitionClasses = makeTransitionStyleClasses(styles);
 
 interface WorkProjectProps {
   id: ProjectKey;
@@ -23,11 +18,19 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
   isActive,
   isInactive,
 }) => {
-  const fullRef = useRef<HTMLDivElement | null>(null);
-  const listRef = useRef<HTMLDivElement | null>(null);
+  const [_hasBeenActive, setHasBeenActive] = useState(isActive);
+  const [_hasBeenInactive, setHasBeenInactive] = useState(isInactive);
+  const hasBeenActive = isActive || _hasBeenActive;
+  const hasBeenInactive = isInactive || _hasBeenInactive;
+  useEffect(() => {
+    setHasBeenActive((has) => has || isActive);
+    setHasBeenInactive((has) => has || isInactive);
+  }, [isActive, isInactive]);
 
   const project = PROJECTS[id];
+
   if (!project) return null;
+
   const { name, shortName, title, dates, color, description, screenshots } =
     project;
   const Logo = PROJECT_LOGOS[id];
@@ -38,11 +41,13 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
       className={clsx(
         styles.container,
         isActive && styles.isActive,
-        isInactive && styles.isInactive
+        isInactive && styles.isInactive,
+        hasBeenActive && styles.hasBeenActive,
+        hasBeenInactive && styles.hasBeenInactive
       )}
     >
       <div
-        className={clsx(styles.content, isActive && styles.isActive)}
+        className={styles.content}
         style={
           {
             "--color-primary": color.primary,
@@ -59,77 +64,61 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
           } as CSSProperties
         }
       >
-        <SwitchTransition>
-          {isActive ? (
-            <CSSTransition
-              key="full"
-              classNames={transitionClasses}
-              timeout={transitionDuration}
-              nodeRef={fullRef}
+        <div className={styles.list}>
+          <Link
+            to="/work/{-$projectId}"
+            params={{ projectId: id }}
+            resetScroll={false}
+            preload="intent"
+          >
+            <div className={styles.logo}>
+              <Logo />
+            </div>
+            <h3 className={styles.name}>{shortName ?? name}</h3>
+          </Link>
+        </div>
+        {hasBeenActive && (
+          <div className={styles.full}>
+            <Link
+              to="/work/{-$projectId}"
+              params={{ projectId: undefined }}
+              resetScroll={false}
+              className={styles.back}
+              preload="intent"
             >
-              <div className={styles.full}>
-                <Link
-                  to="/work/{-$projectId}"
-                  params={{ projectId: undefined }}
-                  resetScroll={false}
-                  className={styles.back}
-                >
-                  ← Back to other projects
-                </Link>
-                <div className={styles.top}>
-                  <div className={styles.logo}>
-                    <Logo />
-                  </div>
-                  <h3 className={styles.name}>{name}</h3>
-                </div>
-                <div className={styles.title}>{title}</div>
-                <div className={styles.dates}>{dates}</div>
-                <div className={styles.screenshots}>
-                  <div className={styles.desktop}>
-                    <img
-                      src={screenshots.desktop}
-                      alt={`Desktop screenshot of ${name}`}
-                      width={1060}
-                    />
-                  </div>
-                  <div className={styles.mobile}>
-                    <img
-                      src={screenshots.mobile}
-                      alt={`Mobile screenshot of ${name}`}
-                      width={400}
-                    />
-                  </div>
-                  <div className={styles.mockup}>
-                    <img src={MockupImage} alt="" width="1280" height="700" />
-                  </div>
-                </div>
-                <div className={styles.description}>{description}</div>
+              ← Back to other projects
+            </Link>
+            <div className={styles.top}>
+              <div className={styles.logo}>
+                <Logo />
               </div>
-            </CSSTransition>
-          ) : (
-            <CSSTransition
-              key="list"
-              classNames={transitionClasses}
-              timeout={transitionDuration}
-              nodeRef={listRef}
-            >
-              <div className={styles.list}>
-                <Link
-                  to="/work/{-$projectId}"
-                  params={{ projectId: id }}
-                  resetScroll={false}
-                >
-                  <div className={styles.logo}>
-                    <Logo />
-                  </div>
-                  <h3 className={styles.name}>{shortName ?? name}</h3>
-                </Link>
+              <h3 className={styles.name}>{name}</h3>
+            </div>
+            <div className={styles.title}>{title}</div>
+            <div className={styles.dates}>{dates}</div>
+            <div className={styles.screenshots}>
+              <div className={styles.desktop}>
+                <img
+                  src={screenshots.desktop}
+                  alt={`Desktop screenshot of ${name}`}
+                  width={1060}
+                />
               </div>
-            </CSSTransition>
-          )}
-        </SwitchTransition>
+              <div className={styles.mobile}>
+                <img
+                  src={screenshots.mobile}
+                  alt={`Mobile screenshot of ${name}`}
+                  width={400}
+                />
+              </div>
+              <div className={styles.mockup}>
+                <img src={MockupImage} alt="" width="1280" height="700" />
+              </div>
+            </div>
+            <div className={styles.description}>{description}</div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
-WorkProject.displayName = "WorkProject";

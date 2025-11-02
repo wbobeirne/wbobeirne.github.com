@@ -50,7 +50,6 @@ export const Route = createRootRoute({
 function RootComponent() {
   const { pathname } = useLocation();
   const [webglLoaded, setWebglLoaded] = useState(false);
-  const templateRef = useRef<HTMLDivElement | null>(null);
   const handleLoaded = useCallback(() => {
     setWebglLoaded(true);
   }, []);
@@ -82,7 +81,7 @@ function RootComponent() {
       </head>
       <body>
         <Nav />
-        <Template ref={templateRef}>
+        <Template>
           <Outlet />
         </Template>
         <WebGLBackground onLoaded={handleLoaded} />

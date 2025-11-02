@@ -108,32 +108,67 @@ $btn-sink: 6px;
     transition: all 150ms ease;
   }
 
-  &:not(.isActive) {
+  &:not(.isActive) & {
     &:active {
       @include border-3d-sunk($btn-depth, $btn-sink);
     }
   }
 }
 
-.list {
+@keyframes content-enter {
+  0%,
+  50% {
+    display: none;
+    opacity: 0;
+  }
+  100% {
+    display: block;
+    opacity: 1;
+  }
+}
+
+@keyframes content-exit-delay {
+  0%,
+  50% {
+    display: block;
+    opacity: 1;
+  }
+  100% {
+    display: none;
+    opacity: 0;
+  }
+}
+
+@keyframes content-exit-immediate {
+  0% {
+    display: block;
+    opacity: 1;
+  }
+  50%,
+  100% {
+    display: none;
+    opacity: 0;
+  }
+}
+
+.list,
+.full {
+  position: absolute;
   width: 100%;
   height: 100%;
-  transition: opacity $duration ease;
+  inset: 0;
+  animation-timing-function: ease;
+  animation-duration: $duration * 2;
+  animation-fill-mode: both;
+  transition-behavior: allow-discrete;
+}
 
-  &.enter {
-    opacity: 0;
-
-    &.enterActive {
-      opacity: 1;
-    }
+.list {
+  .hasBeenActive:not(.isActive) & {
+    animation-name: content-enter;
   }
-
-  &.exit {
-    opacity: 1;
-
-    &.exitActive {
-      opacity: 0;
-    }
+  .hasBeenActive.isActive & {
+    animation-name: content-exit-delay;
   }
 
   a {
@@ -150,13 +185,14 @@ $btn-sink: 6px;
   }
 
   .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     top: 40%;
     left: 50%;
     width: 50%;
     height: 50%;
-    max-width: 200px;
-    max-height: 200px;
     transform: translate(-50%, -50%);
     transition: transform 120ms ease;
   }
@@ -189,6 +225,15 @@ $btn-sink: 6px;
     var(--color-secondary-darker),
     var(--color-secondary-dark)
   );
+
+  display: none;
+  .hasBeenActive:not(.isActive) & {
+    animation-name: content-exit-immediate;
+  }
+  .hasBeenActive.isActive & {
+    display: block;
+    animation-name: content-enter;
+  }
 
   &.enter {
     opacity: 0;
