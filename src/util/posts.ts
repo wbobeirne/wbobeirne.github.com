@@ -1,11 +1,11 @@
-import watchtowerImage from "~/public/blog/watchtower.jpg";
-import jouleAllowancesImage from "~/public/blog/joule-allowances.jpg";
-import lapp4Image from "~/public/blog/lapp-4.jpg";
-import lapp3Image from "~/public/blog/lapp-3.jpg";
-import lapp2Image from "~/public/blog/lapp-2.jpg";
-import lapp1Image from "~/public/blog/lapp-1.jpg";
-import ethBalancesImage from "~/public/blog/eth-balances.jpg";
-import propTypesImage from "~/public/blog/proptypes.jpg";
+import watchtowerImage from "~public/blog/watchtower.jpg";
+import jouleAllowancesImage from "~public/blog/joule-allowances.jpg";
+import lapp4Image from "~public/blog/lapp-4.jpg";
+import lapp3Image from "~public/blog/lapp-3.jpg";
+import lapp2Image from "~public/blog/lapp-2.jpg";
+import lapp1Image from "~public/blog/lapp-1.jpg";
+import ethBalancesImage from "~public/blog/eth-balances.jpg";
+import propTypesImage from "~public/blog/proptypes.jpg";
 
 interface BlogPost {
   title: string;

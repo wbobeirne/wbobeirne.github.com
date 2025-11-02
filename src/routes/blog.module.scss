@@ -1,0 +1,65 @@
+@use "~/styles/mixins" as *;
+$post-depth: 12px;
+
+.posts {
+  position: relative;
+  @include content-container;
+}
+
+.post {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  background: var(--palette-surface);
+  margin: 0 0 40px;
+  @include border-3d(
+    12px,
+    var(--palette-shadowLight),
+    var(--palette-shadowDark)
+  );
+
+  .image {
+    margin: 0 auto 1rem;
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .title {
+    margin: 0 auto 1rem;
+    font-weight: bold;
+    font-size: 1.6rem;
+    opacity: 0.8;
+
+    @include dark-mode {
+      opacity: 1;
+    }
+  }
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: "";
+  }
+
+  .readMore {
+    color: var(--palette-primary);
+  }
+
+  &:hover,
+  &:focus-visible {
+    .readMore {
+      text-decoration: underline;
+    }
+  }
+}
+
+.scrollSpacer {
+  display: none;
+  height: calc(100vh - 200px);
+
+  @include mq-slim {
+    display: block;
+  }
+}

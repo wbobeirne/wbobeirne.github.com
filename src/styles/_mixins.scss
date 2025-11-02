@@ -127,13 +127,14 @@ $content-width-mid: 600px;
 }
 
 @mixin text-3d-sunk($color, $unit: math.div(1rem, 16)) {
-  transform: translate($unit * 3.5, $unit * 3.5);
+  transform: translate($unit * 2.5, $unit * 2.5);
   text-shadow:
     #{$unit * -0.5} 0 0 $color,
     #{$unit * -0.5} #{$unit * -0.5} 0 $color,
     0 #{$unit * -0.5} 0 $color,
     0 #{$unit * 0.5} 0 $color,
     0 #{$unit * 1} 0 $color,
+    #{$unit * 1} 0 0 $color,
     #{$unit * 1} #{$unit * 1} 0 $color;
 }
 
