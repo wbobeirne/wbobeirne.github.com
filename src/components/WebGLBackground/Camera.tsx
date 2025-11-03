@@ -41,21 +41,21 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
           : new Vector3(
               0 + widthOffset * 1.0,
               2.5 + clamp(aspect * 5, 0, 2),
-              10
+              10,
             ),
         target: isMobile
           ? new Vector3(0.85, 3.5, 0)
           : new Vector3(
               -0.6 + widthOffset * 1.0,
               2 + clamp(aspect * 5, 0, 2),
-              0
+              0,
             ),
         positionWiggle: 0.1,
         targetWiggle: 0.05,
         zoom: makeZoom(
           isMobile ? 12 : 0 + clamp(aspect * 5, 2, 10),
           width,
-          height
+          height,
         ),
       },
       {
@@ -79,7 +79,7 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
               ? aspect * 10
               : clamp(aspect * 4, 4, 8),
           width,
-          height
+          height,
         ),
       },
       {
@@ -121,7 +121,7 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
       pageConfig.target.x + mouseX * pageConfig.targetWiggle,
       pageConfig.target.y + mouseY * pageConfig.targetWiggle,
       pageConfig.target.z,
-      isAnimatedRef.current
+      isAnimatedRef.current,
     );
     void camConRef.current.zoomTo(pageConfig.zoom, isAnimatedRef.current);
   }, [pageConfig, mouseX, mouseY]);

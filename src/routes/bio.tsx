@@ -1,13 +1,14 @@
 import { ScrollSpacer } from "~/components/ScrollSpacer";
-import { Template } from "~/components/Template";
 import styles from "./bio.module.scss";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/bio")({
   component: RouteComponent,
   head: () => ({
-    title: "Bio | William O’Beirne",
     meta: [
+      {
+        title: "Bio | William O’Beirne",
+      },
       {
         name: "description",
         content: "Learn all about me!",

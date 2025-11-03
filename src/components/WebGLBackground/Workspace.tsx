@@ -35,11 +35,11 @@ export const Workspace: React.FC<WorkspaceProps> = ({ hasLoaded }) => {
   const gltf = useGLTF("/threejs/models/workspace.glb");
   const gradientTexLight = useTexture(
     "/threejs/textures/gradient-light.png",
-    applyNearestFilterToTextures
+    applyNearestFilterToTextures,
   );
   const gradientTexDark = useTexture(
     "/threejs/textures/gradient-dark.png",
-    applyNearestFilterToTextures
+    applyNearestFilterToTextures,
   );
   const fakeOsImageRef = useRef<Mesh<BufferGeometry, Material> | null>(null);
 

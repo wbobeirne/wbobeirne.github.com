@@ -22,14 +22,14 @@ export const Route = createRootRoute({
   head: () => ({
     meta: [
       {
+        title: "Home | William O'Beirne",
+      },
+      {
         charSet: "utf-8",
       },
       {
         name: "viewport",
         content: "width=device-width, initial-scale=1",
-      },
-      {
-        title: "WBO",
       },
       {
         name: "og:image",

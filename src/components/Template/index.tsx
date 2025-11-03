@@ -19,6 +19,6 @@ export const Template = forwardRef<HTMLDivElement, TemplateProps>(
         <main>{children}</main>
       </div>
     );
-  }
+  },
 );
 Template.displayName = "Template";

@@ -45,7 +45,7 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
         isActive && styles.isActive,
         isInactive && styles.isInactive,
         hasBeenActive && styles.hasBeenActive,
-        hasBeenInactive && styles.hasBeenInactive
+        hasBeenInactive && styles.hasBeenInactive,
       )}
     >
       <div

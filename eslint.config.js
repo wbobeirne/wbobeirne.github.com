@@ -12,5 +12,5 @@ export default defineConfig(
       },
     },
     ignores: ["eslint.config.js"],
-  }
+  },
 );

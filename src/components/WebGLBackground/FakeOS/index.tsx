@@ -63,7 +63,7 @@ export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
         };
       });
     },
-    [screenshotUrl]
+    [screenshotUrl],
   );
 
   const bumpZ = useCallback((key: keyof typeof windowZ) => {

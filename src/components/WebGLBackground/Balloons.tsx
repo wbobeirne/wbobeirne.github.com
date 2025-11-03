@@ -101,7 +101,7 @@ export const Balloons: React.FC<BalloonsProps> = ({ show }) => {
       () => {
         visibilityRef.current = { visible: show, time: Date.now() };
       },
-      show ? 800 : 600
+      show ? 800 : 600,
     );
     return () => clearTimeout(timeout);
   }, [show]);
@@ -120,7 +120,7 @@ export const Balloons: React.FC<BalloonsProps> = ({ show }) => {
         t.magFilter = NearestFilter;
         t.flipY = false;
       });
-    }
+    },
   );
   const balloonNode = nodes.Hot_Air_Balloon;
 
@@ -173,7 +173,7 @@ const BALLOON_OFFSET = 200;
 const calculateBalloonVisibility = (
   visTime: number,
   now: number,
-  i: number
+  i: number,
 ) => {
   const elapsed = now - BALLOON_OFFSET * i - visTime;
   const duration = BALLOON_DURATION + BALLOON_DECAY * i;

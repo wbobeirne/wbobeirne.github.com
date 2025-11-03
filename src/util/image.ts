@@ -4,7 +4,5 @@ import { ImageLoader } from "next/image";
 const config = imageConfigDefault;
 
 export const optimizedTexturePath: ImageLoader = ({ src, quality }) => {
-  return `${config.path}?url=${encodeURIComponent(src)}&w=1080&q=${
-    quality || 75
-  }`;
+  return `${config.path}?url=${encodeURIComponent(src)}&w=1080&q=${quality || 75}`;
 };

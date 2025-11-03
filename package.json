@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "rm -rf dist && vite build"
+    "build": "rm -rf dist && vite build",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@react-three/drei": "^10.7.6",
