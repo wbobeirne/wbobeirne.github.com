@@ -10,7 +10,7 @@ export const Route = createFileRoute("/blog")({
 function RouteComponent() {
   return (
     <>
-      <ScrollSpacer percentage={72} />
+      <ScrollSpacer percentage={80} />
       <div className={styles.posts}>
         {POSTS.map((post) => (
           <a

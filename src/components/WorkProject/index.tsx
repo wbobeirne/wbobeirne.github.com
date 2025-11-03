@@ -1,10 +1,12 @@
 import React, { CSSProperties, useEffect, useState } from "react";
+import snarkdown from "snarkdown";
 import clsx from "clsx";
 import tinycolor from "tinycolor2";
 import { PROJECT_LOGOS, ProjectKey, PROJECTS } from "~/util/projects";
 import styles from "./style.module.scss";
 import MockupImage from "~public/screenshots/mockup.png";
 import { Link } from "@tanstack/react-router";
+import { formatMarkdown } from "~/util/markdown";
 
 interface WorkProjectProps {
   id: ProjectKey;
@@ -115,7 +117,10 @@ export const WorkProject: React.FC<WorkProjectProps> = ({
                 <img src={MockupImage} alt="" width="1280" height="700" />
               </div>
             </div>
-            <div className={styles.description}>{description}</div>
+            <div
+              className={styles.description}
+              dangerouslySetInnerHTML={{ __html: formatMarkdown(description) }}
+            />
           </div>
         )}
       </div>

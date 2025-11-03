@@ -311,6 +311,7 @@ $btn-sink: 6px;
 
   .screenshots {
     position: relative;
+    margin-bottom: 1.5rem;
 
     img {
       width: 100%;
@@ -346,6 +347,11 @@ $btn-sink: 6px;
 
   .description {
     font-size: 1.2rem;
+
+    br {
+      display: block;
+      margin: 12px 0;
+    }
 
     a {
       text-decoration: underline;
