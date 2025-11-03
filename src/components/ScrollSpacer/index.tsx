@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
+import { useApp } from "~/store/app";
 import { useWindowSize } from "~/util/hooks";
 import styles from "./style.module.scss";
-import { useApp } from "~/store/app";
 
 interface ScrollSpacerProps {
   percentage: number;

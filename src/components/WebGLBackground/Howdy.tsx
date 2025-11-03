@@ -3,9 +3,9 @@ import { useLoader, extend, ThreeElement } from "@react-three/fiber";
 import React, { Suspense, useMemo } from "react";
 import { RepeatWrapping } from "three";
 import { FontLoader, TextGeometry } from "three-stdlib";
+import { selectPalette, useTheme } from "~/store/theme";
 import { hexInt } from "~/util/color";
 import patternsImg from "~public/threejs/textures/patterns.webp";
-import { selectPalette, useTheme } from "~/store/theme";
 
 declare module "@react-three/fiber" {
   interface ThreeElements {

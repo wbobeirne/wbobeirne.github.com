@@ -1,4 +1,3 @@
-import { useLocation } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
 export function useUpdatingRef<T>(value: T) {

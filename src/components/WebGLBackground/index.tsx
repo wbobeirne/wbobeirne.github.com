@@ -1,17 +1,17 @@
-import React, { useCallback, useEffect, useState } from "react";
-import clsx from "clsx";
-import { Canvas } from "@react-three/fiber";
 import { ContactShadows, useProgress } from "@react-three/drei";
-import { Howdy } from "./Howdy";
-import { Camera } from "./Camera";
-import { Lights } from "./Lights";
-import { Workspace } from "./Workspace";
-import { Avatar } from "./Avatar";
-import { StarrySky } from "./StarrySky";
-import { Balloons } from "./Balloons";
-import styles from "./style.module.scss";
+import { Canvas } from "@react-three/fiber";
 import { useLocation } from "@tanstack/react-router";
+import clsx from "clsx";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useTheme } from "~/store/theme";
+import { Avatar } from "./Avatar";
+import { Balloons } from "./Balloons";
+import { Camera } from "./Camera";
+import { Howdy } from "./Howdy";
+import { Lights } from "./Lights";
+import { StarrySky } from "./StarrySky";
+import { Workspace } from "./Workspace";
+import styles from "./style.module.scss";
 
 interface WebGLBackgroundProps {
   onLoaded: () => void;
@@ -62,8 +62,13 @@ export const WebGLBackground: React.FC<WebGLBackgroundProps> = ({
 
 const LoadedCallback: React.FC<{ onLoaded: () => void }> = ({ onLoaded }) => {
   const { progress } = useProgress();
+  const hasLoadedRef = useRef(false);
   useEffect(() => {
-    if (progress >= 100) onLoaded();
+    if (hasLoadedRef.current) return;
+    if (progress >= 100) {
+      requestAnimationFrame(() => onLoaded());
+      hasLoadedRef.current = true;
+    }
   }, [onLoaded, progress]);
   return null;
 };

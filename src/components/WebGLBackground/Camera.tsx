@@ -1,9 +1,10 @@
+import { CameraControls, OrbitControls } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
+import { useParams } from "@tanstack/react-router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Vector3 } from "three";
-import { CameraControls, OrbitControls } from "@react-three/drei";
-import { shouldRenderFakeOS } from "~/util/animation";
 import { useApp } from "~/store/app";
+import { shouldRenderFakeOS } from "~/util/animation";
 
 const ZOOM_MULTIPLIER = 50;
 
@@ -20,7 +21,10 @@ interface CameraProps {
 export const Camera: React.FC<CameraProps> = ({ pathname }) => {
   const debug = useApp((s) => s.debug);
   const isUiHidden = useApp((s) => s.isUiHidden);
-  const activeProject = "coder";
+  const isViewingProject = useParams({
+    strict: false,
+    select: (p) => !!p.projectId,
+  });
   const camConRef = useRef<CameraControls | null>(null);
   const width = useThree((s) => s.size.width);
   const height = useThree((s) => s.size.height);
@@ -28,7 +32,7 @@ export const Camera: React.FC<CameraProps> = ({ pathname }) => {
   const [mouseY, setMouseY] = useState(0); // -1 to 1
   const isAnimatedRef = useRef(true);
 
-  const isZoomedOnMonitor = activeProject && shouldRenderFakeOS();
+  const isZoomedOnMonitor = isViewingProject && shouldRenderFakeOS();
   const pageConfigs = useMemo(() => {
     const aspect = width / height;
     const isMobile = width < 880;

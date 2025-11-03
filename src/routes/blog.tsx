@@ -4,6 +4,18 @@ import { POSTS } from "~/util/posts";
 import styles from "./blog.module.scss";
 
 export const Route = createFileRoute("/blog")({
+  head: () => ({
+    meta: [
+      {
+        title: "Blog | William O’Beirne",
+      },
+      {
+        name: "description",
+        content:
+          "Sometimes I write things. Even less frequently I publish them.",
+      },
+    ],
+  }),
   component: RouteComponent,
 });
 

@@ -1,12 +1,12 @@
+import { Link } from "@tanstack/react-router";
 import clsx from "clsx";
 import React from "react";
-import SunIcon from "~public/icons/sun.svg?react";
-import MoonIcon from "~public/icons/moon.svg?react";
-import styles from "./style.module.scss";
-import { useHasRendered, useWindowScroll } from "~/util/hooks";
-import { useTheme } from "~/store/theme";
 import { useApp } from "~/store/app";
-import { Link } from "@tanstack/react-router";
+import { useTheme } from "~/store/theme";
+import { useHasRendered, useWindowScroll } from "~/util/hooks";
+import MoonIcon from "~public/icons/moon.svg?react";
+import SunIcon from "~public/icons/sun.svg?react";
+import styles from "./style.module.scss";
 
 const links = [
   {

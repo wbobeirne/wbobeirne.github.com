@@ -13,4 +13,12 @@ export default defineConfig(
     },
     ignores: ["eslint.config.js"],
   },
+  {
+    rules: {
+      "@typescript-eslint/only-throw-error": [
+        "error",
+        { allow: ["Redirect", "NotFoundError"] },
+      ],
+    },
+  },
 );

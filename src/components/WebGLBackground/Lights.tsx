@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
 import { useHelper } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+import React, { useRef, useState } from "react";
 import {
   AmbientLight,
   DirectionalLight,
@@ -9,7 +10,6 @@ import {
   SpotLight,
   SpotLightHelper,
 } from "three";
-import { useFrame } from "@react-three/fiber";
 import { useApp } from "~/store/app";
 import { useTheme } from "~/store/theme";
 

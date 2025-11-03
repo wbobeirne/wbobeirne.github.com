@@ -1,6 +1,8 @@
 {
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "printWidth": 80,
   "trailingComma": "all",
   "tabWidth": 2,
-  "semi": true
+  "semi": true,
+  "importOrder": ["^~(.*)$", "^[./]"]
 }

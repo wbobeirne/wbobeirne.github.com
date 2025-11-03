@@ -7,8 +7,8 @@ import {
   LoopOnce,
   MeshToonMaterial,
 } from "three";
-import { applyNearestFilterToTextures } from "~/util/3d";
 import { useTheme } from "~/store/theme";
+import { applyNearestFilterToTextures } from "~/util/3d";
 
 interface AvatarProps {
   waving: boolean;

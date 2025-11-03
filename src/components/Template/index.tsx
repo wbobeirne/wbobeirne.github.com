@@ -1,7 +1,7 @@
-import React, { forwardRef } from "react";
-import styles from "./style.module.scss";
 import clsx from "clsx";
+import React, { forwardRef } from "react";
 import { useApp } from "~/store/app";
+import styles from "./style.module.scss";
 
 interface TemplateProps {
   children: React.ReactNode;

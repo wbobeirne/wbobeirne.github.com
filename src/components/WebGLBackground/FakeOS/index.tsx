@@ -1,45 +1,42 @@
-import React, { useCallback, useEffect, useState } from "react";
 import clsx from "clsx";
+import React, { useCallback, useEffect, useState } from "react";
 import { ProjectInfo, ProjectKey, PROJECTS } from "~/util/projects";
-import { Window } from "./Window";
-import styles from "./style.module.scss";
-
 import AppleIcon from "~public/icons/apple.svg?react";
-import WifiIcon from "~public/icons/wifi.svg?react";
 import BatteryIcon from "~public/icons/battery.svg?react";
 import SearchIcon from "~public/icons/search.svg?react";
 import VscodeCodeIcon from "~public/icons/vscode-code.svg?react";
-import VscodeSearchIcon from "~public/icons/vscode-search.svg?react";
-import VscodeSourceControlIcon from "~public/icons/vscode-source-control.svg?react";
 import VscodeDebugIcon from "~public/icons/vscode-debug.svg?react";
 import VscodeExtensionsIcon from "~public/icons/vscode-extensions.svg?react";
+import VscodeSearchIcon from "~public/icons/vscode-search.svg?react";
+import VscodeSourceControlIcon from "~public/icons/vscode-source-control.svg?react";
+import WifiIcon from "~public/icons/wifi.svg?react";
+import { Window } from "./Window";
+import styles from "./style.module.scss";
 
 export const OS_WIDTH = 1460;
 export const OS_HEIGHT = 768;
 export const OS_TOPBAR_HEIGHT = 28;
 
 interface FakeOSProps {
-  activeProject: ProjectKey | null;
+  project: ProjectInfo | null;
 }
 
-export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
-  const [project, setProject] = useState<ProjectInfo>();
+export const FakeOS: React.FC<FakeOSProps> = ({ project }) => {
   const [imgLoadMap, setImgLoadMap] = useState<Record<string, boolean>>({});
   const [windowZ, setWindowZ] = useState({ code: 0, browser: 1 });
   const [shouldShowScreenshot, setShouldShowScreenshot] = useState(false);
 
   useEffect(() => {
-    if (!activeProject) return;
-    setProject(PROJECTS[activeProject]);
+    if (!project) return;
     setWindowZ((z) => ({ code: z.code, browser: z.code + 1 }));
-  }, [activeProject]);
+  }, [project]);
 
   const screenshotUrl =
     project && `/screenshots/${project.screenshots.desktop}`;
   const isScreenshotLoaded = screenshotUrl
     ? shouldShowScreenshot && !!imgLoadMap[screenshotUrl]
     : false;
-  const isBrowserOpen = !!activeProject && !!project;
+  const isBrowserOpen = !!project;
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
@@ -53,8 +50,8 @@ export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
     return () => clearTimeout(timeout);
   }, [screenshotUrl, isBrowserOpen]);
 
-  const handleLoad: React.ReactEventHandler<HTMLImageElement> = useCallback(
-    (ev) => {
+  const handleLoad: React.ReactEventHandler<HTMLImageElement> =
+    useCallback(() => {
       if (!screenshotUrl) return;
       setImgLoadMap((map) => {
         return {
@@ -62,9 +59,7 @@ export const FakeOS: React.FC<FakeOSProps> = ({ activeProject }) => {
           [screenshotUrl]: true,
         };
       });
-    },
-    [screenshotUrl],
-  );
+    }, [screenshotUrl]);
 
   const bumpZ = useCallback((key: keyof typeof windowZ) => {
     setWindowZ((z) => {

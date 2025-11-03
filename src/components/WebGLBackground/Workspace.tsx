@@ -6,6 +6,7 @@ import {
   Image as DreiImage,
 } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+import { useLocation, useParams } from "@tanstack/react-router";
 import React, { useEffect, useRef } from "react";
 import {
   BufferGeometry,
@@ -14,13 +15,13 @@ import {
   MeshToonMaterial,
   Object3D,
 } from "three";
+import { useTheme } from "~/store/theme";
 import { applyNearestFilterToTextures } from "~/util/3d";
 import { shouldRenderFakeOS } from "~/util/animation";
-import { useTheme } from "~/store/theme";
-import { FakeOS } from "./FakeOS";
-
-import FakeOSLight from "~public/threejs/textures/fakeos-light.webp";
+import { ProjectKey, PROJECTS } from "~/util/projects";
 import FakeOSDark from "~public/threejs/textures/fakeos-dark.webp";
+import FakeOSLight from "~public/threejs/textures/fakeos-light.webp";
+import { FakeOS } from "./FakeOS";
 
 interface WorkspaceProps {
   hasLoaded: boolean;
@@ -28,8 +29,13 @@ interface WorkspaceProps {
 
 export const Workspace: React.FC<WorkspaceProps> = ({ hasLoaded }) => {
   const theme = useTheme((s) => s.theme);
-  const activeProject = "coder";
-  const isViewingProjects = true;
+  const project = useParams({
+    strict: false,
+    select: (p) => (p.projectId ? PROJECTS[p.projectId as ProjectKey] : null),
+  });
+  const isViewingProjects = useLocation({
+    select: (l) => l.pathname.startsWith("/work"),
+  });
 
   const sceneRef = useRef<Object3D>(null!);
   const gltf = useGLTF("/threejs/models/workspace.glb");
@@ -46,16 +52,16 @@ export const Workspace: React.FC<WorkspaceProps> = ({ hasLoaded }) => {
   // Apply MeshToonMaterial to workspace
   const gradientTex = theme === "light" ? gradientTexLight : gradientTexDark;
   useEffect(() => {
-    gltf.scene.traverse((node: any) => {
+    gltf.scene.traverse((node) => {
       if ("receiveShadow" in node) {
         node.receiveShadow = true;
       }
-      if (node.isMesh) {
-        const oldMaterial = node.material;
+      if ("isMesh" in node && (node as Mesh).isMesh) {
+        const oldMaterial = (node as Mesh).material as Material;
         const newMaterial = new MeshToonMaterial();
-        newMaterial.map = oldMaterial.map;
+        newMaterial.map = (oldMaterial as MeshToonMaterial).map;
         newMaterial.gradientMap = gradientTex;
-        node.material = newMaterial;
+        (node as Mesh).material = newMaterial;
       }
     });
   }, [gltf, gradientTex]);
@@ -81,7 +87,7 @@ export const Workspace: React.FC<WorkspaceProps> = ({ hasLoaded }) => {
         <meshBasicMaterial color={0x3c3c3c} />
         {isViewingProjects && shouldRenderFakeOS() ? (
           <DreiHtml transform occlude={[sceneRef]}>
-            <FakeOS activeProject={activeProject} />
+            <FakeOS project={project} />
           </DreiHtml>
         ) : hasLoaded ? (
           <DreiImage

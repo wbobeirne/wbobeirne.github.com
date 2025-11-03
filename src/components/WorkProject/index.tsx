@@ -1,12 +1,12 @@
+import { Link } from "@tanstack/react-router";
+import clsx from "clsx";
 import React, { CSSProperties, useEffect, useState } from "react";
 import snarkdown from "snarkdown";
-import clsx from "clsx";
 import tinycolor from "tinycolor2";
-import { PROJECT_LOGOS, ProjectKey, PROJECTS } from "~/util/projects";
-import styles from "./style.module.scss";
-import MockupImage from "~public/screenshots/mockup.png";
-import { Link } from "@tanstack/react-router";
 import { formatMarkdown } from "~/util/markdown";
+import { PROJECT_LOGOS, ProjectKey, PROJECTS } from "~/util/projects";
+import MockupImage from "~public/screenshots/mockup.png";
+import styles from "./style.module.scss";
 
 interface WorkProjectProps {
   id: ProjectKey;

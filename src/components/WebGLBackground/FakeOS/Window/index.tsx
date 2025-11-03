@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState, useRef } from "react";
-import styles from "./style.module.scss";
-import { useUpdatingRef } from "~/util/hooks";
 import clsx from "clsx";
+import React, { useCallback, useEffect, useState, useRef } from "react";
+import { useUpdatingRef } from "~/util/hooks";
 import { OS_HEIGHT, OS_TOPBAR_HEIGHT, OS_WIDTH } from "..";
+import styles from "./style.module.scss";
 
 interface WindowProps {
   children: React.ReactNode;

@@ -1,6 +1,6 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { ScrollSpacer } from "~/components/ScrollSpacer";
 import styles from "./bio.module.scss";
-import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/bio")({
   component: RouteComponent,

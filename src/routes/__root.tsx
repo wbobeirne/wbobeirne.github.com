@@ -1,6 +1,5 @@
 /// <reference types="vite/client" />
 /// <reference types="vite-plugin-svgr/client" />
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import {
   Outlet,
   createRootRoute,
@@ -8,21 +7,26 @@ import {
   Scripts,
   useLocation,
 } from "@tanstack/react-router";
-import "~/styles/global.scss";
-import { Nav } from "~/components/Nav";
-import WebGLBackground from "~/components/WebGLBackground";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { LoaderBackground } from "~/components/LoaderBackground";
+import { Nav } from "~/components/Nav";
 import { NoScriptBackground } from "~/components/NoScriptBackground";
-import ogImage from "~public/og/image.jpg";
 import { Template } from "~/components/Template";
-import { makeThemeCss, Theme } from "~/util/palette";
+import WebGLBackground from "~/components/WebGLBackground";
 import { useTheme } from "~/store/theme";
+import "~/styles/global.scss";
+import { makeThemeCss, Theme } from "~/util/palette";
+import ogImage from "~public/og/image.jpg";
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       {
         title: "Home | William O'Beirne",
+      },
+      {
+        name: "description",
+        content: "Software engineer and all around computer dude.",
       },
       {
         charSet: "utf-8",
