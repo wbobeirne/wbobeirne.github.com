@@ -17,18 +17,28 @@ export function useHasRendered() {
 }
 
 export function useWindowSize() {
-  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [windowSize, setWindowSize] = useState({
+    width: 0,
+    height: 0,
+    stableHeight: 0,
+  });
 
   useEffect(() => {
     const handler = () => {
-      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.visualViewport?.height ?? window.innerHeight,
+        stableHeight: document.documentElement.clientHeight,
+      });
     };
+
+    window.visualViewport?.addEventListener("resize", handler);
     window.addEventListener("resize", handler);
-    window.addEventListener("scroll", handler, { passive: true });
     handler();
+
     return () => {
+      window.visualViewport?.removeEventListener("resize", handler);
       window.removeEventListener("resize", handler);
-      window.removeEventListener("scroll", handler);
     };
   }, []);
 

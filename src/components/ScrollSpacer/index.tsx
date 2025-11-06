@@ -9,10 +9,10 @@ interface ScrollSpacerProps {
 
 export const ScrollSpacer: React.FC<ScrollSpacerProps> = ({ percentage }) => {
   const setStickyNavTop = useApp((s) => s.setStickyNavTop);
-  const { width, height } = useWindowSize();
+  const { width, stableHeight } = useWindowSize();
 
   const isRendering = width < 880;
-  const spacerHeight = (height - 100) * (percentage / 100);
+  const spacerHeight = (stableHeight - 100) * (percentage / 100);
 
   useEffect(() => {
     if (!isRendering) {

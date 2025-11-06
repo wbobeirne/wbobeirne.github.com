@@ -5,6 +5,8 @@ import {
   AnimationAction,
   AnimationMixer,
   LoopOnce,
+  Material,
+  Mesh,
   MeshToonMaterial,
 } from "three";
 import { useTheme } from "~/store/theme";
@@ -42,14 +44,14 @@ export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
       if ("receiveShadow" in node) {
         node.receiveShadow = true;
       }
-      if (node.isMesh) {
-        const oldMaterial = node.material;
+      if ((node as Mesh).isMesh) {
+        const oldMaterial = (node as Mesh).material as MeshToonMaterial;
         const newMaterial = new MeshToonMaterial();
         newMaterial.map = oldMaterial.map;
         newMaterial.gradientMap = gradientTex;
         newMaterial.opacity = 0;
         newMaterial.transparent = true;
-        node.material = newMaterial;
+        (node as Mesh).material = newMaterial;
       }
     });
   }, [scene, gradientTex]);
@@ -112,9 +114,10 @@ export const Avatar: React.FC<AvatarProps> = ({ waving }) => {
 
     // Update opacity
     scene.traverse((node) => {
-      if (node.isMesh) {
-        node.material.transparent = opacity !== 1;
-        node.material.opacity = opacity;
+      if ((node as Mesh).isMesh) {
+        const material = (node as Mesh).material as Material;
+        material.transparent = opacity !== 1;
+        material.opacity = opacity;
       }
     });
   });

@@ -1,3 +1,4 @@
+import { cloudflare } from "@cloudflare/vite-plugin";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import path from "path";
@@ -15,15 +16,21 @@ export default defineConfig({
       "~public": path.resolve(__dirname, "public"),
     },
   },
+  define: {
+    "globalThis.Cloudflare.compatibilityFlags": {
+      nodejs_compat: true,
+    },
+  },
   plugins: [
+    cloudflare({ viteEnvironment: { name: "ssr" } }),
     tsConfigPaths(),
     tanstackStart({
       spa: {
         enabled: true,
-        prerender: {
-          enabled: true,
-          crawlLinks: true,
-        },
+        // prerender: {
+        //   enabled: true,
+        //   crawlLinks: true,
+        // },
       },
     }),
     viteReact(),

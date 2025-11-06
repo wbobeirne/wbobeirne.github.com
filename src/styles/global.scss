@@ -46,8 +46,9 @@ html {
 }
 
 body {
-  height: 100vh;
-  height: -webkit-fill-available;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
   color: var(--palette-text);
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   @include main-background;
